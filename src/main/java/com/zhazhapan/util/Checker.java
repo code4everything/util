@@ -18,7 +18,7 @@ public class Checker {
 	 * 超链接匹配，忽略大小写
 	 */
 	public static final Pattern HYPER_LINK_PATTERN = Pattern
-			.compile("^(https*://)?([a-z0-9]+\\.)+[a-z0-9]+(/[^\\s]*)*$", Pattern.CASE_INSENSITIVE);
+			.compile("^(https*://)?([^\\s&;\"':<>]+\\.)+[a-z0-9]+(/[^\\s]*)*$", Pattern.CASE_INSENSITIVE);
 
 	/**
 	 * 日期匹配
