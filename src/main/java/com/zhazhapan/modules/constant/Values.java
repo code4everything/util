@@ -46,4 +46,5 @@ public class Values {
 	 */
 	public static final String USER_AGENT = "mozilla/5.0 (windows nt 10.0; win64; x64) applewebkit/537.36 (khtml, like gecko) chrome/59.0.3071.115 safari/537.36";
 
+	public static final int DEFAULT_DOWNLOAD_REMAINING_CENTER = 1048576;
 }

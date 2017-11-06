@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.UUID;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -25,51 +27,63 @@ public class Downloader {
 
 	private static String storageFolder = Values.USER_HOME + Values.SEPARATOR + "util";
 
-	public static void downloadFromNet(String storageFolder, String downloadURL, boolean insertUUID) {
+	private static ThreadPoolExecutor executor = new ThreadPool(1, 3, 100, TimeUnit.MILLISECONDS).newExecutor;
+
+	public static void download(String storageFolder, String downloadURL, boolean insertUUID) {
 		Downloader.storageFolder = storageFolder;
-		downloadFromNet(downloadURL, insertUUID);
+		download(downloadURL, insertUUID);
 	}
 
-	public static void downloadFromNet(String downloadURL) {
-		downloadFromNet(downloadURL, false);
+	public static void download(String downloadURL) {
+		download(downloadURL, false);
 	}
 
 	/**
 	 * 下载文件
 	 */
-	public static void downloadFromNet(String downloadURL, boolean insertUUID) {
+	public static void download(String downloadURL, boolean uuid) {
 		if (Checker.isHyperLink(downloadURL) && checkDownloadPath()) {
 			logger.info("ready for download url: " + downloadURL + " storage in " + storageFolder);
 		} else {
 			logger.info("url or storage path are invalidated, can't download");
 			return;
 		}
-		checkDownloadPath();
-		int byteread = 0;
-		String uuid = insertUUID ? UUID.randomUUID().toString() : "";
-		File file = new File(storageFolder + Values.SEPARATOR + uuid + Formatter.getFileName(downloadURL));
-		String log = "download success from url '" + downloadURL + "' to local '" + file.getAbsolutePath() + "'";
-		try {
-			URL url = new URL(downloadURL);
-			URLConnection conn = url.openConnection();
-			conn.setConnectTimeout(1000 * 60);
-			conn.setRequestProperty("User-Agent", Values.USER_AGENT);
-			InputStream inStream = conn.getInputStream();
-			FileOutputStream fs = new FileOutputStream(file);
-			if (!file.exists()) {
-				file.createNewFile();
+		executor.submit(() -> {
+			int byteread = 0;
+			String fname = storageFolder + Values.SEPARATOR + getUUID(uuid) + Formatter.getFileName(downloadURL);
+			String tmp = fname + ".tmp";
+			File file = new File(tmp);
+			String log = "download success from url '" + downloadURL + "' to local '" + file.getAbsolutePath() + "'";
+			try {
+				URL url = new URL(downloadURL);
+				URLConnection conn = url.openConnection();
+				conn.setConnectTimeout(1000 * 60);
+				conn.setRequestProperty("User-Agent", Values.USER_AGENT);
+				InputStream inStream = conn.getInputStream();
+				if (conn.getContentLength() <= 0) {
+					return;
+				}
+				FileOutputStream fs = new FileOutputStream(file);
+				if (!file.exists()) {
+					file.createNewFile();
+				}
+				byte[] buffer = new byte[1024];
+				while ((byteread = inStream.read(buffer)) != -1) {
+					fs.write(buffer, 0, byteread);
+				}
+				file.renameTo(new File(fname));
+				inStream.close();
+				fs.close();
+				logger.info(log);
+			} catch (IOException e) {
+				log = log.replace("success", "error") + ", message: " + e.getMessage();
+				logger.error(log);
 			}
-			byte[] buffer = new byte[1024];
-			while ((byteread = inStream.read(buffer)) != -1) {
-				fs.write(buffer, 0, byteread);
-			}
-			inStream.close();
-			fs.close();
-			logger.info(log);
-		} catch (IOException e) {
-			log = log.replace("success", "error") + ", message: " + e.getMessage();
-			logger.error(log);
-		}
+		});
+	}
+
+	private static String getUUID(boolean b) {
+		return b ? UUID.randomUUID().toString() : "";
 	}
 
 	private static boolean checkDownloadPath() {

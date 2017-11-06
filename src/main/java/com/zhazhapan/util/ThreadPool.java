@@ -17,13 +17,40 @@ public class ThreadPool {
 
 	private static int corePoolSize = 1;
 
-	private static int maximumPoolSize = 5;
+	private static int maximumPoolSize = 3;
 
 	private static long keepAliveTime = 1000;
 
-	private static TimeUnit unit = TimeUnit.MILLISECONDS;
+	private static TimeUnit timeUnit = TimeUnit.MILLISECONDS;
 
 	private static BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>(1);
+
+	public static ThreadPoolExecutor executor = null;
+
+	public ThreadPoolExecutor newExecutor = null;
+
+	/**
+	 * 新建线程池
+	 * 
+	 * @param core
+	 *            初始线程大小
+	 * @param maximum
+	 *            最大线程数
+	 * @param keep
+	 *            线程存活时长
+	 * @param timeUnit
+	 *            存活时长单位
+	 */
+	public ThreadPool(int core, int maximum, int keep, TimeUnit unit) {
+		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>(1);
+		ThreadFactory factory = new ThreadFactory() {
+			@Override
+			public Thread newThread(Runnable r) {
+				return new Thread(r);
+			}
+		};
+		newExecutor = new ThreadPoolExecutor(core, maximum, keep, unit, queue, factory);
+	}
 
 	private static ThreadFactory threadFactory = new ThreadFactory() {
 		@Override
@@ -33,18 +60,24 @@ public class ThreadPool {
 	};
 
 	public static void init() {
-		executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
+		executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, timeUnit, workQueue,
+				threadFactory);
 	}
 
-	public static void init(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit) {
+	public static void init(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit timeUnit) {
 		ThreadPool.corePoolSize = corePoolSize;
 		ThreadPool.maximumPoolSize = maximumPoolSize;
 		ThreadPool.keepAliveTime = keepAliveTime;
-		ThreadPool.unit = unit;
+		ThreadPool.timeUnit = timeUnit;
 		init();
 	}
 
-	public static ThreadPoolExecutor executor = null;
+	public static ThreadPoolExecutor getExecutor() {
+		if (Checker.isNull(executor)) {
+			init();
+		}
+		return executor;
+	}
 
 	public static void shutdown() {
 		executor.shutdown();
@@ -78,12 +111,12 @@ public class ThreadPool {
 		ThreadPool.keepAliveTime = keepAliveTime;
 	}
 
-	public static TimeUnit getUnit() {
-		return unit;
+	public static TimeUnit getTimeUnit() {
+		return timeUnit;
 	}
 
-	public static void setUnit(TimeUnit unit) {
-		ThreadPool.unit = unit;
+	public static void setTimeUnit(TimeUnit unit) {
+		ThreadPool.timeUnit = unit;
 	}
 
 	public static BlockingQueue<Runnable> getWorkQueue() {
