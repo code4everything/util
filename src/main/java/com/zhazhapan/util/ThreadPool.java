@@ -79,14 +79,6 @@ public class ThreadPool {
 		return executor;
 	}
 
-	public static void shutdown() {
-		executor.shutdown();
-	}
-
-	public static void shutdownNow() {
-		executor.shutdownNow();
-	}
-
 	public static int getCorePoolSize() {
 		return corePoolSize;
 	}
