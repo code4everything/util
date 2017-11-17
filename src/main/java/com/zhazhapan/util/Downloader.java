@@ -52,7 +52,7 @@ public class Downloader {
 			conn.setRequestProperty("User-Agent", Values.USER_AGENT);
 			conn.setRequestProperty("Connection", "Keep-Alive");
 			InputStream inStream = conn.getInputStream();
-			if (conn.getResponseCode() != 200 || conn.getContentLength() <= 0) {
+			if (conn.getResponseCode() != Values.RESPONSE_OK || conn.getContentLength() <= 0) {
 				return;
 			}
 			FileOutputStream fs = new FileOutputStream(file);
