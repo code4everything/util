@@ -52,4 +52,9 @@ public class Values {
 	 * 网页响应200
 	 */
 	public static final int RESPONSE_OK = 200;
+
+	/**
+	 * 数字 2
+	 */
+	public static final int TWO_INT = 2;
 }

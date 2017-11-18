@@ -14,6 +14,19 @@ import java.util.regex.Pattern;
  */
 public class Checker {
 
+	public static boolean isSorted(int[] nums) {
+		boolean desc = nums[0] - nums[nums.length - 1] < 0 ? false : true;
+		for (int i = 0; i < nums.length - 1; i++) {
+			if (!desc && nums[i] > nums[i + 1]) {
+				return false;
+			}
+			if (desc && nums[i] < nums[i + 1]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * 超链接匹配，忽略大小写
 	 */
