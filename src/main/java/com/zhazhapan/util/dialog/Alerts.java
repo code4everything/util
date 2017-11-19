@@ -20,6 +20,7 @@ import javafx.stage.Window;
 /**
  * @author pantao 对JavaFX对话框进行封装
  */
+@SuppressWarnings("restriction")
 public class Alerts {
 
 	public static Optional<ButtonType> showInformation(String title, String content) {

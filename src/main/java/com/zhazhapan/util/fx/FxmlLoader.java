@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
  * @author pantao
  *
  */
+@SuppressWarnings("restriction")
 public class FxmlLoader {
 
 	private static final Logger logger = Logger.getLogger(FxmlLoader.class);

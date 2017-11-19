@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
@@ -23,12 +24,111 @@ import javafx.scene.input.ClipboardContent;
  * @author pantao
  *
  */
+@SuppressWarnings("restriction")
 public class Utils {
 
 	/**
 	 * 日志输出
 	 */
 	private static Logger logger = Logger.getLogger(Utils.class);
+
+	/**
+	 * 抽取字符串的数字，并转换为Double
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static double extractDouble(String string) {
+		return Double.parseDouble(extractDigit(string));
+	}
+
+	/**
+	 * 抽取字符串的数字，并转换为Float
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static float extractFloat(String string) {
+		return Float.parseFloat(extractDigit(string));
+	}
+
+	/**
+	 * 抽取字符串的数字，并转换为Short
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static short extractShort(String string) {
+		return Short.parseShort(extractDigit(string).replace(".", ""));
+	}
+
+	/**
+	 * 抽取字符串的数字，并转换为Long
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static long extractLong(String string) {
+		return Long.parseLong(extractDigit(string).replace(".", ""));
+	}
+
+	/**
+	 * 抽取字符串的数字，并转换为Integer
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static int extractInt(String string) {
+		return Integer.parseInt(extractDigit(string).replace(".", ""));
+	}
+
+	/**
+	 * 匹配字符串是否有数字
+	 */
+	private static final Pattern HAS_DIGIT_PATTERN = Pattern.compile(".*[0-9]+.*");
+
+	/**
+	 * 抽取字符串的数字（包括最后一个点号）
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static String extractDigit(String string) {
+		String res = "";
+		if (HAS_DIGIT_PATTERN.matcher(string).matches()) {
+			string = string.replaceAll("(\\s|[a-zA-Z])", "");
+			res = string.indexOf("-") == 0 ? "-" : "";
+			int dotIdx = string.lastIndexOf(".");
+			for (int i = 0; i < string.length(); i++) {
+				char c = string.charAt(i);
+				if (Character.isDigit(c) || i == dotIdx) {
+					res += c;
+				}
+			}
+			if (res.indexOf(".") == 0) {
+				res = "0" + res;
+			} else if (res.indexOf("-.") == 0) {
+				res = "-0." + res.substring(2, res.length());
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * 返回多个字符串中长度最长的字符串
+	 * 
+	 * @param strings
+	 * @return
+	 */
+	public static String maxLengthString(String... strings) {
+		String res = "";
+		for (String string : strings) {
+			if (string.length() > res.length()) {
+				res = string;
+			}
+		}
+		return res;
+	}
 
 	/**
 	 * 合并多个Short数组
@@ -95,7 +195,7 @@ public class Utils {
 	}
 
 	/**
-	 * 合并多个Charactor数组
+	 * 合并多个Character数组
 	 * 
 	 * @param array
 	 * @param arrays
