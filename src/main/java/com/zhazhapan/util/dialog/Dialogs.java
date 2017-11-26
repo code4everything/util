@@ -17,7 +17,6 @@ import javafx.stage.Modality;
  * @author pantao
  *
  */
-@SuppressWarnings("restriction")
 public class Dialogs {
 
 	private static String cancelButtonText = "取消";

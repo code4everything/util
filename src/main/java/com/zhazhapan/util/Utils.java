@@ -24,7 +24,6 @@ import javafx.scene.input.ClipboardContent;
  * @author pantao
  *
  */
-@SuppressWarnings("restriction")
 public class Utils {
 
 	/**

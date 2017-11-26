@@ -51,6 +51,7 @@ public class Downloader {
 			conn.setRequestProperty("Charset", "UTF-8");
 			conn.setRequestProperty("User-Agent", Values.USER_AGENT);
 			conn.setRequestProperty("Connection", "Keep-Alive");
+			conn.setRequestProperty("Accept", "*/*");
 			InputStream inStream = conn.getInputStream();
 			if (conn.getResponseCode() != Values.RESPONSE_OK || conn.getContentLength() <= 0) {
 				return;
@@ -63,9 +64,9 @@ public class Downloader {
 			while ((byteread = inStream.read(buffer)) != -1) {
 				fs.write(buffer, 0, byteread);
 			}
-			file.renameTo(new File(fname));
 			inStream.close();
 			fs.close();
+			file.renameTo(new File(fname));
 			logger.info(log);
 		} catch (IOException e) {
 			log = log.replace("success", "error") + ", message: " + e.getMessage();
