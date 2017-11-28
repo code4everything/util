@@ -22,8 +22,19 @@ public class Downloader {
 
 	private static Logger logger = Logger.getLogger(Downloader.class);
 
+	/**
+	 * 下载目录
+	 */
 	private static String storageFolder = Values.USER_HOME + Values.SEPARATOR + "util";
 
+	/**
+	 * 下载
+	 * 
+	 * @param storageFolder
+	 *            下载到指定目录
+	 * @param downloadURL
+	 *            下载的URL
+	 */
 	public static void download(String storageFolder, String downloadURL) {
 		Downloader.storageFolder = storageFolder;
 		download(downloadURL);
@@ -31,6 +42,9 @@ public class Downloader {
 
 	/**
 	 * 下载文件
+	 * 
+	 * @param downloadURL
+	 *            下载的URL
 	 */
 	public static void download(String downloadURL) {
 		if (Checker.isHyperLink(downloadURL) && checkDownloadPath()) {
@@ -96,6 +110,11 @@ public class Downloader {
 		return file.getAbsolutePath();
 	}
 
+	/**
+	 * 检测下载目录是否存在，不存在则创建
+	 * 
+	 * @return {@link Boolean}
+	 */
 	private static boolean checkDownloadPath() {
 		if (Checker.isNotEmpty(storageFolder)) {
 			File file = new File(storageFolder);
@@ -108,10 +127,21 @@ public class Downloader {
 		return false;
 	}
 
+	/**
+	 * 获取下载目录
+	 * 
+	 * @return {@link String}
+	 */
 	public static String getStorageFolder() {
 		return storageFolder;
 	}
 
+	/**
+	 * 设置下载的目录
+	 * 
+	 * @param storageFolder
+	 *            下载目录
+	 */
 	public static void setStorageFolder(String storageFolder) {
 		Downloader.storageFolder = storageFolder;
 	}

@@ -90,7 +90,7 @@ public class JsonParser {
 	 * 
 	 * @param key
 	 *            例如：country
-	 * @return
+	 * @return {@link JSONObject}
 	 * @throws Exception
 	 *             when key is null
 	 */
@@ -103,8 +103,9 @@ public class JsonParser {
 	 * 
 	 * @param key
 	 *            例如：country.province
-	 * @return
+	 * @return {@link JSONArray}
 	 * @throws Exception
+	 *             when key is null
 	 */
 	public JSONArray getArray(String key) throws Exception {
 		return get(key).getJSONArray(postKey);
@@ -115,8 +116,9 @@ public class JsonParser {
 	 * 
 	 * @param key
 	 *            例如：country.province[13].name
-	 * @return
+	 * @return {@link String}
 	 * @throws Exception
+	 *             when key is null
 	 */
 	public String getString(String key) throws Exception {
 		return get(key).getString(postKey);
@@ -127,8 +129,9 @@ public class JsonParser {
 	 * 
 	 * @param key
 	 *            例如：country.province[13].peopleNums
-	 * @return
+	 * @return {@link Integer}
 	 * @throws Exception
+	 *             when key is null
 	 */
 	public int getInteger(String key) throws Exception {
 		return Formatter.stringToInt(getString(key));
@@ -139,8 +142,9 @@ public class JsonParser {
 	 * 
 	 * @param key
 	 *            例如：country.province[13].area
-	 * @return
+	 * @return {@link Double}
 	 * @throws Exception
+	 *             when key is null
 	 */
 	public double getDouble(String key) throws Exception {
 		return Formatter.stringToDouble(getString(key));
@@ -150,8 +154,9 @@ public class JsonParser {
 	 * 通过key解析JsonObject
 	 * 
 	 * @param key
-	 * @return
+	 * @return {@link JSONObject}
 	 * @throws Exception
+	 *             when key is null
 	 */
 	private JSONObject get(String key) throws Exception {
 		if (Checker.isNotEmpty(key)) {
@@ -192,7 +197,7 @@ public class JsonParser {
 	/**
 	 * 获取当前json文件的绝对路径
 	 * 
-	 * @return
+	 * @return {@link String}
 	 */
 	public String getJsonPath() {
 		return jsonPath;
@@ -211,7 +216,7 @@ public class JsonParser {
 	/**
 	 * 获取当前解析的JsonObject
 	 * 
-	 * @return
+	 * @return {@link JSONObject}
 	 */
 	public JSONObject getJsonObject() {
 		return jsonObject;

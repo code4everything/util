@@ -29,7 +29,6 @@ import sun.misc.BASE64Encoder;
  * @author pantao
  *
  */
-@SuppressWarnings("restriction")
 public class JavaEncrypt {
 
 	private static final String DES_CRYPT_WAY = "DES";
@@ -58,20 +57,20 @@ public class JavaEncrypt {
 	 * HMAC加密，单向
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws InvalidKeyException
+	 *             异常
 	 */
-	public static String hmac(String string) {
+	public static String hmac(String string) throws NoSuchAlgorithmException, InvalidKeyException {
 		String code = "";
-		try {
-			KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacMD5");
-			SecretKey secretKey = keyGenerator.generateKey();
-			SecretKey secretKey2 = new SecretKeySpec(secretKey.getEncoded(), "HmacMD5");
-			Mac mac = Mac.getInstance(secretKey.getAlgorithm());
-			mac.init(secretKey2);
-			code = new String(mac.doFinal(string.getBytes()));
-		} catch (NoSuchAlgorithmException | InvalidKeyException | IllegalStateException e) {
-			System.out.println("加密失败：" + e.getMessage());
-		}
+		KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacMD5");
+		SecretKey secretKey = keyGenerator.generateKey();
+		SecretKey secretKey2 = new SecretKeySpec(secretKey.getEncoded(), "HmacMD5");
+		Mac mac = Mac.getInstance(secretKey.getAlgorithm());
+		mac.init(secretKey2);
 		return code;
 	}
 
@@ -79,40 +78,41 @@ public class JavaEncrypt {
 	 * 初始化加密器，双向加密，不支持中文
 	 * 
 	 * @param key
-	 * @return
+	 *            {@link String}
+	 * @return {@link Boolean}
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws NoSuchPaddingException
+	 *             异常
 	 */
-	private static boolean initDES(String key) {
+	private static boolean initDES(String key) throws NoSuchAlgorithmException, NoSuchPaddingException {
 		Security.addProvider(new com.sun.crypto.provider.SunJCE());
 		boolean b = false;
-		try {
-			// DES、DESede、AES为对称加密，RSA为非对称加密
-			if (DES_CRYPT_WAY.equals(key)) {
-				KeyGenerator keygen = KeyGenerator.getInstance(key);
-				secretKey = keygen.generateKey();
-				cipher = Cipher.getInstance(key);
-				DES = 1;
-			} else if (DES3_CRYPT_WAY.equals(key)) {
-				KeyGenerator keygen = KeyGenerator.getInstance(key);
-				secretKey3 = keygen.generateKey();
-				cipher3 = Cipher.getInstance(key);
-				DES3 = 1;
-			} else if (AES_CRYPT_WAY.equals(key)) {
-				KeyGenerator keygen = KeyGenerator.getInstance(key);
-				aesKey = keygen.generateKey();
-				aes = Cipher.getInstance(key);
-				AES = 1;
-			} else {
-				// RSA加密
-				KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(key);
-				keyPairGen.initialize(1024);
-				rsaKey = keyPairGen.generateKeyPair();
-				rsa = Cipher.getInstance(key);
-				RSA = 1;
-			}
-			b = true;
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-			System.out.println("初始化对称加密器失败：" + e.getMessage());
+		// DES、DESede、AES为对称加密，RSA为非对称加密
+		if (DES_CRYPT_WAY.equals(key)) {
+			KeyGenerator keygen = KeyGenerator.getInstance(key);
+			secretKey = keygen.generateKey();
+			cipher = Cipher.getInstance(key);
+			DES = 1;
+		} else if (DES3_CRYPT_WAY.equals(key)) {
+			KeyGenerator keygen = KeyGenerator.getInstance(key);
+			secretKey3 = keygen.generateKey();
+			cipher3 = Cipher.getInstance(key);
+			DES3 = 1;
+		} else if (AES_CRYPT_WAY.equals(key)) {
+			KeyGenerator keygen = KeyGenerator.getInstance(key);
+			aesKey = keygen.generateKey();
+			aes = Cipher.getInstance(key);
+			AES = 1;
+		} else {
+			// RSA加密
+			KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(key);
+			keyPairGen.initialize(1024);
+			rsaKey = keyPairGen.generateKeyPair();
+			rsa = Cipher.getInstance(key);
+			RSA = 1;
 		}
+		b = true;
 		return b;
 	}
 
@@ -120,10 +120,25 @@ public class JavaEncrypt {
 	 * 为Cipher加密器提供一个解密开放接口
 	 * 
 	 * @param code
+	 *            {@link String}
 	 * @param key
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws BadPaddingException
+	 *             异常
+	 * @throws IllegalBlockSizeException
+	 *             异常
+	 * @throws UnsupportedEncodingException
+	 *             异常
+	 * @throws NoSuchPaddingException
+	 *             异常
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws InvalidKeyException
+	 *             异常
 	 */
-	public static String decryptDES(String code, String key) {
+	public static String decryptDES(String code, String key) throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		return cryptDES(code, Cipher.DECRYPT_MODE, key);
 	}
 
@@ -131,32 +146,44 @@ public class JavaEncrypt {
 	 * Cipher加密解密器
 	 * 
 	 * @param string
+	 *            {@link String}
 	 * @param opmode
+	 *            {@link Integer}
 	 * @param key
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws NoSuchPaddingException
+	 *             异常
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws InvalidKeyException
+	 *             异常
+	 * @throws BadPaddingException
+	 *             异常
+	 * @throws IllegalBlockSizeException
+	 *             异常
+	 * @throws UnsupportedEncodingException
+	 *             异常
 	 */
-	private static String cryptDES(String string, int opmode, String key) {
+	private static String cryptDES(String string, int opmode, String key)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException,
+			IllegalBlockSizeException, BadPaddingException {
 		String result = "";
 		int isInit = "DES".equals(key) ? DES : ("AES".equals(key) ? AES : ("RSA".equals(key) ? RSA : DES3));
 		if (isInit == 1 ? true : (initDES(key) ? true : initDES(key))) {
-			try {
-				if (DES_CRYPT_WAY.equals(key)) {
-					cipher.init(opmode, secretKey);
-					result = new String(cipher.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
-				} else if (DES3_CRYPT_WAY.equals(key)) {
-					cipher3.init(opmode, secretKey3);
-					result = new String(cipher3.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
-				} else if (AES_CRYPT_WAY.equals(key)) {
-					aes.init(opmode, aesKey);
-					result = new String(aes.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
-				} else {
-					rsa.init(opmode, opmode == Cipher.ENCRYPT_MODE ? (RSAPublicKey) rsaKey.getPublic()
-							: (RSAPrivateKey) rsaKey.getPrivate());
-					result = new String(rsa.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
-				}
-			} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException
-					| UnsupportedEncodingException e) {
-				System.out.println((opmode == Cipher.ENCRYPT_MODE ? "加密" : "解密") + "失败：" + e.getMessage());
+			if (DES_CRYPT_WAY.equals(key)) {
+				cipher.init(opmode, secretKey);
+				result = new String(cipher.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
+			} else if (DES3_CRYPT_WAY.equals(key)) {
+				cipher3.init(opmode, secretKey3);
+				result = new String(cipher3.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
+			} else if (AES_CRYPT_WAY.equals(key)) {
+				aes.init(opmode, aesKey);
+				result = new String(aes.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
+			} else {
+				rsa.init(opmode, opmode == Cipher.ENCRYPT_MODE ? (RSAPublicKey) rsaKey.getPublic()
+						: (RSAPrivateKey) rsaKey.getPrivate());
+				result = new String(rsa.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
 			}
 		}
 		return result;
@@ -166,9 +193,23 @@ public class JavaEncrypt {
 	 * RSA加密
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws BadPaddingException
+	 *             异常
+	 * @throws IllegalBlockSizeException
+	 *             异常
+	 * @throws UnsupportedEncodingException
+	 *             异常
+	 * @throws NoSuchPaddingException
+	 *             异常
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws InvalidKeyException
+	 *             异常
 	 */
-	public static String rsa(String string) {
+	public static String rsa(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		return cryptDES(string, Cipher.ENCRYPT_MODE, "RSA");
 	}
 
@@ -176,9 +217,23 @@ public class JavaEncrypt {
 	 * DES3加密
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws BadPaddingException
+	 *             异常
+	 * @throws IllegalBlockSizeException
+	 *             异常
+	 * @throws UnsupportedEncodingException
+	 *             异常
+	 * @throws NoSuchPaddingException
+	 *             异常
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws InvalidKeyException
+	 *             异常
 	 */
-	public static String des3(String string) {
+	public static String des3(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		return cryptDES(string, Cipher.ENCRYPT_MODE, "DESede");
 	}
 
@@ -186,9 +241,23 @@ public class JavaEncrypt {
 	 * AES加密
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws BadPaddingException
+	 *             异常
+	 * @throws IllegalBlockSizeException
+	 *             异常
+	 * @throws UnsupportedEncodingException
+	 *             异常
+	 * @throws NoSuchPaddingException
+	 *             异常
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws InvalidKeyException
+	 *             异常
 	 */
-	public static String aes(String string) {
+	public static String aes(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		return cryptDES(string, Cipher.ENCRYPT_MODE, "AES");
 	}
 
@@ -196,9 +265,23 @@ public class JavaEncrypt {
 	 * DES加密
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws BadPaddingException
+	 *             异常
+	 * @throws IllegalBlockSizeException
+	 *             异常
+	 * @throws UnsupportedEncodingException
+	 *             异常
+	 * @throws NoSuchPaddingException
+	 *             异常
+	 * @throws NoSuchAlgorithmException
+	 *             异常
+	 * @throws InvalidKeyException
+	 *             异常
 	 */
-	public static String des(String string) {
+	public static String des(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		return cryptDES(string, Cipher.ENCRYPT_MODE, "DES");
 	}
 
@@ -206,7 +289,8 @@ public class JavaEncrypt {
 	 * BASE64加密
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
 	 */
 	public static String base64(String string) {
 		return new BASE64Encoder().encodeBuffer(string.getBytes());
@@ -216,10 +300,14 @@ public class JavaEncrypt {
 	 * SHA加密，返回指定进制格式
 	 * 
 	 * @param string
+	 *            {@link String}
 	 * @param scale
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws NoSuchAlgorithmException
+	 *             异常
 	 */
-	public static String sha(String string, int scale) {
+	public static String sha(String string, int scale) throws NoSuchAlgorithmException {
 		return messageDigest("SHA", string, scale);
 	}
 
@@ -227,9 +315,12 @@ public class JavaEncrypt {
 	 * SHA加密，返回32进制格式
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws NoSuchAlgorithmException
+	 *             异常
 	 */
-	public static String sha(String string) {
+	public static String sha(String string) throws NoSuchAlgorithmException {
 		return messageDigest("SHA", string, 32);
 	}
 
@@ -237,10 +328,14 @@ public class JavaEncrypt {
 	 * MD5加密，返回指定进制格式
 	 * 
 	 * @param string
+	 *            {@link String}
 	 * @param scale
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws NoSuchAlgorithmException
+	 *             异常
 	 */
-	public static String md5(String string, int scale) {
+	public static String md5(String string, int scale) throws NoSuchAlgorithmException {
 		return messageDigest("MD5", string, scale);
 	}
 
@@ -248,9 +343,12 @@ public class JavaEncrypt {
 	 * MD5加密，返回16进制格式
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
+	 * @throws NoSuchAlgorithmException
+	 *             异常
 	 */
-	public static String md5(String string) {
+	public static String md5(String string) throws NoSuchAlgorithmException {
 		return messageDigest("MD5", string, 16);
 	}
 
@@ -258,20 +356,21 @@ public class JavaEncrypt {
 	 * 消息摘要算法，单向加密
 	 * 
 	 * @param key
+	 *            {@link String}
 	 * @param string
+	 *            {@link String}
 	 * @param scale
-	 * @return
+	 *            {@link Integer}
+	 * @return {@link String}
+	 * @throws NoSuchAlgorithmException
+	 *             异常
 	 */
-	private static String messageDigest(String key, String string, int scale) {
+	private static String messageDigest(String key, String string, int scale) throws NoSuchAlgorithmException {
 		String code = "";
-		try {
-			MessageDigest md = MessageDigest.getInstance(key);
-			md.update(string.getBytes());
-			BigInteger bigInteger = new BigInteger(md.digest());
-			code = bigInteger.toString(scale);
-		} catch (Exception e) {
-			System.out.println("加密失败：" + e.getMessage());
-		}
+		MessageDigest md = MessageDigest.getInstance(key);
+		md.update(string.getBytes());
+		BigInteger bigInteger = new BigInteger(md.digest());
+		code = bigInteger.toString(scale);
 		return code;
 	}
 }

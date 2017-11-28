@@ -14,6 +14,13 @@ import java.util.regex.Pattern;
  */
 public class Checker {
 
+	/**
+	 * 检查数组是否已经排好序
+	 * 
+	 * @param nums
+	 *            数组
+	 * @return {@link Boolean}
+	 */
 	public static boolean isSorted(int[] nums) {
 		boolean desc = nums[0] - nums[nums.length - 1] < 0 ? false : true;
 		for (int i = 0; i < nums.length - 1; i++) {
@@ -59,7 +66,7 @@ public class Checker {
 	 * 
 	 * @param date
 	 *            需要判断的日期
-	 * @return 匹配结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isDate(String date) {
 		return isNull(date) ? false : DATE_PATTERN.matcher(date).matches();
@@ -74,7 +81,7 @@ public class Checker {
 	 *            需要替换的字符
 	 * @param newChar
 	 *            新的字符
-	 * @return 结果字符串
+	 * @return {@link String}
 	 */
 	public static String replace(String string, char oldChar, char newChar) {
 		return checkNull(string).replace(oldChar, newChar);
@@ -89,7 +96,7 @@ public class Checker {
 	 *            需要替换的字符串
 	 * @param newString
 	 *            新的字符串
-	 * @return 结果字符串
+	 * @return {@link String}
 	 */
 	public static String replace(String string, String oldString, String newString) {
 		return checkNull(string).replace(oldString, newString);
@@ -100,7 +107,7 @@ public class Checker {
 	 * 
 	 * @param email
 	 *            需要判断的邮箱地址
-	 * @return 匹配结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isEmail(String email) {
 		return isNullOrEmpty(email) ? false : EMAIL_PATTERN.matcher(email).matches();
@@ -111,7 +118,7 @@ public class Checker {
 	 * 
 	 * @param decimal
 	 *            需要判断的数字
-	 * @return 匹配结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isDecimal(String decimal) {
 		return isNull(decimal) ? false : DECIMAL_PATTERN.matcher(decimal).matches();
@@ -122,7 +129,7 @@ public class Checker {
 	 * 
 	 * @param number
 	 *            需要判断的整数
-	 * @return 匹配结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isNumber(String number) {
 		return isNull(number) ? false : NUMBER_PATTERN.matcher(number).matches();
@@ -133,7 +140,7 @@ public class Checker {
 	 * 
 	 * @param object
 	 *            需要判断的对象
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isNull(Object object) {
 		return object == null ? true : false;
@@ -144,7 +151,7 @@ public class Checker {
 	 * 
 	 * @param object
 	 *            需要判断的对象
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isNotNull(Object object) {
 		return !isNull(object);
@@ -155,7 +162,7 @@ public class Checker {
 	 * 
 	 * @param string
 	 *            需要判断的字符串
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isNullOrEmpty(String string) {
 		return isNull(string) ? true : string.isEmpty();
@@ -166,7 +173,7 @@ public class Checker {
 	 * 
 	 * @param string
 	 *            需要判断的字符串
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isNotEmpty(String string) {
 		return !isNullOrEmpty(string);
@@ -177,7 +184,7 @@ public class Checker {
 	 * 
 	 * @param string
 	 *            需要检测的字符串
-	 * @return 如果字符串为NULL，则返回空字符串，否则返回原字符串
+	 * @return {@link String}
 	 */
 	public static String checkNull(String string) {
 		return isNull(string) ? "" : string;
@@ -188,7 +195,7 @@ public class Checker {
 	 * 
 	 * @param longNum
 	 *            需要检测的整数
-	 * @return 如果整数为NULL，则返回0，否则返回原整数
+	 * @return {@link Long}
 	 */
 	public static long checkNull(long longNum) {
 		return isNull(longNum) ? 0 : longNum;
@@ -199,7 +206,7 @@ public class Checker {
 	 * 
 	 * @param list
 	 *            需要判断的LIST
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isNotEmpty(List<?> list) {
 		return !isEmpty(list);
@@ -210,7 +217,7 @@ public class Checker {
 	 * 
 	 * @param list
 	 *            需要判断的LIST
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isEmpty(List<?> list) {
 		return isNull(list) ? true : list.isEmpty();
@@ -221,7 +228,7 @@ public class Checker {
 	 * 
 	 * @param map
 	 *            需要判断的MAP
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isNotEmpty(Map<?, ?> map) {
 		return !isEmpty(map);
@@ -232,7 +239,7 @@ public class Checker {
 	 * 
 	 * @param map
 	 *            需要判断的MAP
-	 * @return 判断结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isEmpty(Map<?, ?> map) {
 		return isNull(map) ? true : map.isEmpty();
@@ -243,10 +250,10 @@ public class Checker {
 	 * 
 	 * @param hyperLink
 	 *            需要匹配超链接
-	 * @return 匹配结果
+	 * @return {@link Boolean}
 	 */
 	public static boolean isHyperLink(String hyperLink) {
-		return isNotEmpty(hyperLink) ? HYPER_LINK_PATTERN.matcher(hyperLink).matches() : false;
+		return isNullOrEmpty(hyperLink) ? false : HYPER_LINK_PATTERN.matcher(hyperLink).matches();
 	}
 
 	/**
@@ -254,7 +261,7 @@ public class Checker {
 	 * 
 	 * @param date
 	 *            需要检测的日期
-	 * @return 如果日期为NULL，则返回当前日期，否则返回原日期
+	 * @return {@link Date}
 	 */
 	public static Date checkDate(Date date) {
 		return isNull(date) ? new Date() : date;

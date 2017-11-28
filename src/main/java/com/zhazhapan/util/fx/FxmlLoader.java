@@ -19,6 +19,13 @@ public class FxmlLoader {
 
 	private static final Logger logger = Logger.getLogger(FxmlLoader.class);
 
+	/**
+	 * 加密fxml文件
+	 * 
+	 * @param url
+	 *            {@link URL}
+	 * @return {@link Scene}
+	 */
 	public static Scene loadFxml(URL url) {
 		logger.info("load fxml from url: " + url);
 		try {

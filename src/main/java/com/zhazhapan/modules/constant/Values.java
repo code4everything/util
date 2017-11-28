@@ -57,4 +57,14 @@ public class Values {
 	 * 数字 2
 	 */
 	public static final int TWO_INT = 2;
+
+	/**
+	 * 英文点号
+	 */
+	public static final String DOT_SIGN = ".";
+
+	/**
+	 * 符号“-.”
+	 */
+	public static final String NEGATIVE_DOT_SIGN = "-.";
 }

@@ -35,7 +35,8 @@ public class Utils {
 	 * 抽取字符串的数字，并转换为Double
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link Double}
 	 */
 	public static double extractDouble(String string) {
 		return Double.parseDouble(extractDigit(string));
@@ -45,7 +46,8 @@ public class Utils {
 	 * 抽取字符串的数字，并转换为Float
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link Float}
 	 */
 	public static float extractFloat(String string) {
 		return Float.parseFloat(extractDigit(string));
@@ -55,7 +57,8 @@ public class Utils {
 	 * 抽取字符串的数字，并转换为Short
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link Short}
 	 */
 	public static short extractShort(String string) {
 		return Short.parseShort(extractDigit(string).replace(".", ""));
@@ -65,7 +68,8 @@ public class Utils {
 	 * 抽取字符串的数字，并转换为Long
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link Long}
 	 */
 	public static long extractLong(String string) {
 		return Long.parseLong(extractDigit(string).replace(".", ""));
@@ -75,7 +79,8 @@ public class Utils {
 	 * 抽取字符串的数字，并转换为Integer
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link Integer}
 	 */
 	public static int extractInt(String string) {
 		return Integer.parseInt(extractDigit(string).replace(".", ""));
@@ -90,7 +95,8 @@ public class Utils {
 	 * 抽取字符串的数字（包括最后一个点号）
 	 * 
 	 * @param string
-	 * @return
+	 *            {@link String}
+	 * @return {@link String}
 	 */
 	public static String extractDigit(String string) {
 		String res = "";
@@ -104,9 +110,9 @@ public class Utils {
 					res += c;
 				}
 			}
-			if (res.indexOf(".") == 0) {
+			if (res.indexOf(Values.DOT_SIGN) == 0) {
 				res = "0" + res;
-			} else if (res.indexOf("-.") == 0) {
+			} else if (res.indexOf(Values.NEGATIVE_DOT_SIGN) == 0) {
 				res = "-0." + res.substring(2, res.length());
 			}
 		}
@@ -117,7 +123,8 @@ public class Utils {
 	 * 返回多个字符串中长度最长的字符串
 	 * 
 	 * @param strings
-	 * @return
+	 *            多个字符串
+	 * @return {@link String}
 	 */
 	public static String maxLengthString(String... strings) {
 		String res = "";
@@ -133,8 +140,10 @@ public class Utils {
 	 * 合并多个Short数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static short[] concatArrays(short[] array, short[]... arrays) {
@@ -149,8 +158,10 @@ public class Utils {
 	 * 合并多个Long数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static long[] concatArrays(long[] array, long[]... arrays) {
@@ -165,8 +176,10 @@ public class Utils {
 	 * 合并多个Float数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static float[] concatArrays(float[] array, float[]... arrays) {
@@ -181,8 +194,10 @@ public class Utils {
 	 * 合并多个Double数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static double[] concatArrays(double[] array, double[]... arrays) {
@@ -197,8 +212,10 @@ public class Utils {
 	 * 合并多个Character数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static char[] concatArrays(char[] array, char[]... arrays) {
@@ -213,8 +230,10 @@ public class Utils {
 	 * 合并多个Byte数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static byte[] concatArrays(byte[] array, byte[]... arrays) {
@@ -229,8 +248,10 @@ public class Utils {
 	 * 合并多个Boolean数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static boolean[] concatArrays(boolean[] array, boolean[]... arrays) {
@@ -245,8 +266,10 @@ public class Utils {
 	 * 合并多个String数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static String[] concatArrays(String[] array, String[]... arrays) {
@@ -261,8 +284,10 @@ public class Utils {
 	 * 合并多个Integer数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static int[] concatArrays(int[] array, int[]... arrays) {
@@ -277,8 +302,12 @@ public class Utils {
 	 * 合并多个T数组
 	 * 
 	 * @param array
+	 *            数组
 	 * @param arrays
-	 * @return
+	 *            数组
+	 * @param <T>
+	 *            T类型
+	 * @return 数组
 	 */
 	@SafeVarargs
 	public static <T> T[] concatArrays(T[] array, T[]... arrays) {
@@ -292,7 +321,7 @@ public class Utils {
 	/**
 	 * 获取当前年份
 	 * 
-	 * @return 长度为4的Integer
+	 * @return 长度为4的{@link Integer}
 	 */
 	public static int getCurrentYear() {
 		return Calendar.getInstance().get(Calendar.YEAR);
@@ -301,7 +330,7 @@ public class Utils {
 	/**
 	 * 获取当前月份
 	 * 
-	 * @return 长度2的Integer
+	 * @return 长度2的{@link Integer}
 	 */
 	public static int getCurrentMonth() {
 		return Calendar.getInstance().get(Calendar.MONTH);
@@ -338,6 +367,7 @@ public class Utils {
 	 * 使用系统默认的方式打开文件
 	 * 
 	 * @param path
+	 *            路径
 	 */
 	public static void openFile(String path) {
 		openFile(new File(path));
@@ -347,6 +377,7 @@ public class Utils {
 	 * 使用系统默认的方式打开文件
 	 * 
 	 * @param file
+	 *            文件
 	 */
 	public static void openFile(File file) {
 		try {
@@ -426,7 +457,8 @@ public class Utils {
 	 * 获取数组中最大值
 	 * 
 	 * @param nums
-	 * @return
+	 *            数组
+	 * @return {@link Integer}
 	 */
 	public static int getMaxValue(int... nums) {
 		int max = 0;
@@ -441,8 +473,10 @@ public class Utils {
 	 * 合并两个升序数组
 	 * 
 	 * @param nums1
+	 *            数组
 	 * @param nums2
-	 * @return
+	 *            数组
+	 * @return 数组
 	 */
 	public static int[] mergeSortedArrays(int[] nums1, int[] nums2) {
 		return mergeSortedArrays(nums1, nums2, false);
@@ -452,8 +486,12 @@ public class Utils {
 	 * 将两个有序数组（同序）合并成一个有序数组
 	 * 
 	 * @param nums1
+	 *            数组
 	 * @param nums2
-	 * @return
+	 *            数组
+	 * @param desc
+	 *            是否为降序
+	 * @return 数组
 	 */
 	public static int[] mergeSortedArrays(int[] nums1, int[] nums2, boolean desc) {
 		int len = nums1.length + nums2.length;

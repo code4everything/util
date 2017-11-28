@@ -75,7 +75,7 @@ public class Formatter {
 	private static SimpleDateFormat SHORT_TIME = new SimpleDateFormat("HH:mm");
 
 	/**
-	 * 文件名匹配（不能包含非法字符：/\:*"<>|?）,忽略大小写
+	 * 文件名匹配（不能包含非法字符）,忽略大小写
 	 */
 	public static final Pattern FILE_NAME_PATTERN = Pattern.compile("([^/\\\\:*\"<>|?]+\\.)*[^/\\\\:*\"<>|?]+(\\?.*)?$",
 			Pattern.CASE_INSENSITIVE);
@@ -85,7 +85,7 @@ public class Formatter {
 	 * 
 	 * @param string
 	 *            需要转换的字符串
-	 * @return INT型数值
+	 * @return {@link Integer}
 	 */
 	public static int stringToInt(String string) {
 		return stringToInteger(string);
@@ -96,7 +96,7 @@ public class Formatter {
 	 * 
 	 * @param size
 	 *            单位为B的文件大小
-	 * @return 格式化为KB、MB、GB、TB的字符串
+	 * @return 格式化为KB、MB、GB、TB的{@link String}
 	 */
 	public static String formatSize(long size) {
 		if (size < Values.KB) {
@@ -117,7 +117,7 @@ public class Formatter {
 	 * 
 	 * @param size
 	 *            格式为 xx.xx B、xx.xx KB、xx.xx MB、xx.xx GB、xx.xx TB 的字符串
-	 * @return 单位为B的long型数值
+	 * @return 单位为B的{@link Long}
 	 */
 	public static long sizeToLong(String size) {
 		if (Checker.isNotEmpty(size)) {
@@ -174,7 +174,7 @@ public class Formatter {
 	 *            需要格式化的数值
 	 * @param format
 	 *            格式，例如：#0.00
-	 * @return 格式化后的字符串
+	 * @return {@link String}
 	 */
 	public static String customFormatDecimal(double number, String format) {
 		return new DecimalFormat(format).format(number);
@@ -185,7 +185,7 @@ public class Formatter {
 	 * 
 	 * @param number
 	 *            需要格式化的数值
-	 * @return 格式化的字符串
+	 * @return {@link String}
 	 */
 	public static String formatDecimal(double number) {
 		return formatDecimal(number, "#0.00");
@@ -198,7 +198,7 @@ public class Formatter {
 	 *            需要格式化的数值
 	 * @param format
 	 *            格式，例如：#0.00
-	 * @return 格式化后的字符串
+	 * @return {@link String}
 	 */
 	public static String formatDecimal(double number, String format) {
 		return customFormatDecimal(number, format);
@@ -209,7 +209,7 @@ public class Formatter {
 	 * 
 	 * @param time
 	 *            时间戳
-	 * @return 转换后的字符串
+	 * @return {@link String}
 	 */
 	public static synchronized String timeStampToString(long time) {
 		return DATE_WITH_LONG_TIME.format(time);
@@ -220,7 +220,7 @@ public class Formatter {
 	 * 
 	 * @param string
 	 *            JSON格式的字符串
-	 * @return 格式化后的JSON字符串
+	 * @return {@link String}
 	 */
 	public static String formatJson(String string) {
 		String json;
@@ -241,7 +241,7 @@ public class Formatter {
 	 * 
 	 * @param date
 	 *            日期
-	 * @return 只有日期的字符串
+	 * @return 只有日期的{@link String}
 	 */
 	public static synchronized String dateToString(Date date) {
 		return DATE_WITHOUT_TIME.format(Checker.checkDate(date));
@@ -252,7 +252,7 @@ public class Formatter {
 	 * 
 	 * @param date
 	 *            日期
-	 * @return 日期+长时间的字符串
+	 * @return 日期+长时间的{@link String}
 	 */
 	public static synchronized String datetimeToString(Date date) {
 		return DATE_WITH_LONG_TIME.format(Checker.checkDate(date));
@@ -263,7 +263,7 @@ public class Formatter {
 	 * 
 	 * @param string
 	 *            文件路径
-	 * @return 文件名
+	 * @return {@link String}
 	 */
 	public static String getFileName(String string) {
 		if (Checker.isNotEmpty(string)) {
@@ -452,7 +452,7 @@ public class Formatter {
 	 *            整数
 	 * @param length
 	 *            长度
-	 * @return 字符串
+	 * @return {@link String}
 	 */
 	public static String numberFormat(long data, int length) {
 		return String.format("%0" + length + "d", data);
