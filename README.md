@@ -5,11 +5,13 @@
 
 **使用Maven**
 
+```
 <dependency>
     <groupId>com.zhazhapan</groupId>
     <artifactId>util</artifactId>
     <version>1.0.0</version>
 </dependency>
+```
 
 **或手动导入**
 
