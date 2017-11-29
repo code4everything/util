@@ -27,8 +27,10 @@ public class FileExecutor {
 	 *            文件路径
 	 * @param content
 	 *            内容
+	 * @throws IOException
+	 *             异常
 	 */
-	public void saveFile(String path, String content) {
+	public void saveFile(String path, String content) throws IOException {
 		saveFile(path, content, false);
 	}
 
@@ -41,8 +43,10 @@ public class FileExecutor {
 	 *            内容
 	 * @param append
 	 *            保存方式
+	 * @throws IOException
+	 *             异常
 	 */
-	public void saveFile(String path, String content, boolean append) {
+	public void saveFile(String path, String content, boolean append) throws IOException {
 		saveFile(new File(path), content, append);
 	}
 
@@ -53,8 +57,10 @@ public class FileExecutor {
 	 *            文件
 	 * @param content
 	 *            内容
+	 * @throws IOException
+	 *             异常
 	 */
-	public void saveFile(File file, String content) {
+	public void saveFile(File file, String content) throws IOException {
 		saveFile(file, content, false);
 	}
 
@@ -64,8 +70,10 @@ public class FileExecutor {
 	 * @param path
 	 *            路径
 	 * @return {@link String}
+	 * @throws IOException
+	 *             异常
 	 */
-	public String readFile(String path) {
+	public String readFile(String path) throws IOException {
 		return readFile(new File(path));
 	}
 
@@ -75,19 +83,17 @@ public class FileExecutor {
 	 * @param file
 	 *            文件
 	 * @return {@link String}
+	 * @throws IOException
+	 *             异常
 	 */
-	public String readFile(File file) {
+	public String readFile(File file) throws IOException {
 		StringBuilder content = new StringBuilder();
 		String line;
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			while ((line = reader.readLine()) != null) {
-				content.append(line + "\r\n");
-			}
-			reader.close();
-		} catch (IOException e) {
-			logger.error("read file error, messages: " + e.getMessage());
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		while ((line = reader.readLine()) != null) {
+			content.append(line + "\r\n");
 		}
+		reader.close();
 		return content.toString();
 	}
 
@@ -98,8 +104,10 @@ public class FileExecutor {
 	 *            路径
 	 * @param content
 	 *            内容
+	 * @throws IOException
+	 *             异常
 	 */
-	public void saveLogFile(String logPath, String content) {
+	public void saveLogFile(String logPath, String content) throws IOException {
 		File file = new File(logPath);
 		if (file.exists()) {
 			content += readFile(file);
@@ -116,20 +124,18 @@ public class FileExecutor {
 	 *            内容
 	 * @param append
 	 *            保存方式
+	 * @throws IOException
+	 *             异常
 	 */
-	public void saveFile(File file, String content, boolean append) {
+	public void saveFile(File file, String content, boolean append) throws IOException {
 		if (Checker.isNotNull(file)) {
-			try {
-				if (!file.exists()) {
-					file.createNewFile();
-				}
-				BufferedWriter out = new BufferedWriter(new FileWriter(file, append));
-				out.write(content);
-				out.close();
-				logger.info("save file '" + file.getAbsolutePath() + "' success");
-			} catch (IOException e) {
-				logger.error("save file failed, messages: " + e.getMessage());
+			if (!file.exists()) {
+				file.createNewFile();
 			}
+			BufferedWriter out = new BufferedWriter(new FileWriter(file, append));
+			out.write(content);
+			out.close();
+			logger.info("save file '" + file.getAbsolutePath() + "' success");
 		}
 	}
 }

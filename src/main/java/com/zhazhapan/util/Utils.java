@@ -101,7 +101,7 @@ public class Utils {
 	public static String extractDigit(String string) {
 		String res = "";
 		if (HAS_DIGIT_PATTERN.matcher(string).matches()) {
-			string = string.replaceAll("(\\s|[a-zA-Z])", "");
+			string = string.replaceAll("(\\s|[a-zA-Z])+", "");
 			res = string.indexOf("-") == 0 ? "-" : "";
 			int dotIdx = string.lastIndexOf(".");
 			for (int i = 0; i < string.length(); i++) {
@@ -354,13 +354,13 @@ public class Utils {
 	 * 
 	 * @param url
 	 *            超链接
+	 * @throws URISyntaxException
+	 *             异常
+	 * @throws IOException
+	 *             异常
 	 */
-	public static void openLink(String url) {
-		try {
-			Desktop.getDesktop().browse(new URI(url));
-		} catch (IOException | URISyntaxException e) {
-			logger.error("open url '" + url + "' failed, message: " + e.getMessage());
-		}
+	public static void openLink(String url) throws IOException, URISyntaxException {
+		Desktop.getDesktop().browse(new URI(url));
 	}
 
 	/**
@@ -368,8 +368,10 @@ public class Utils {
 	 * 
 	 * @param path
 	 *            路径
+	 * @throws IOException
+	 *             异常
 	 */
-	public static void openFile(String path) {
+	public static void openFile(String path) throws IOException {
 		openFile(new File(path));
 	}
 
@@ -378,13 +380,11 @@ public class Utils {
 	 * 
 	 * @param file
 	 *            文件
+	 * @throws IOException
+	 *             异常
 	 */
-	public static void openFile(File file) {
-		try {
-			Desktop.getDesktop().open(file);
-		} catch (IOException e) {
-			logger.error("open file error: " + e.getMessage());
-		}
+	public static void openFile(File file) throws IOException {
+		Desktop.getDesktop().open(file);
 	}
 
 	/**

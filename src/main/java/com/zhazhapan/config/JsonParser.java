@@ -3,6 +3,7 @@
  */
 package com.zhazhapan.config;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.alibaba.fastjson.JSON;
@@ -40,8 +41,10 @@ public class JsonParser {
 	 * 自动配置jsonPath
 	 * 
 	 * @param jsonPath
+	 * @throws IOException
+	 *             异常
 	 */
-	public JsonParser(String jsonPath) {
+	public JsonParser(String jsonPath) throws IOException {
 		setJsonPath(jsonPath);
 	}
 
@@ -66,16 +69,6 @@ public class JsonParser {
 	private String jsonPath;
 
 	/**
-	 * 最后一个“.”号之前的key
-	 */
-	private String prefixKey = ".";
-
-	/**
-	 * 最后一个“.”号之后的key
-	 */
-	private String postKey = "";
-
-	/**
 	 * 需要解析的JsonObject
 	 */
 	private JSONObject jsonObject;
@@ -92,10 +85,10 @@ public class JsonParser {
 	 *            例如：country
 	 * @return {@link JSONObject}
 	 * @throws Exception
-	 *             when key is null
+	 *             when key is invalid
 	 */
 	public JSONObject getObject(String key) throws Exception {
-		return get(key).getJSONObject(postKey);
+		return (JSONObject) get(key, JSONObject.class);
 	}
 
 	/**
@@ -105,10 +98,10 @@ public class JsonParser {
 	 *            例如：country.province
 	 * @return {@link JSONArray}
 	 * @throws Exception
-	 *             when key is null
+	 *             when key is invalid
 	 */
 	public JSONArray getArray(String key) throws Exception {
-		return get(key).getJSONArray(postKey);
+		return (JSONArray) get(key, JSONArray.class);
 	}
 
 	/**
@@ -118,10 +111,10 @@ public class JsonParser {
 	 *            例如：country.province[13].name
 	 * @return {@link String}
 	 * @throws Exception
-	 *             when key is null
+	 *             when key is invalid
 	 */
 	public String getString(String key) throws Exception {
-		return get(key).getString(postKey);
+		return (String) get(key, String.class);
 	}
 
 	/**
@@ -131,7 +124,7 @@ public class JsonParser {
 	 *            例如：country.province[13].peopleNums
 	 * @return {@link Integer}
 	 * @throws Exception
-	 *             when key is null
+	 *             when key is invalid
 	 */
 	public int getInteger(String key) throws Exception {
 		return Formatter.stringToInt(getString(key));
@@ -144,7 +137,7 @@ public class JsonParser {
 	 *            例如：country.province[13].area
 	 * @return {@link Double}
 	 * @throws Exception
-	 *             when key is null
+	 *             when key is invalid
 	 */
 	public double getDouble(String key) throws Exception {
 		return Formatter.stringToDouble(getString(key));
@@ -156,21 +149,21 @@ public class JsonParser {
 	 * @param key
 	 * @return {@link JSONObject}
 	 * @throws Exception
-	 *             when key is null
+	 *             when key is invalid
 	 */
-	private JSONObject get(String key) throws Exception {
+	private <T> Object get(String key, Class<T> classT) throws Exception {
 		if (Checker.isNotEmpty(key)) {
 			JSONObject object = jsonObject;
 			// 拆分key
 			String[] keys = key.split("\\.");
-			prefixKey = ".";
-			for (int i = 0; i < keys.length - 1; i++) {
+			String prefixKey = ".";
+			for (int i = 0; i < keys.length; i++) {
 				String tempKey = keys[i];
 				prefixKey += tempKey + ".";
 				if (jsonStore.containsKey(tempKey)) {
 					object = jsonStore.get(tempKey);
-				} else {
-					if (tempKey.contains("[") && tempKey.contains("]")) {
+				} else if (i < keys.length - 1) {
+					if (tempKey.matches(".*\\[\\d+\\]$")) {
 						// 解析数组
 						JSONArray array = object.getJSONArray(tempKey.split("\\[")[0]);
 						String idx = tempKey.substring(tempKey.indexOf("[") + 1, tempKey.length() - 1);
@@ -179,18 +172,40 @@ public class JsonParser {
 						object = object.getJSONObject(tempKey);
 					}
 					jsonStore.put(prefixKey, object);
+				} else {
+					key = keys[keys.length - 1];
+					if (key.matches(".*\\[\\d+\\]$")) {
+						int leftIdx = key.lastIndexOf("[");
+						JSONArray array = object.getJSONArray(key.substring(0, leftIdx));
+						int idx = Formatter.stringToInt(key.substring(leftIdx + 1, key.length() - 1));
+						if (classT == JSONObject.class) {
+							return array.getJSONObject(idx);
+						} else if (classT == JSONArray.class) {
+							return array.getJSONArray(idx);
+						} else {
+							return array.getString(idx);
+						}
+					} else if (classT == JSONObject.class) {
+						return object.getJSONObject(key);
+					} else if (classT == JSONArray.class) {
+						return object.getJSONArray(key);
+					} else {
+						return object.getString(key);
+					}
 				}
 			}
-			postKey = keys[keys.length - 1];
-			return jsonStore.get(prefixKey);
+			return object;
 		}
 		return null;
 	}
 
 	/**
 	 * 通过配置好的jsonPath，加载文本并配置到jsonObject
+	 * 
+	 * @throws IOException
+	 *             异常
 	 */
-	private void load() {
+	private void load() throws IOException {
 		setJsonObject(new FileExecutor().readFile(jsonPath));
 	}
 
@@ -207,8 +222,10 @@ public class JsonParser {
 	 * 配置jsonPath
 	 * 
 	 * @param jsonPath
+	 * @throws IOException
+	 *             异常
 	 */
-	public void setJsonPath(String jsonPath) {
+	public void setJsonPath(String jsonPath) throws IOException {
 		this.jsonPath = jsonPath;
 		load();
 	}

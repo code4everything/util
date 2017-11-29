@@ -23,7 +23,7 @@ public class Downloader {
 	private static Logger logger = Logger.getLogger(Downloader.class);
 
 	/**
-	 * 下载目录
+	 * 默认下载目录
 	 */
 	private static String storageFolder = Values.USER_HOME + Values.SEPARATOR + "util";
 
@@ -34,10 +34,11 @@ public class Downloader {
 	 *            下载到指定目录
 	 * @param downloadURL
 	 *            下载的URL
+	 * @return 是否下载成功
 	 */
-	public static void download(String storageFolder, String downloadURL) {
+	public static boolean download(String storageFolder, String downloadURL) {
 		Downloader.storageFolder = storageFolder;
-		download(downloadURL);
+		return download(downloadURL);
 	}
 
 	/**
@@ -45,20 +46,22 @@ public class Downloader {
 	 * 
 	 * @param downloadURL
 	 *            下载的URL
+	 * @return 是否下载成功
 	 */
-	public static void download(String downloadURL) {
+	public static boolean download(String downloadURL) {
 		if (Checker.isHyperLink(downloadURL) && checkDownloadPath()) {
 			logger.info("ready for download url: " + downloadURL + " storage in " + storageFolder);
 		} else {
 			logger.info("url or storage path are invalidated, can't download");
-			return;
+			return false;
 		}
 		int byteread = 0;
-		String fname = checkPath(storageFolder + Values.SEPARATOR + Formatter.getFileName(downloadURL));
-		String tmp = fname + ".tmp";
-		File file = new File(tmp);
-		String log = "download success from url '" + downloadURL + "' to local '" + file.getAbsolutePath() + "'";
+		String log = "download success from url '" + downloadURL + "' to local '";
 		try {
+			String fname = checkPath(storageFolder + Values.SEPARATOR + Formatter.getFileName(downloadURL));
+			String tmp = fname + ".tmp";
+			File file = new File(tmp);
+			log += file.getAbsolutePath() + "'";
 			URL url = new URL(downloadURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setConnectTimeout(1000 * 6);
@@ -68,7 +71,7 @@ public class Downloader {
 			conn.setRequestProperty("Accept", "*/*");
 			InputStream inStream = conn.getInputStream();
 			if (conn.getResponseCode() != Values.RESPONSE_OK || conn.getContentLength() <= 0) {
-				return;
+				return false;
 			}
 			FileOutputStream fs = new FileOutputStream(file);
 			if (!file.exists()) {
@@ -82,9 +85,11 @@ public class Downloader {
 			fs.close();
 			file.renameTo(new File(fname));
 			logger.info(log);
+			return true;
 		} catch (IOException e) {
 			log = log.replace("success", "error") + ", message: " + e.getMessage();
 			logger.error(log);
+			return false;
 		}
 	}
 

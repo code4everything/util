@@ -15,7 +15,7 @@ import com.zhazhapan.config.JsonParser;
  */
 public class FastJsonTest {
 
-	String json = "{key1:test,key2:{child1:node1,child2:node2},key3:[{fast:json1},{fast:json2}]}";
+	String json = "{key1:test,key2:{child1:node1,child2:node2},key3:[{fast:json1},{fast:json2}],key4:[arr1,arr2]}";
 
 	@Test
 	public void testGetString() {
@@ -24,6 +24,9 @@ public class FastJsonTest {
 			assertEquals("test", jsonParser.getString("key1"));
 			assertEquals("node1", jsonParser.getString("key2.child1"));
 			assertEquals("json2", jsonParser.getString("key3[1].fast"));
+			assertEquals("arr2", jsonParser.getString("key4[1]"));
+			System.out.println(jsonParser.getArray("key4"));
+			System.out.println(jsonParser.getObject("key3[0]"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

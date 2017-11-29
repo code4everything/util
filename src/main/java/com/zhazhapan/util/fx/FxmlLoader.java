@@ -3,6 +3,7 @@
  */
 package com.zhazhapan.util.fx;
 
+import java.io.IOException;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
@@ -25,15 +26,12 @@ public class FxmlLoader {
 	 * @param url
 	 *            {@link URL}
 	 * @return {@link Scene}
+	 * @throws IOException
+	 *             异常
 	 */
-	public static Scene loadFxml(URL url) {
+	public static Scene loadFxml(URL url) throws IOException {
 		logger.info("load fxml from url: " + url);
-		try {
-			BorderPane root = (BorderPane) FXMLLoader.load(url);
-			return new Scene(root);
-		} catch (Exception e) {
-			logger.error("load fxml error: " + e.getMessage());
-		}
-		return null;
+		BorderPane root = (BorderPane) FXMLLoader.load(url);
+		return new Scene(root);
 	}
 }

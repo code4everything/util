@@ -6,6 +6,7 @@ package com.zhazhapan.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -14,8 +15,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,11 +27,6 @@ import com.zhazhapan.modules.constant.Values;
  *
  */
 public class Formatter {
-
-	/**
-	 * 日志输出
-	 */
-	private static Logger logger = Logger.getLogger(Formatter.class);
 
 	/**
 	 * 单位KB
@@ -224,15 +218,10 @@ public class Formatter {
 	 */
 	public static String formatJson(String string) {
 		String json;
-		try {
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			JsonParser jp = new JsonParser();
-			JsonElement je = jp.parse(string);
-			json = gson.toJson(je);
-		} catch (Exception e) {
-			logger.error("format json string error,json: " + string);
-			json = string;
-		}
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonParser jp = new JsonParser();
+		JsonElement je = jp.parse(string);
+		json = gson.toJson(je);
 		return json;
 	}
 
@@ -264,14 +253,12 @@ public class Formatter {
 	 * @param string
 	 *            文件路径
 	 * @return {@link String}
+	 * @throws UnsupportedEncodingException
+	 *             异常
 	 */
-	public static String getFileName(String string) {
+	public static String getFileName(String string) throws UnsupportedEncodingException {
 		if (Checker.isNotEmpty(string)) {
-			try {
-				string = URLDecoder.decode(string, "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				logger.error("decode url '" + string + "' error use encoding utf-8, message: " + e.getMessage());
-			}
+			string = URLDecoder.decode(string, "UTF-8");
 			Matcher matcher = FILE_NAME_PATTERN.matcher(string);
 			if (matcher.find() && Checker.isNotEmpty(matcher.group(0))) {
 				String name = matcher.group(0).split("\\?")[0];
@@ -317,8 +304,10 @@ public class Formatter {
 	 * @param date
 	 *            日期格式的字符串
 	 * @return 没有时间的日期
+	 * @throws ParseException
+	 *             异常
 	 */
-	public static Date stringToDate(String date) {
+	public static Date stringToDate(String date) throws ParseException {
 		return stringToCustomDateTime(DATE_WITHOUT_TIME, date);
 	}
 
@@ -328,8 +317,10 @@ public class Formatter {
 	 * @param time
 	 *            时间格式的字符串
 	 * @return 没有日期的长时间
+	 * @throws ParseException
+	 *             异常
 	 */
-	public static Date stringToLongTime(String time) {
+	public static Date stringToLongTime(String time) throws ParseException {
 		return stringToCustomDateTime(LONG_TIME, time);
 	}
 
@@ -339,8 +330,10 @@ public class Formatter {
 	 * @param time
 	 *            时间格式的字符串
 	 * @return 没有日期的短时间
+	 * @throws ParseException
+	 *             异常
 	 */
-	public static Date stringToShortTime(String time) {
+	public static Date stringToShortTime(String time) throws ParseException {
 		return stringToCustomDateTime(SHORT_TIME, time);
 	}
 
@@ -352,8 +345,10 @@ public class Formatter {
 	 * @param formatWay
 	 *            自定义格式
 	 * @return 自定义格式的日期
+	 * @throws ParseException
+	 *             异常
 	 */
-	public static Date stringToCustomDateTime(String datetime, String formatWay) {
+	public static Date stringToCustomDateTime(String datetime, String formatWay) throws ParseException {
 		return stringToCustomDateTime(new SimpleDateFormat(formatWay), datetime);
 	}
 
@@ -363,8 +358,10 @@ public class Formatter {
 	 * @param datetime
 	 *            日期格式的字符串
 	 * @return 包含时间的日期
+	 * @throws ParseException
+	 *             异常
 	 */
-	public static Date stringToDatetime(String datetime) {
+	public static Date stringToDatetime(String datetime) throws ParseException {
 		return stringToCustomDateTime(DATE_WITH_LONG_TIME, datetime);
 	}
 
@@ -376,14 +373,11 @@ public class Formatter {
 	 * @param sdf
 	 *            自定义的格式
 	 * @return 自定义格式的日期
+	 * @throws ParseException
+	 *             异常
 	 */
-	public static Date stringToCustomDateTime(SimpleDateFormat sdf, String datetime) {
-		try {
-			return sdf.parse(datetime);
-		} catch (Exception e) {
-			logger.info("format string to date error: " + e.getMessage());
-		}
-		return null;
+	public static Date stringToCustomDateTime(SimpleDateFormat sdf, String datetime) throws ParseException {
+		return sdf.parse(datetime);
 	}
 
 	/**
