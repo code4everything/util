@@ -138,10 +138,10 @@ public class Calculator {
 	 * @throws ScriptException
 	 *             异常
 	 */
-	public static double calculateUseEval(String formula) throws ScriptException {
+	public static Object calculateUseEval(String formula) throws ScriptException {
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine jsEngine = mgr.getEngineByName("JavaScript");
-		return (double) jsEngine.eval(formula);
+		return jsEngine.eval(formula);
 	}
 
 	/**
