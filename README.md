@@ -6,7 +6,7 @@
 <dependency>
     <groupId>com.zhazhapan</groupId>
     <artifactId>util</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
