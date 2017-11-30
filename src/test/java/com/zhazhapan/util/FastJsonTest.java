@@ -24,7 +24,7 @@ public class FastJsonTest {
 			assertEquals("test", jsonParser.getString("key1"));
 			assertEquals("node1", jsonParser.getString("key2.child1"));
 			assertEquals("json2", jsonParser.getString("key3[1].fast"));
-			assertEquals("arr2s", jsonParser.getString("key4[1]"));
+			assertEquals("arr2", jsonParser.getString("key4[1]"));
 			System.out.println(jsonParser.getArray("key4"));
 			System.out.println(jsonParser.getObject("key3[0]"));
 		} catch (Exception e) {
