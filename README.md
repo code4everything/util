@@ -128,7 +128,7 @@ import com.zhazhapan.util.decryption.JavaEncrypt;
 // 如何使用
 String code = JavaEncrypt.md5("this is a md5 encrypt method");
 
-// 提供一些Java常用的解密（包括md5，base64,sha等解密）
+// 主要是base64解密
 import com.zhazhapan.util.decryption.JavaDecrypt;
 
 // 异或加密和ascii加密
