@@ -187,7 +187,6 @@ isEmpty|列表或集合是否为空
 isHyperLink|是否是超链接（URL）
 checkDate|检测日期是否为null，如果是，返回当前日期，否则返回原日期
 
-<br />
 **9. `com.zhazhapan.util.Formatter`类**
 
 方法名|简要说明
@@ -219,7 +218,6 @@ numberFormat|将数字格式化为指定长度的字符串（不足用0补齐）
 localDateToDate|将java.time.LocalDate转换为java.util.Date
 dateToLocalDate|将java.util.Date转换为java.time.LocalDate
 
-<br />
 **10. `com.zhazhapan.util.Utils`类**
 
 方法名|简要说明
