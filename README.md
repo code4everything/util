@@ -10,7 +10,7 @@
 </dependency>
 ```
 
-**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util.jar)
+**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.1.jar)
 
 ## 功能
 
@@ -38,7 +38,7 @@ JSONObject jsonObject = jsonParser.getObject("key3[0]");
 JSONArray jsonArray = jsonParser.getArray("key4"); 
 ```
 
-**2. 简单计算器**
+**2. 简单计算器（v1.0.1中加入）**
 
 *使用*
 
