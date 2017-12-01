@@ -64,7 +64,7 @@ double res = db.doubleValue();
 import com.zhazhapan.util.Downloader;
 
 // 2. 下载
-String storagePath = "/Users/pantao/Desktop"
+String storagePath = "/Users/pantao/Desktop";
 Downloader.download(storagePath, "http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util.jar");
 ```
 
