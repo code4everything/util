@@ -3,6 +3,8 @@
  */
 package com.zhazhapan.util;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 /**
@@ -12,11 +14,9 @@ import org.junit.Test;
 public class ArraySortTest {
 
 	@Test
-	public void testHeapSort() {
+	public void testSort() {
 		int[] arrays = { 12, 3, 56, 2, 1, 33, 55, 32 };
-		ArraySort.bubbleSort(arrays);
-		for (int i = 0; i < arrays.length; i++) {
-			System.out.println(arrays[i]);
-		}
+		ArraySort.shellSort(arrays);
+		System.out.println(Arrays.toString(arrays));
 	}
 }
