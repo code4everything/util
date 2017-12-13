@@ -23,7 +23,7 @@ public class JsonParser {
 	/**
 	 * 最大缓存大小
 	 */
-	private int maxCache = Integer.MAX_VALUE;
+	private int maxCache = 1024;
 
 	/**
 	 * 默认构造函数，如果您需要配置jsonPath，请调用{@link JsonParser#setJsonPath(String)}；

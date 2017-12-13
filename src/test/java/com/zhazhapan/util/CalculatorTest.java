@@ -3,6 +3,7 @@
  */
 package com.zhazhapan.util;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -34,5 +35,16 @@ public class CalculatorTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testCalculationFormula() {
+		assertTrue(Calculator.isFormula("(23-9*7)/22+2(35-45+56/(12-9+4*(22/10-2)))"));
+		assertTrue(Calculator.isFormula("(23+23)"));
+		assertFalse(Calculator.isFormula("(23+4"));
+		assertFalse(Calculator.isFormula("33+99)"));
+		assertFalse(Calculator.isFormula("445+66+"));
+		assertTrue(Calculator.isFormula("(12+33)/34*12/(66)="));
+		assertFalse(Calculator.isFormula("(23-9*7)/22+2(35-45+56/(12-9+4*(22/10-2))"));
 	}
 }

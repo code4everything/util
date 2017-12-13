@@ -19,8 +19,15 @@ import javax.script.ScriptException;
  */
 public class Calculator {
 
-	private static final Pattern CALCULATION_PATTERN = Pattern
-			.compile("^((\\d+(\\.\\d+)?|\\d*\\(.+\\))(\\+|-|\\*|/))*(\\d+(\\.\\d+)?|\\d*\\(.+\\))=?$");
+	// private static final Pattern CALCULATION_FORMULA_PATTERN = Pattern
+	// .compile("^((\\d+(\\.\\d+)?|\\d*\\(.+\\))(\\+|-|\\*|/))*(\\d+(\\.\\d+)?|\\d*\\(.+\\))=?$");
+
+	private static final String CALCULATION_FORMULA_PATTERN_STRING = "\\((\\d+(\\.\\d+)?(\\+|-|\\*|/))*\\d+(\\.\\d+)?\\)";
+
+	private static final Pattern FORMULA_REPLACE_PATTERN = Pattern.compile(CALCULATION_FORMULA_PATTERN_STRING);
+
+	private static final Pattern CALCULATION_FORMULA_PATTERN = Pattern.compile(
+			CALCULATION_FORMULA_PATTERN_STRING.substring(2, CALCULATION_FORMULA_PATTERN_STRING.length() - 2) + "=?");
 
 	/**
 	 * 默认精度
@@ -38,11 +45,25 @@ public class Calculator {
 	 */
 	public static BigDecimal calculate(String formula) throws Exception {
 		formula = formula.replaceAll("\\s", "");
-		if (CALCULATION_PATTERN.matcher(formula).matches()) {
+		if (isFormula(formula)) {
 			return doCalculate(formula);
 		} else {
-			throw new Exception("calculation formula is not valid");
+			throw new Exception("calculation formula is not valid, please check up on it carefully.");
 		}
+	}
+
+	/**
+	 * 验证第计算式是否合法
+	 * 
+	 * @param formula
+	 *            计算式
+	 * @return {@link Boolean}
+	 */
+	public static boolean isFormula(String formula) {
+		while (FORMULA_REPLACE_PATTERN.matcher(formula).find()) {
+			formula = formula.replaceAll(CALCULATION_FORMULA_PATTERN_STRING, "0");
+		}
+		return CALCULATION_FORMULA_PATTERN.matcher(formula).matches();
 	}
 
 	/**
