@@ -21,6 +21,11 @@ import com.zhazhapan.util.Formatter;
 public class JsonParser {
 
 	/**
+	 * 最大缓存大小
+	 */
+	private int maxCache = Integer.MAX_VALUE;
+
+	/**
 	 * 默认构造函数，如果您需要配置jsonPath，请调用{@link JsonParser#setJsonPath(String)}；
 	 * 或配置jsonObject，请调用{@link JsonParser#setJsonObject(String)}或{@link JsonParser#setJsonObject(JSONObject)}
 	 */
@@ -161,6 +166,10 @@ public class JsonParser {
 				String tempKey = keys[i];
 				prefixKey += tempKey + ".";
 				if (jsonStore.containsKey(tempKey)) {
+					if (jsonStore.size() >= maxCache) {
+						// 清除缓存
+						jsonStore.clear();
+					}
 					object = jsonStore.get(tempKey);
 				} else if (i < keys.length - 1) {
 					if (tempKey.matches(".*\\[\\d+\\]$")) {
@@ -257,5 +266,40 @@ public class JsonParser {
 	public void setJsonObject(JSONObject jsonObject) {
 		jsonStore.put(".", jsonObject);
 		this.jsonObject = jsonObject;
+	}
+
+	/**
+	 * 获取最大缓存值
+	 * 
+	 * @return {@link Integer}
+	 */
+	public int getMaxCache() {
+		return maxCache;
+	}
+
+	/**
+	 * 设置最大缓存值
+	 * 
+	 * @param maxCache
+	 *            {@link Integer}
+	 */
+	public void setMaxCache(int maxCache) {
+		this.maxCache = maxCache;
+	}
+
+	/**
+	 * 获取当前缓存大小
+	 * 
+	 * @return {@link Integer}
+	 */
+	public int getCacheSize() {
+		return jsonStore.size();
+	}
+
+	/**
+	 * 清除JSON缓存
+	 */
+	public void clearCache() {
+		jsonStore.clear();
 	}
 }
