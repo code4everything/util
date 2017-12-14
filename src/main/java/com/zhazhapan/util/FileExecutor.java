@@ -127,7 +127,7 @@ public class FileExecutor {
 	 * @throws IOException
 	 *             异常
 	 */
-	public void saveFile(File file, String content, boolean append) throws IOException {
+	public synchronized void saveFile(File file, String content, boolean append) throws IOException {
 		if (Checker.isNotNull(file)) {
 			if (!file.exists()) {
 				file.createNewFile();

@@ -81,7 +81,7 @@ public class JsonParser {
 	/**
 	 * 用来存储已经解析过Json对象
 	 */
-	private HashMap<String, JSONObject> jsonStore = new HashMap<String, JSONObject>(16);
+	private volatile HashMap<String, JSONObject> jsonStore = new HashMap<String, JSONObject>(16);
 
 	/**
 	 * 获取JsonObject
