@@ -59,6 +59,16 @@ public class Values {
 	public static final int TWO_INT = 2;
 
 	/**
+	 * 数字 3
+	 */
+	public static final int THREE_INT = 3;
+
+	/**
+	 * 数字 100
+	 */
+	public static final int ONE_HUNDRED_INT = 100;
+
+	/**
 	 * 英文点号
 	 */
 	public static final String DOT_SIGN = ".";

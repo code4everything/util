@@ -215,7 +215,7 @@ public class JsonParser {
 	 *             异常
 	 */
 	private void load() throws IOException {
-		setJsonObject(new FileExecutor().readFile(jsonPath));
+		setJsonObject(FileExecutor.readFile(jsonPath));
 	}
 
 	/**

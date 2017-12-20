@@ -231,6 +231,7 @@ public class MailSender {
 		properties.put("mail.smtp.ssl.socketFactory", sf);
 		// 获取默认session对象
 		Session session = Session.getDefaultInstance(properties, new Authenticator() {
+			@Override
 			public PasswordAuthentication getPasswordAuthentication() {
 				// 发件人邮件用户名、密码
 				return new PasswordAuthentication(from, key);

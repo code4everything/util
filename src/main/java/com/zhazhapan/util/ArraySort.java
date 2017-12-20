@@ -1,5 +1,12 @@
 package com.zhazhapan.util;
 
+import com.zhazhapan.modules.constant.Values;
+
+/**
+ * 
+ * @author pantao
+ *
+ */
 public class ArraySort {
 
 	/**
@@ -10,7 +17,7 @@ public class ArraySort {
 	 */
 	public static void heapSort(int[] arrays) {
 		// 将待排序的序列构建成一个大顶堆
-		for (int i = arrays.length / 2; i >= 0; i--) {
+		for (int i = arrays.length / Values.TWO_INT; i >= 0; i--) {
 			heapAdjust(arrays, i, arrays.length);
 		}
 		// 逐步将每个最大值的根节点与末尾元素交换，并且再调整二叉树，使其成为大顶堆
@@ -25,7 +32,7 @@ public class ArraySort {
 	private static void heapAdjust(int[] arrays, int i, int n) {
 		int child;
 		int father;
-		for (father = arrays[i]; 2 * i + 1 < n; i = child) {
+		for (father = arrays[i]; Values.TWO_INT * i + 1 < n; i = child) {
 			child = 2 * i + 1;
 			// 如果左子树小于右子树，则需要比较右子树和父节点
 			if (child != n - 1 && arrays[child] < arrays[child + 1]) {
@@ -93,7 +100,7 @@ public class ArraySort {
 	 */
 	public static void shellSort(int[] arrays) {
 		int h = 1;
-		while (h <= arrays.length / 3) {
+		while (h <= arrays.length / Values.THREE_INT) {
 			h = h * 3 + 1;
 		}
 		while (h > 0) {

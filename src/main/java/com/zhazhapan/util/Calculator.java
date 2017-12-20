@@ -98,7 +98,8 @@ public class Calculator {
 				number = number.compareTo(BigDecimal.valueOf(0)) == 0 ? res[0] : number.multiply(res[0]);
 				i = res[1].intValue();
 			}
-			if ((!Character.isDigit(c) && c != '.' && c != '(') || i == formula.length() - 1) {
+			boolean isNotDigit = (!Character.isDigit(c) && c != '.' && c != '(') || i == formula.length() - 1;
+			if (isNotDigit) {
 				if (sign == '+') {
 					stack.push(number);
 				} else if (sign == '-') {
