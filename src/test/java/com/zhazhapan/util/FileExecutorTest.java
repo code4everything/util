@@ -24,4 +24,11 @@ public class FileExecutorTest {
 				"/Users/pantao/Desktop/test/Dump20171220_2.sql" };
 		FileExecutor.mergeFiles(files, "/Users/pantao/Desktop/test/test_merge.sql", "/\\*.*?\\*/;\r?\n?");
 	}
+
+	@Test
+	public void testRenameFile() {
+		String[] files = new String[] { "/Users/pantao/Desktop/test/Dump20171220_3.sql",
+				"/Users/pantao/Desktop/test/Dump20171220_4.sql" };
+		FileExecutor.renameFiles(files, new String[] { "test_rename_1", "test_rename_2.txt" });
+	}
 }

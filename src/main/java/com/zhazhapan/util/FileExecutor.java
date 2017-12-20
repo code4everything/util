@@ -10,8 +10,6 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
@@ -92,7 +90,6 @@ public class FileExecutor {
 			String filePath = storageFolder + fileName[0] + "_" + (i + 1) + "." + fileName[1];
 			createNewFile(filePath);
 			while (length > Integer.MAX_VALUE) {
-				System.out.println("big file");
 				saveFile(filePath, readFile(file, start, Integer.MAX_VALUE), true);
 				start += Integer.MAX_VALUE;
 				length -= Integer.MAX_VALUE;
@@ -386,19 +383,22 @@ public class FileExecutor {
 		return content.toString();
 	}
 
+	/**
+	 * 从指定位置读取指定长度
+	 * 
+	 * @param file
+	 * @param start
+	 * @param length
+	 * @return
+	 * @throws IOException
+	 */
 	public static String readFile(File file, long start, int length) throws IOException {
-		InputStreamReader isr = new InputStreamReader(new FileInputStream(file));
-		isr.skip(start);
-		char[] cs = new char[length];
-		isr.read(cs);
-		isr.close();
-		int i = cs.length - 1;
-		for (; i >= 0; i--) {
-			if (cs[i] != 0) {
-				break;
-			}
-		}
-		return new String(Arrays.copyOf(cs, i + 1));
+		FileInputStream fis = new FileInputStream(file);
+		fis.skip(start);
+		byte[] bs = new byte[length];
+		fis.read(bs);
+		fis.close();
+		return new String(bs);
 	}
 
 	/**
