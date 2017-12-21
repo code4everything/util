@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import com.zhazhapan.modules.constant.Values;
@@ -19,9 +20,171 @@ import com.zhazhapan.modules.constant.Values;
  * @author pantao
  *
  */
-public class FileExecutor {
+public class FileExecutor extends FileUtils {
 
 	private static Logger logger = Logger.getLogger(FileExecutor.class);
+
+	/**
+	 * 批量复制文件夹
+	 * 
+	 * @param directories
+	 *            文件夹路径数组
+	 * @param storageFolder
+	 *            存储目录
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyDirectories(String[] directories, String storageFolder) throws IOException {
+		copyDirectories(getFiles(directories), storageFolder);
+	}
+
+	/**
+	 * 批量复制文件夹
+	 * 
+	 * @param directories
+	 *            文件夹数组
+	 * @param storageFolder
+	 *            存储目录
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyDirectories(File[] directories, String storageFolder) throws IOException {
+		storageFolder = checkFolder(storageFolder) + Values.SEPARATOR;
+		for (int i = 0; i < directories.length; i++) {
+			copyDirectory(directories[i], new File(storageFolder + directories[i].getName()));
+		}
+	}
+
+	/**
+	 * 批量复制文件夹
+	 * 
+	 * @param directories
+	 *            文件夹路径数组
+	 * @param destinationDirectories
+	 *            目标文件夹路径数组，与文件夹一一对应
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyDirectories(String[] directories, String[] destinationDirectories) throws IOException {
+		copyDirectories(getFiles(directories), getFiles(destinationDirectories));
+	}
+
+	/**
+	 * 批量复制文件夹
+	 * 
+	 * @param directories
+	 *            文件夹数组
+	 * @param destinationDirectories
+	 *            目标文件夹数组，与文件夹一一对应
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyDirectories(File[] directories, File[] destinationDirectories) throws IOException {
+		int length = Integer.min(directories.length, destinationDirectories.length);
+		for (int i = 0; i < length; i++) {
+			copyDirectory(directories[i], destinationDirectories[i]);
+		}
+	}
+
+	/**
+	 * 批量复制文件，使用原文件名
+	 * 
+	 * @param files
+	 *            文件路径数组
+	 * @param storageFolder
+	 *            存储目录
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyFiles(String[] files, String storageFolder) throws IOException {
+		copyFiles(getFiles(files), storageFolder);
+	}
+
+	/**
+	 * 批量复制文件，并重命名
+	 * 
+	 * @param files
+	 *            文件路径数组
+	 * @param destinationFiles
+	 *            目标文件路径数组，与文件路径数组一一对应
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyFiles(String[] files, String[] destinationFiles) throws IOException {
+		copyFiles(getFiles(files), getFiles(destinationFiles));
+	}
+
+	/**
+	 * 新建文件夹，如果文件夹存在则不创建
+	 * 
+	 * @param directory
+	 *            文件夹
+	 */
+	public static void createFolder(String directory) {
+		createFolder(new File(directory));
+	}
+
+	/**
+	 * 新建文件夹，如果文件夹存在则不创建
+	 * 
+	 * @param director
+	 *            文件夹
+	 */
+	public static void createFolder(File director) {
+		if (director.isDirectory() && !director.exists()) {
+			director.mkdir();
+		}
+	}
+
+	/**
+	 * 检查文件夹，如果不存在则创建，如果是文件则获取上级目录
+	 * 
+	 * @param directory
+	 *            文件夹
+	 * @return 文件夹路径
+	 */
+	private static String checkFolder(String directory) {
+		File dir = new File(directory);
+		if (dir.isFile()) {
+			directory = dir.getParent();
+		}
+		createFolder(directory);
+		return directory;
+	}
+
+	/**
+	 * 批量复制文件，使用原文件名
+	 * 
+	 * @param files
+	 *            文件数组
+	 * @param storageFolder
+	 *            存储目录
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyFiles(File[] files, String storageFolder) throws IOException {
+		storageFolder = checkFolder(storageFolder) + Values.SEPARATOR;
+		for (int i = 0; i < files.length; i++) {
+			copyFile(files[i], new File(storageFolder + files[i].getName()));
+		}
+	}
+
+	/**
+	 * 批量复制文件，并重命名
+	 * 
+	 * @param files
+	 *            文件数组
+	 * @param destinationFiles
+	 *            目标文件数组，与文件数组一一对应
+	 * @throws IOException
+	 *             异常
+	 */
+	public static void copyFiles(File[] files, File[] destinationFiles) throws IOException {
+		int length = Integer.min(files.length, destinationFiles.length);
+		for (int i = 0; i < length; i++) {
+			copyFile(files[i], destinationFiles[i]);
+		}
+	}
 
 	/**
 	 * 拆分文件

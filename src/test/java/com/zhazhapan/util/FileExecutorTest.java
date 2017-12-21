@@ -31,4 +31,14 @@ public class FileExecutorTest {
 				"/Users/pantao/Desktop/test/Dump20171220_4.sql" };
 		FileExecutor.renameFiles(files, new String[] { "test_rename_1", "test_rename_2.txt" });
 	}
+
+	@Test
+	public void testCopyFiles() throws IOException {
+		FileExecutor.copyFiles(new String[] { "/Users/pantao/Desktop/qiniu.jar" }, "/Users/pantao/Desktop/test");
+	}
+
+	@Test
+	public void testCopyDirectories() throws IOException {
+		FileExecutor.copyDirectories(new String[] { "/Users/pantao/Desktop/test" }, "/Users/pantao/Desktop/new");
+	}
 }

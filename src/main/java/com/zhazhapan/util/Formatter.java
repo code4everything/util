@@ -114,6 +114,7 @@ public class Formatter {
 	 * @return 单位为B的{@link Long}
 	 */
 	public static long sizeToLong(String size) {
+		size = size.trim();
 		if (Checker.isNotEmpty(size)) {
 			String num = size.split(" ")[0];
 			double result = 0;
@@ -141,6 +142,7 @@ public class Formatter {
 	 * @return 转换结果，如果数值非法，则返回-1
 	 */
 	public static double stringToDouble(String string) {
+		string = string.trim();
 		if (Checker.isDecimal(string)) {
 			return Double.parseDouble(string);
 		}
@@ -155,6 +157,7 @@ public class Formatter {
 	 * @return 转换结果，如果数值非法，则返回-1
 	 */
 	public static long stringToLong(String string) {
+		string = string.trim();
 		if (Checker.isNumber(string)) {
 			return Long.parseLong(string);
 		}
@@ -278,6 +281,7 @@ public class Formatter {
 	 * @return 转换结果，如果数值非法，则返回-1
 	 */
 	public static float stringToFloat(String string) {
+		string = string.trim();
 		if (Checker.isDecimal(string)) {
 			return Float.parseFloat(string);
 		}
@@ -292,6 +296,7 @@ public class Formatter {
 	 * @return 转换结果，如果数值非法，则返回-1
 	 */
 	public static int stringToInteger(String string) {
+		string = string.trim();
 		if (Checker.isNumber(string)) {
 			return Integer.parseInt(string);
 		}
@@ -377,7 +382,7 @@ public class Formatter {
 	 *             异常
 	 */
 	public static Date stringToCustomDateTime(SimpleDateFormat sdf, String datetime) throws ParseException {
-		return sdf.parse(datetime);
+		return sdf.parse(datetime.trim());
 	}
 
 	/**
