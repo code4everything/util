@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -23,6 +24,39 @@ import com.zhazhapan.modules.constant.Values;
 public class FileExecutor extends FileUtils {
 
 	private static Logger logger = Logger.getLogger(FileExecutor.class);
+
+	/**
+	 * 读取输入流
+	 * 
+	 * @param is
+	 *            输入流
+	 * @param off
+	 *            偏移
+	 * @param len
+	 *            长度
+	 * @return 内容
+	 * @throws IOException
+	 *             异常
+	 */
+	public static String read(InputStream is, int off, int len) throws IOException {
+		byte[] bs = new byte[len];
+		is.read(bs, off, len);
+		is.close();
+		return new String(bs);
+	}
+
+	/**
+	 * 读取输入流
+	 * 
+	 * @param is
+	 *            输入流
+	 * @return 内容
+	 * @throws IOException
+	 *             异常
+	 */
+	public static String read(InputStream is) throws IOException {
+		return read(is, 0, is.available());
+	}
 
 	/**
 	 * 批量复制文件夹

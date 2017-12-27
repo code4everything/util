@@ -9,6 +9,7 @@ import java.util.HashMap;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPath;
 import com.zhazhapan.util.Checker;
 import com.zhazhapan.util.FileExecutor;
 import com.zhazhapan.util.Formatter;
@@ -82,6 +83,10 @@ public class JsonParser {
 	 * 用来存储已经解析过Json对象
 	 */
 	private volatile HashMap<String, JSONObject> jsonStore = new HashMap<String, JSONObject>(16);
+
+	public void set(String key, Object value) throws Exception {
+		JSONPath.set(jsonObject, "$." + key, value);
+	}
 
 	/**
 	 * 获取JsonObject
@@ -166,7 +171,7 @@ public class JsonParser {
 				String tempKey = keys[i];
 				prefixKey += tempKey + ".";
 				if (jsonStore.containsKey(tempKey)) {
-					if (jsonStore.size() >= maxCache) {
+					if (jsonStore.size() > maxCache) {
 						// 清除缓存
 						jsonStore.clear();
 					}
