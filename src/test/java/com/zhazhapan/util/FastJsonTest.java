@@ -21,12 +21,14 @@ public class FastJsonTest {
 	public void testGetString() {
 		JsonParser jsonParser = new JsonParser(json, false);
 		try {
-			assertEquals("test", jsonParser.getString("key1"));
-			assertEquals("node1", jsonParser.getString("key2.child1"));
-			assertEquals("json2", jsonParser.getString("key3[1].fast"));
-			assertEquals("arr2", jsonParser.getString("key4[1]"));
-			System.out.println(jsonParser.getArray("key4"));
-			System.out.println(jsonParser.getObject("key3[0]"));
+			assertEquals(jsonParser.eval("key1"), jsonParser.getString("key1"));
+			assertEquals(jsonParser.eval("key2.child1"), jsonParser.getString("key2.child1"));
+			assertEquals(jsonParser.eval("key3[1].fast"), jsonParser.getString("key3[1].fast"));
+			assertEquals(jsonParser.eval("key4[1]"), jsonParser.getString("key4[1]"));
+			assertEquals(jsonParser.eval("key4"), jsonParser.getArray("key4"));
+			assertEquals(jsonParser.eval("key3[0]"), jsonParser.getObject("key3[0]"));
+			jsonParser.set("key1", "test_set_value");
+			assertEquals("test_set_value", jsonParser.eval("key1"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

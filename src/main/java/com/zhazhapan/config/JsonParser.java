@@ -44,7 +44,7 @@ public class JsonParser {
 	}
 
 	/**
-	 * 自动配置jsonPath
+	 * 自动配置jsonPath，根据JSON文件路径读取json并转换为JSONObject
 	 * 
 	 * @param jsonPath
 	 * @throws IOException
@@ -84,8 +84,111 @@ public class JsonParser {
 	 */
 	private volatile HashMap<String, JSONObject> jsonStore = new HashMap<String, JSONObject>(16);
 
-	public void set(String key, Object value) throws Exception {
-		JSONPath.set(jsonObject, "$." + key, value);
+	/**
+	 * 根据路径设置值
+	 * 
+	 * @param path
+	 *            <a href=
+	 *            "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+	 * @param value
+	 *            值对象
+	 * @return 是否设置成功
+	 * @throws Exception
+	 *             异常
+	 */
+	public boolean set(String path, Object value) throws Exception {
+		return JSONPath.set(jsonObject, checkPath(path), value);
+	}
+
+	/**
+	 * 根据路径获取对象
+	 * 
+	 * @param path
+	 *            <a href=
+	 *            "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+	 * @return 对象
+	 */
+	public Object eval(String path) {
+		return JSONPath.eval(jsonObject, checkPath(path));
+	}
+
+	/**
+	 * 获取大小
+	 * 
+	 * @param path
+	 *            <a href=
+	 *            "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+	 * @return 大小
+	 */
+	public int size(String path) {
+		return JSONPath.size(jsonObject, checkPath(path));
+	}
+
+	/**
+	 * 是否包含某个对象
+	 * 
+	 * @param path
+	 *            <a href=
+	 *            "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+	 * @return {@link Boolean}
+	 */
+	public boolean contains(String path) {
+		return JSONPath.contains(jsonObject, checkPath(path));
+	}
+
+	/**
+	 * 是否包含某个值
+	 * 
+	 * @param path
+	 *            <a href=
+	 *            "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+	 * @param value
+	 *            值
+	 * @return {@link Boolean}
+	 */
+	public boolean containsValue(String path, Object value) {
+		return JSONPath.containsValue(jsonObject, checkPath(path), value);
+	}
+
+	/**
+	 * 数组追加数组
+	 * 
+	 * @param path<a
+	 *            href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+	 * @param values
+	 *            数组
+	 */
+	public void arrayAdd(String path, Object... values) {
+		JSONPath.arrayAdd(jsonObject, checkPath(path), values);
+	}
+
+	/**
+	 * 移除某个路径
+	 * 
+	 * @param path
+	 *            <a href=
+	 *            "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+	 * @return 是否移除成功
+	 */
+	public boolean remove(String path) {
+		return JSONPath.remove(jsonObject, checkPath(path));
+	}
+
+	/**
+	 * 检查路径头是否正确
+	 * 
+	 * @param key
+	 *            路径
+	 * @return 正确路径头
+	 */
+	private String checkPath(String key) {
+		if (!key.startsWith("$")) {
+			if (!key.startsWith(".")) {
+				key = "." + key;
+			}
+			key = "$" + key;
+		}
+		return key;
 	}
 
 	/**
@@ -233,7 +336,7 @@ public class JsonParser {
 	}
 
 	/**
-	 * 配置jsonPath
+	 * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
 	 * 
 	 * @param jsonPath
 	 * @throws IOException
