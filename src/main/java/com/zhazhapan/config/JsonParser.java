@@ -6,6 +6,8 @@ package com.zhazhapan.config;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -20,6 +22,8 @@ import com.zhazhapan.util.Formatter;
  * @author pantao
  */
 public class JsonParser {
+
+	private Logger logger = Logger.getLogger(getClass());
 
 	/**
 	 * 最大缓存大小
@@ -97,6 +101,7 @@ public class JsonParser {
 	 *             异常
 	 */
 	public boolean set(String path, Object value) throws Exception {
+		jsonStore.clear();
 		return JSONPath.set(jsonObject, checkPath(path), value);
 	}
 
@@ -109,7 +114,18 @@ public class JsonParser {
 	 * @return 对象
 	 */
 	public Object eval(String path) {
-		return JSONPath.eval(jsonObject, checkPath(path));
+		String key = pathToKey(path);
+		if (jsonStore.containsKey(key)) {
+			return jsonStore.get(key);
+		} else {
+			Object object = JSONPath.eval(jsonObject, checkPath(path));
+			try {
+				put(key, (JSONObject) object);
+			} catch (Exception e) {
+				logger.error("save json cache error(this message has no effect for you): " + e.getMessage());
+			}
+			return object;
+		}
 	}
 
 	/**
@@ -159,6 +175,7 @@ public class JsonParser {
 	 *            数组
 	 */
 	public void arrayAdd(String path, Object... values) {
+		jsonStore.clear();
 		JSONPath.arrayAdd(jsonObject, checkPath(path), values);
 	}
 
@@ -171,6 +188,7 @@ public class JsonParser {
 	 * @return 是否移除成功
 	 */
 	public boolean remove(String path) {
+		jsonStore.clear();
 		return JSONPath.remove(jsonObject, checkPath(path));
 	}
 
@@ -187,6 +205,9 @@ public class JsonParser {
 				key = "." + key;
 			}
 			key = "$" + key;
+		}
+		if (key.endsWith(".")) {
+			key = key.substring(0, key.length() - 1);
 		}
 		return key;
 	}
@@ -257,6 +278,22 @@ public class JsonParser {
 	}
 
 	/**
+	 * 缓存
+	 * 
+	 * @param key
+	 *            键
+	 * @param jsonObject
+	 *            值
+	 */
+	private void put(String key, JSONObject jsonObject) {
+		if (jsonStore.size() > maxCache || jsonStore.size() == Integer.MAX_VALUE) {
+			// 清除缓存
+			jsonStore.clear();
+		}
+		jsonStore.put(key, jsonObject);
+	}
+
+	/**
 	 * 通过key解析JsonObject
 	 * 
 	 * @param key
@@ -270,44 +307,45 @@ public class JsonParser {
 			// 拆分key
 			String[] keys = key.split("\\.");
 			String prefixKey = ".";
-			for (int i = 0; i < keys.length; i++) {
-				String tempKey = keys[i];
-				prefixKey += tempKey + ".";
-				if (jsonStore.containsKey(tempKey)) {
-					if (jsonStore.size() > maxCache) {
-						// 清除缓存
-						jsonStore.clear();
-					}
-					object = jsonStore.get(tempKey);
-				} else if (i < keys.length - 1) {
-					if (tempKey.matches(".*\\[\\d+\\]$")) {
-						// 解析数组
-						JSONArray array = object.getJSONArray(tempKey.split("\\[")[0]);
-						String idx = tempKey.substring(tempKey.indexOf("[") + 1, tempKey.length() - 1);
-						object = array.getJSONObject(Formatter.stringToInt(idx));
-					} else {
-						object = object.getJSONObject(tempKey);
-					}
-					jsonStore.put(prefixKey, object);
-				} else {
-					key = keys[keys.length - 1];
-					if (key.matches(".*\\[\\d+\\]$")) {
-						int leftIdx = key.lastIndexOf("[");
-						JSONArray array = object.getJSONArray(key.substring(0, leftIdx));
-						int idx = Formatter.stringToInt(key.substring(leftIdx + 1, key.length() - 1));
-						if (classT == JSONObject.class) {
-							return array.getJSONObject(idx);
-						} else if (classT == JSONArray.class) {
-							return array.getJSONArray(idx);
+			key = pathToKey(key);
+			if (jsonStore.containsKey(key)) {
+				object = jsonStore.get(key);
+			} else {
+				for (int i = 0; i < keys.length; i++) {
+					String tempKey = keys[i];
+					prefixKey += tempKey + ".";
+					if (jsonStore.containsKey(tempKey)) {
+						object = jsonStore.get(tempKey);
+					} else if (i < keys.length - 1) {
+						if (tempKey.matches(".*\\[\\d+\\]$")) {
+							// 解析数组
+							JSONArray array = object.getJSONArray(tempKey.split("\\[")[0]);
+							String idx = tempKey.substring(tempKey.indexOf("[") + 1, tempKey.length() - 1);
+							object = array.getJSONObject(Formatter.stringToInt(idx));
 						} else {
-							return array.getString(idx);
+							object = object.getJSONObject(tempKey);
 						}
-					} else if (classT == JSONObject.class) {
-						return object.getJSONObject(key);
-					} else if (classT == JSONArray.class) {
-						return object.getJSONArray(key);
+						put(prefixKey, object);
 					} else {
-						return object.getString(key);
+						key = keys[keys.length - 1];
+						if (key.matches(".*\\[\\d+\\]$")) {
+							int leftIdx = key.lastIndexOf("[");
+							JSONArray array = object.getJSONArray(key.substring(0, leftIdx));
+							int idx = Formatter.stringToInt(key.substring(leftIdx + 1, key.length() - 1));
+							if (classT == JSONObject.class) {
+								return array.getJSONObject(idx);
+							} else if (classT == JSONArray.class) {
+								return array.getJSONArray(idx);
+							} else {
+								return array.getString(idx);
+							}
+						} else if (classT == JSONObject.class) {
+							return object.getJSONObject(key);
+						} else if (classT == JSONArray.class) {
+							return object.getJSONArray(key);
+						} else {
+							return object.getString(key);
+						}
 					}
 				}
 			}
@@ -409,5 +447,25 @@ public class JsonParser {
 	 */
 	public void clearCache() {
 		jsonStore.clear();
+	}
+
+	/**
+	 * 将JSONPath的路径简单地转换为JsonParser支持的key
+	 * 
+	 * @param path
+	 *            路径
+	 * @return key
+	 */
+	private String pathToKey(String path) {
+		if (path.startsWith("$")) {
+			path = path.substring(1);
+		}
+		if (!path.startsWith(".")) {
+			path = "." + path;
+		}
+		if (!path.endsWith(".")) {
+			path += ".";
+		}
+		return path;
 	}
 }
