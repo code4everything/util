@@ -584,10 +584,14 @@ public class FileExecutor extends FileUtils {
 	 * 从指定位置读取指定长度
 	 * 
 	 * @param file
+	 *            文件
 	 * @param start
+	 *            开始拉黑
 	 * @param length
-	 * @return
+	 *            读取长度
+	 * @return 文件内容
 	 * @throws IOException
+	 *             异常
 	 */
 	public static String readFile(File file, long start, int length) throws IOException {
 		FileInputStream fis = new FileInputStream(file);

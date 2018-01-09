@@ -80,7 +80,7 @@ public class RandomUtils {
 	 * 
 	 * @param opacity
 	 *            不透明度
-	 * @return {@link Color}
+	 * @return {@link SimpleColor}
 	 */
 	public static SimpleColor getRandomColor(double opacity) {
 		Random ran = new Random();
@@ -93,7 +93,7 @@ public class RandomUtils {
 	/**
 	 * 获取随机颜色，默认不透明
 	 * 
-	 * @return {@link Color}
+	 * @return {@link SimpleColor}
 	 */
 	public static SimpleColor getRandomColor() {
 		return getRandomColor(1d);

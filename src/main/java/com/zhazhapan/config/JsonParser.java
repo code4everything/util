@@ -42,6 +42,7 @@ public class JsonParser {
 	 * 自动配置jsonObject
 	 * 
 	 * @param jsonObject
+	 *            {@link JSONObject}
 	 */
 	public JsonParser(JSONObject jsonObject) {
 		setJsonObject(jsonObject);
@@ -51,6 +52,7 @@ public class JsonParser {
 	 * 自动配置jsonPath，根据JSON文件路径读取json并转换为JSONObject
 	 * 
 	 * @param jsonPath
+	 *            JSON文件的路径
 	 * @throws IOException
 	 *             异常
 	 */
@@ -377,6 +379,7 @@ public class JsonParser {
 	 * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
 	 * 
 	 * @param jsonPath
+	 *            JSON文件的路径
 	 * @throws IOException
 	 *             异常
 	 */
@@ -408,6 +411,7 @@ public class JsonParser {
 	 * 配置JsonObject
 	 * 
 	 * @param jsonObject
+	 *            {@link JSONObject}
 	 */
 	public void setJsonObject(JSONObject jsonObject) {
 		jsonStore.put(".", jsonObject);
