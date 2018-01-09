@@ -586,7 +586,7 @@ public class FileExecutor extends FileUtils {
 	 * @param file
 	 *            文件
 	 * @param start
-	 *            开始拉黑
+	 *            开始位置
 	 * @param length
 	 *            读取长度
 	 * @return 文件内容
