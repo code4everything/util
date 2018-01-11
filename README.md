@@ -6,11 +6,11 @@
 <dependency>
     <groupId>com.zhazhapan</groupId>
     <artifactId>util</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
-**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.1.jar)
+**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.2.jar)
 
 ## 功能
 
@@ -35,10 +35,23 @@ JsonParser jsonParser = new JsonParser("/Users/pantao/Desktop/test.json");
 String str = jsonParser.getString("key3[1].fast");
 String str1 = jsonParser.getString("key4[1]");
 JSONObject jsonObject = jsonParser.getObject("key3[0]");
-JSONArray jsonArray = jsonParser.getArray("key4"); 
+JSONArray jsonArray = jsonParser.getArray("key4");
+// 或使用JSONPath路径语法
+Object object = jsonParser.eval("$.key2.child1");
+
+// 4. 修改指定路径值
+jsonParser.set("key1", "test_set_value");
+
+// 5. 删除指定路径值
+jsonParser.remove("key1");
+
+// 6. 指定路径是否包含某个值
+boolean b = jsonParser.containsValue("key1", "test");
 ```
 
-**2. 简单计算器（v1.0.1中加入）**
+备注：[fastjson jsonpath路径语法](https://github.com/alibaba/fastjson/wiki/JSONPath)
+
+**2. 简单计算器**
 
 *使用*
 
@@ -76,15 +89,35 @@ Downloader.download(storagePath, "http://oq3iwfipo.bkt.clouddn.com/tools/zhazhap
 // 1. 导包
 import com.zhazhapan.util.FileExecutor;
 
-// 2. 创建对象
-FileExecutor executor = new FileExecutor();
-
-// 3. 写文件（可能抛出IO异常）
+// 2. 写文件（可能抛出IO异常）
 String write = "write something";
-executor.saveFile("/Users/pantao/Desktop/test.txt", write, false);
+FileExecutor.saveFile("/Users/pantao/Desktop/test.txt", write, false);
 
-// 4. 读文件（可能抛出IO异常）
-String read = executor.readFile("/Users/pantao/Desktop/test.txt");
+// 3. 读文件（可能抛出IO异常）
+String read = FileExecutor.readFile("/Users/pantao/Desktop/test.txt");
+
+// 4. 批量复制文件夹
+FileExecutor.copyDirectories(new String[] { "/Users/pantao/Desktop/test" }, "/Users/pantao/Desktop/new");
+
+// 5. 批量复制文件
+FileExecutor.copyFiles(new String[] { "/Users/pantao/Desktop/qiniu.jar" }, "/Users/pantao/Desktop/test");
+
+// 6. 批量重命名文件
+String[] files = new String[] { "/Users/pantao/Desktop/test/Dump20171220_3.sql", "/Users/pantao/Desktop/test/Dump20171220_4.sql" };
+FileExecutor.renameFiles(files, new String[] { "test_rename_1", "test_rename_2.txt" });
+
+// 7. 拆分文件，通过拆分点拆分
+FileExecutor.splitFile("/Users/pantao/Desktop/test/Dump20171220.sql", new long[] { 1000, 2000, 3000 });
+
+// 8. 合并文件
+String[] files = new String[] { "/Users/pantao/Desktop/test/Dump20171220_1.sql", "/Users/pantao/Desktop/test/Dump20171220_2.sql" };
+FileExecutor.mergeFiles(files, "/Users/pantao/Desktop/test/test_merge.sql", "");
+
+// 9. 创建文件（如果存在则删除）
+FileExecutor.createNewFile("test.txt");
+
+// 10. 删除文件或文件夹（递归删除）
+FileExecutor.deleteFile("/Users/pantao/Desktop/test/test_merge.sql");
 ```
 
 **5. 简单的线程池**
@@ -239,3 +272,47 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 | getYear           | 获取年份                    |
 | getMaxValue       | 从多个数字中获取最大值             |
 | mergeSortedArrays | 将两个已经排好序（同序）的数组合并一个有序数组 |
+
+**11. `com.zhazhapan.util.ArraySort`类**
+
+|方法名|简要说明|
+|------|---------------|
+|heapSort|堆排序|
+|mergeSort|归并排序|
+|shellSort|希尔排序|
+|selectSort|选择排序|
+|quickSort|快速排序|
+|insertSort|插入排序|
+|bubbleSort|冒泡排序|
+
+**12. `com.zhazhapan.util.DateUtils`类**
+
+|方法名|简要说明|
+|------|---------------|
+|getWeekAsChinese|获取某个日期的星期，返回一个中文字符串|
+|getWeek|获取某个日期的星期，返回一个整型|
+|addHour|某个日期后推多少个小时|
+|addMinute|某个日期后推多少个分钟|
+|addSecond|某个日期后推多少个秒|
+|addYear|某个日期后推多少个年|
+|addMonth|某个日期后推多少个月|
+|addDay|某个日期后推多少个天|
+
+**13. 发送邮件**
+
+``` java
+// 导包
+import com.zhazhapan.util.MailSender;
+
+// 如何使用，下面的key指的是开启了POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务，生成的授权码
+MailSender.config("smtp.qq.com", "zhazhapan", "735817834@qq.com", "key");
+MailSender.sendMail("tao@zhazhapan.com", "title", "this is a test email");
+```
+
+**14. `com.zhazhapan.util.RandomUtils`类**
+
+|方法名|简要说明|
+|------|---------------|
+|getRandomDouble|获取一个随机的双精度类型|
+|getRandomInteger|获取一个随机的整型|
+|getRandomColor|获取一个随机的颜色|
