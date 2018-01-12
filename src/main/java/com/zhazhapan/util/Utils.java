@@ -32,10 +32,13 @@ public class Utils {
      */
     private static Logger logger = Logger.getLogger(Utils.class);
 
+    private Utils() {}
+
     /**
      * 抽取字符串的数字，并转换为Double
      *
      * @param string {@link String}
+     *
      * @return {@link Double}
      */
     public static double extractDouble(String string) {
@@ -46,6 +49,7 @@ public class Utils {
      * 抽取字符串的数字，并转换为Float
      *
      * @param string {@link String}
+     *
      * @return {@link Float}
      */
     public static float extractFloat(String string) {
@@ -56,6 +60,7 @@ public class Utils {
      * 抽取字符串的数字，并转换为Short
      *
      * @param string {@link String}
+     *
      * @return {@link Short}
      */
     public static short extractShort(String string) {
@@ -66,6 +71,7 @@ public class Utils {
      * 抽取字符串的数字，并转换为Long
      *
      * @param string {@link String}
+     *
      * @return {@link Long}
      */
     public static long extractLong(String string) {
@@ -76,6 +82,7 @@ public class Utils {
      * 抽取字符串的数字，并转换为Integer
      *
      * @param string {@link String}
+     *
      * @return {@link Integer}
      */
     public static int extractInt(String string) {
@@ -86,6 +93,7 @@ public class Utils {
      * 抽取字符串的数字（包括最后一个点号）
      *
      * @param string {@link String}
+     *
      * @return {@link String}
      */
     public static String extractDigit(String string) {
@@ -113,6 +121,7 @@ public class Utils {
      * 返回多个字符串中长度最长的字符串
      *
      * @param strings 多个字符串
+     *
      * @return {@link String}
      */
     public static String maxLengthString(String... strings) {
@@ -128,8 +137,9 @@ public class Utils {
     /**
      * 合并多个Short数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -144,8 +154,9 @@ public class Utils {
     /**
      * 合并多个Long数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -160,8 +171,9 @@ public class Utils {
     /**
      * 合并多个Float数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -176,8 +188,9 @@ public class Utils {
     /**
      * 合并多个Double数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -192,8 +205,9 @@ public class Utils {
     /**
      * 合并多个Character数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -208,8 +222,9 @@ public class Utils {
     /**
      * 合并多个Byte数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -224,8 +239,9 @@ public class Utils {
     /**
      * 合并多个Boolean数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -240,8 +256,9 @@ public class Utils {
     /**
      * 合并多个String数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -256,8 +273,9 @@ public class Utils {
     /**
      * 合并多个Integer数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -272,9 +290,10 @@ public class Utils {
     /**
      * 合并多个T数组
      *
-     * @param array  数组
+     * @param array 数组
      * @param arrays 数组
-     * @param <T>    T类型
+     * @param <T> T类型
+     *
      * @return 数组
      */
     @SafeVarargs
@@ -320,8 +339,9 @@ public class Utils {
      * 使用系统默认的浏览器打开超链接
      *
      * @param url 超链接
+     *
      * @throws URISyntaxException 异常
-     * @throws IOException        异常
+     * @throws IOException 异常
      */
     public static void openLink(String url) throws IOException, URISyntaxException {
         Desktop.getDesktop().browse(new URI(url));
@@ -331,6 +351,7 @@ public class Utils {
      * 使用系统默认的方式打开文件
      *
      * @param path 路径
+     *
      * @throws IOException 异常
      */
     public static void openFile(String path) throws IOException {
@@ -341,6 +362,7 @@ public class Utils {
      * 使用系统默认的方式打开文件
      *
      * @param file 文件
+     *
      * @throws IOException 异常
      */
     public static void openFile(File file) throws IOException {
@@ -351,6 +373,7 @@ public class Utils {
      * 获取日期格式的号数
      *
      * @param date 日期格式的字符串
+     *
      * @return 类型为字符串的数值
      */
     public static String getDay(String date) {
@@ -361,6 +384,7 @@ public class Utils {
      * 获取日期格式的号数
      *
      * @param date 日期
+     *
      * @return 类型为字符串的数值
      */
     public static String getDay(Date date) {
@@ -371,6 +395,7 @@ public class Utils {
      * 获取日期格式的月份
      *
      * @param date 日期格式的字符串
+     *
      * @return 类型为字符串的数值
      */
     public static String getMonth(String date) {
@@ -381,6 +406,7 @@ public class Utils {
      * 获取日期格式的月份
      *
      * @param date 日期
+     *
      * @return 类型为字符串的数值
      */
     public static String getMonth(Date date) {
@@ -391,6 +417,7 @@ public class Utils {
      * 获取日期格式的年份
      *
      * @param date 日期格式的字符串
+     *
      * @return 类型为字符串的数值
      */
     public static String getYear(String date) {
@@ -401,6 +428,7 @@ public class Utils {
      * 获取日期格式的年份
      *
      * @param date 日期
+     *
      * @return 类型为字符串的数值
      */
     public static String getYear(Date date) {
@@ -411,6 +439,7 @@ public class Utils {
      * 获取数组中最大值
      *
      * @param nums 数组
+     *
      * @return {@link Integer}
      */
     public static int getMaxValue(int... nums) {
@@ -427,6 +456,7 @@ public class Utils {
      *
      * @param nums1 数组
      * @param nums2 数组
+     *
      * @return 数组
      */
     public static int[] mergeSortedArrays(int[] nums1, int[] nums2) {
@@ -438,7 +468,8 @@ public class Utils {
      *
      * @param nums1 数组
      * @param nums2 数组
-     * @param desc  是否为降序
+     * @param desc 是否为降序
+     *
      * @return 数组
      */
     public static int[] mergeSortedArrays(int[] nums1, int[] nums2, boolean desc) {

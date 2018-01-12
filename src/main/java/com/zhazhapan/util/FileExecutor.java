@@ -16,13 +16,17 @@ public class FileExecutor extends FileUtils {
 
     private static Logger logger = Logger.getLogger(FileExecutor.class);
 
+    private FileExecutor() {}
+
     /**
      * 读取输入流
      *
-     * @param is  输入流
+     * @param is 输入流
      * @param off 偏移
      * @param len 长度
+     *
      * @return 内容
+     *
      * @throws IOException 异常
      */
     public static String read(InputStream is, int off, int len) throws IOException {
@@ -36,7 +40,9 @@ public class FileExecutor extends FileUtils {
      * 读取输入流
      *
      * @param is 输入流
+     *
      * @return 内容
+     *
      * @throws IOException 异常
      */
     public static String read(InputStream is) throws IOException {
@@ -46,8 +52,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件夹
      *
-     * @param directories   文件夹路径数组
+     * @param directories 文件夹路径数组
      * @param storageFolder 存储目录
+     *
      * @throws IOException 异常
      */
     public static void copyDirectories(String[] directories, String storageFolder) throws IOException {
@@ -57,8 +64,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件夹
      *
-     * @param directories   文件夹数组
+     * @param directories 文件夹数组
      * @param storageFolder 存储目录
+     *
      * @throws IOException 异常
      */
     public static void copyDirectories(File[] directories, String storageFolder) throws IOException {
@@ -71,8 +79,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件夹
      *
-     * @param directories            文件夹路径数组
+     * @param directories 文件夹路径数组
      * @param destinationDirectories 目标文件夹路径数组，与文件夹一一对应
+     *
      * @throws IOException 异常
      */
     public static void copyDirectories(String[] directories, String[] destinationDirectories) throws IOException {
@@ -82,8 +91,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件夹
      *
-     * @param directories            文件夹数组
+     * @param directories 文件夹数组
      * @param destinationDirectories 目标文件夹数组，与文件夹一一对应
+     *
      * @throws IOException 异常
      */
     public static void copyDirectories(File[] directories, File[] destinationDirectories) throws IOException {
@@ -96,8 +106,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件，使用原文件名
      *
-     * @param files         文件路径数组
+     * @param files 文件路径数组
      * @param storageFolder 存储目录
+     *
      * @throws IOException 异常
      */
     public static void copyFiles(String[] files, String storageFolder) throws IOException {
@@ -107,8 +118,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件，并重命名
      *
-     * @param files            文件路径数组
+     * @param files 文件路径数组
      * @param destinationFiles 目标文件路径数组，与文件路径数组一一对应
+     *
      * @throws IOException 异常
      */
     public static void copyFiles(String[] files, String[] destinationFiles) throws IOException {
@@ -139,6 +151,7 @@ public class FileExecutor extends FileUtils {
      * 检查文件夹，如果不存在则创建，如果是文件则获取上级目录
      *
      * @param directory 文件夹
+     *
      * @return 文件夹路径
      */
     private static String checkFolder(String directory) {
@@ -153,8 +166,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件，使用原文件名
      *
-     * @param files         文件数组
+     * @param files 文件数组
      * @param storageFolder 存储目录
+     *
      * @throws IOException 异常
      */
     public static void copyFiles(File[] files, String storageFolder) throws IOException {
@@ -167,8 +181,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 批量复制文件，并重命名
      *
-     * @param files            文件数组
+     * @param files 文件数组
      * @param destinationFiles 目标文件数组，与文件数组一一对应
+     *
      * @throws IOException 异常
      */
     public static void copyFiles(File[] files, File[] destinationFiles) throws IOException {
@@ -181,8 +196,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 拆分文件
      *
-     * @param filePath    文件路径
+     * @param filePath 文件路径
      * @param splitPoints 拆分点数组（函数将根据拆分点来分割文件）
+     *
      * @throws IOException 异常
      */
     public static void splitFile(String filePath, long[] splitPoints) throws IOException {
@@ -192,8 +208,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 拆分文件
      *
-     * @param file        文件
+     * @param file 文件
      * @param splitPoints 拆分点数组（函数将根据拆分点来分割文件）
+     *
      * @throws IOException 异常
      */
     public static void splitFile(File file, long[] splitPoints) throws IOException {
@@ -203,9 +220,10 @@ public class FileExecutor extends FileUtils {
     /**
      * 拆分文件
      *
-     * @param filePath      文件路径
-     * @param splitPoints   拆分点数组（函数将根据拆分点来分割文件）
+     * @param filePath 文件路径
+     * @param splitPoints 拆分点数组（函数将根据拆分点来分割文件）
      * @param storageFolder 保存路径
+     *
      * @throws IOException 异常
      */
     public static void splitFile(String filePath, long[] splitPoints, String storageFolder) throws IOException {
@@ -215,9 +233,10 @@ public class FileExecutor extends FileUtils {
     /**
      * 拆分文件
      *
-     * @param file          文件
-     * @param splitPoints   拆分点数组（函数将根据拆分点来分割文件）
+     * @param file 文件
+     * @param splitPoints 拆分点数组（函数将根据拆分点来分割文件）
      * @param storageFolder 保存路径
+     *
      * @throws IOException 异常
      */
     public static void splitFile(File file, long[] splitPoints, String storageFolder) throws IOException {
@@ -244,7 +263,7 @@ public class FileExecutor extends FileUtils {
     /**
      * 重命名多个文件
      *
-     * @param filePath  文件路径数组
+     * @param filePath 文件路径数组
      * @param fileNames 文件名，与文件数组一一对应
      */
     public static void renameFiles(String[] filePath, String[] fileNames) {
@@ -254,7 +273,7 @@ public class FileExecutor extends FileUtils {
     /**
      * 重命名多个文件
      *
-     * @param files     文件数组
+     * @param files 文件数组
      * @param fileNames 文件名，与文件数组一一对应
      */
     public static void renameFiles(File[] files, String[] fileNames) {
@@ -272,22 +291,23 @@ public class FileExecutor extends FileUtils {
     /**
      * 合并文件
      *
-     * @param filePath            文件路径数组
+     * @param filePath 文件路径数组
      * @param destinationFilePath 目标文件路径
-     * @param filterRegex         过滤规则（正则表达式，所有文件使用同一个过滤规则，为空时不过滤）
+     * @param filterRegex 过滤规则（正则表达式，所有文件使用同一个过滤规则，为空时不过滤）
+     *
      * @throws IOException 异常
      */
-    public static void mergeFiles(String[] filePath, String destinationFilePath, String filterRegex)
-            throws IOException {
+    public static void mergeFiles(String[] filePath, String destinationFilePath, String filterRegex) throws IOException {
         mergeFiles(getFiles(filePath), new File(destinationFilePath), filterRegex);
     }
 
     /**
      * 合并文件
      *
-     * @param files           文件数组
+     * @param files 文件数组
      * @param destinationFile 目标文件
-     * @param filterRegex     过滤规则（正则表达式，所有文件使用同一个过滤规则，为空时不过滤）
+     * @param filterRegex 过滤规则（正则表达式，所有文件使用同一个过滤规则，为空时不过滤）
+     *
      * @throws IOException 异常
      */
     public static void mergeFiles(File[] files, File destinationFile, String filterRegex) throws IOException {
@@ -300,22 +320,23 @@ public class FileExecutor extends FileUtils {
     /**
      * 合并文件
      *
-     * @param filePath            文件路径数组
+     * @param filePath 文件路径数组
      * @param destinationFilePath 目标文件路径
-     * @param filterRegex         过滤规则数组（正则表达式，与文件数组一一对应，即第个文件使用一个过滤规则，为空时不过滤）
+     * @param filterRegex 过滤规则数组（正则表达式，与文件数组一一对应，即第个文件使用一个过滤规则，为空时不过滤）
+     *
      * @throws IOException 异常
      */
-    public static void mergeFiles(String[] filePath, String destinationFilePath, String[] filterRegex)
-            throws IOException {
+    public static void mergeFiles(String[] filePath, String destinationFilePath, String[] filterRegex) throws IOException {
         mergeFiles(getFiles(filePath), new File(destinationFilePath), filterRegex);
     }
 
     /**
      * 合并文件
      *
-     * @param files           文件数组
+     * @param files 文件数组
      * @param destinationFile 目标文件
-     * @param filterRegex     过滤规则数组（正则表达式，与文件数组一一对应，即第个文件使用一个过滤规则，为空时不过滤）
+     * @param filterRegex 过滤规则数组（正则表达式，与文件数组一一对应，即第个文件使用一个过滤规则，为空时不过滤）
+     *
      * @throws IOException 异常
      */
     public static void mergeFiles(File[] files, File destinationFile, String[] filterRegex) throws IOException {
@@ -333,6 +354,7 @@ public class FileExecutor extends FileUtils {
      * 根据文件路径数组获取文件数组
      *
      * @param filePath 文件路径数组
+     *
      * @return 文件数组
      */
     public static File[] getFiles(String[] filePath) {
@@ -347,9 +369,10 @@ public class FileExecutor extends FileUtils {
     /**
      * 合并文件
      *
-     * @param file            待读取文件
+     * @param file 待读取文件
      * @param destinationFile 目标文件
-     * @param filter          过滤规则
+     * @param filter 过滤规则
+     *
      * @throws IOException 异常
      */
     private static void mergeFiles(File file, File destinationFile, String filter) throws IOException {
@@ -364,6 +387,7 @@ public class FileExecutor extends FileUtils {
      * 创建一个新的空文件（如果文件存在，则删除重新创建）
      *
      * @param filePath 文件路径
+     *
      * @throws IOException 异常
      */
     public static void createNewFile(String filePath) throws IOException {
@@ -374,6 +398,7 @@ public class FileExecutor extends FileUtils {
      * 创建一个新的空文件（如果文件存在，则删除重新创建）
      *
      * @param file 文件
+     *
      * @throws IOException 异常
      */
     public static void createNewFile(File file) throws IOException {
@@ -387,6 +412,7 @@ public class FileExecutor extends FileUtils {
      * 删除文件
      *
      * @param filePath 文件路径
+     *
      * @return 是否删除成功
      */
     public static boolean deleteFile(String filePath) {
@@ -397,6 +423,7 @@ public class FileExecutor extends FileUtils {
      * 删除文件
      *
      * @param file 文件
+     *
      * @return 是否删除成功
      */
     public static boolean deleteFile(File file) {
@@ -417,8 +444,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 保存文件，覆盖原内容
      *
-     * @param path    文件路径
+     * @param path 文件路径
      * @param content 内容
+     *
      * @throws IOException 异常
      */
     public static void saveFile(String path, String content) throws IOException {
@@ -428,9 +456,10 @@ public class FileExecutor extends FileUtils {
     /**
      * 保存文件
      *
-     * @param path    文件路径
+     * @param path 文件路径
      * @param content 内容
-     * @param append  保存方式
+     * @param append 保存方式
+     *
      * @throws IOException 异常
      */
     public static void saveFile(String path, String content, boolean append) throws IOException {
@@ -440,8 +469,9 @@ public class FileExecutor extends FileUtils {
     /**
      * 保存文件，覆盖原内容
      *
-     * @param file    文件
+     * @param file 文件
      * @param content 内容
+     *
      * @throws IOException 异常
      */
     public static void saveFile(File file, String content) throws IOException {
@@ -452,7 +482,9 @@ public class FileExecutor extends FileUtils {
      * 读取文件
      *
      * @param path 路径
+     *
      * @return {@link String}
+     *
      * @throws IOException 异常
      */
     public static String readFile(String path) throws IOException {
@@ -463,7 +495,9 @@ public class FileExecutor extends FileUtils {
      * 读取文件
      *
      * @param file 文件
+     *
      * @return {@link String}
+     *
      * @throws IOException 异常
      */
     public static String readFile(File file) throws IOException {
@@ -480,10 +514,12 @@ public class FileExecutor extends FileUtils {
     /**
      * 从指定位置读取指定长度
      *
-     * @param file   文件
-     * @param start  开始位置
+     * @param file 文件
+     * @param start 开始位置
      * @param length 读取长度
+     *
      * @return 文件内容
+     *
      * @throws IOException 异常
      */
     public static String readFile(File file, long start, int length) throws IOException {
@@ -500,6 +536,7 @@ public class FileExecutor extends FileUtils {
      *
      * @param logPath 路径
      * @param content 内容
+     *
      * @throws IOException 异常
      */
     public static void saveLogFile(String logPath, String content) throws IOException {
@@ -513,9 +550,10 @@ public class FileExecutor extends FileUtils {
     /**
      * 保存文件
      *
-     * @param file    文件
+     * @param file 文件
      * @param content 内容
-     * @param append  保存方式
+     * @param append 保存方式
+     *
      * @throws IOException 异常
      */
     public static synchronized void saveFile(File file, String content, boolean append) throws IOException {

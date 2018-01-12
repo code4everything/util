@@ -18,11 +18,15 @@ public class FxmlLoader {
 
     private static final Logger logger = Logger.getLogger(FxmlLoader.class);
 
+    private FxmlLoader() {}
+
     /**
      * 加密fxml文件
      *
      * @param url {@link URL}
+     *
      * @return {@link Scene}
+     *
      * @throws IOException 异常
      */
     public static Scene loadFxml(URL url) throws IOException {

@@ -24,19 +24,21 @@ public class Calculator {
 
     private static final Pattern FORMULA_REPLACE_PATTERN = Pattern.compile(CALCULATION_FORMULA_PATTERN_STRING);
 
-    private static final Pattern CALCULATION_FORMULA_PATTERN = Pattern.compile(
-            CALCULATION_FORMULA_PATTERN_STRING.substring(2, CALCULATION_FORMULA_PATTERN_STRING.length() - 2) + "=?");
-
+    private static final Pattern CALCULATION_FORMULA_PATTERN = Pattern.compile(CALCULATION_FORMULA_PATTERN_STRING.substring(2, CALCULATION_FORMULA_PATTERN_STRING.length() - 2) + "=?");
     /**
      * 默认精度
      */
     private static int precision = 100;
 
+    private Calculator() {}
+
     /**
      * 连续计算，使用默认精度（100）
      *
      * @param formula 表达式
+     *
      * @return {@link BigDecimal}
+     *
      * @throws Exception 异常
      */
     public static BigDecimal calculate(String formula) throws Exception {
@@ -52,6 +54,7 @@ public class Calculator {
      * 验证第计算式是否合法
      *
      * @param formula 计算式
+     *
      * @return {@link Boolean}
      */
     public static boolean isFormula(String formula) {
@@ -65,7 +68,9 @@ public class Calculator {
      * 开始计算
      *
      * @param formula 表达式
+     *
      * @return {@link BigDecimal}
+     *
      * @throws Exception 异常
      */
     private static BigDecimal doCalculate(String formula) throws Exception {
@@ -80,8 +85,7 @@ public class Calculator {
             char c = formula.charAt(i);
             if (Character.isDigit(c)) {
                 BigDecimal num = new BigDecimal(c - '0');
-                number = isDecimal ? number.add(num.multiply(decimalSign))
-                        : num.add(number.multiply(BigDecimal.valueOf(10)));
+                number = isDecimal ? number.add(num.multiply(decimalSign)) : num.add(number.multiply(BigDecimal.valueOf(10)));
                 decimalSign = decimalSign.multiply(BigDecimal.valueOf(0.1));
             } else if (c == '.') {
                 isDecimal = true;
@@ -116,9 +120,11 @@ public class Calculator {
     /**
      * 计算（）内的表达式
      *
-     * @param start   开始位置
+     * @param start 开始位置
      * @param formula 表达式
+     *
      * @return 长度为2的{@link BigDecimal}数组，位置0表示计算结果，位置1表示结束位置
+     *
      * @throws Exception 异常
      */
     private static BigDecimal[] calculateInlineFormula(int start, String formula) throws Exception {
@@ -145,7 +151,9 @@ public class Calculator {
      * 连续计算，可能导致数据失真
      *
      * @param formula 表达式
+     *
      * @return {@link Double}
+     *
      * @throws ScriptException 异常
      */
     public static Object calculateUseEval(String formula) throws ScriptException {

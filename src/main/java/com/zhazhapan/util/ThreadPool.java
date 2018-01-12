@@ -33,10 +33,10 @@ public class ThreadPool {
     /**
      * 新建线程池
      *
-     * @param core    初始线程大小
+     * @param core 初始线程大小
      * @param maximum 最大线程数
-     * @param keep    线程存活时长
-     * @param unit    存活时长单位
+     * @param keep 线程存活时长
+     * @param unit 存活时长单位
      */
     public ThreadPool(int core, int maximum, int keep, TimeUnit unit) {
         BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>(1);
@@ -53,17 +53,16 @@ public class ThreadPool {
      * 初始化线程池
      */
     public static void init() {
-        executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, timeUnit, workQueue,
-                threadFactory);
+        executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, timeUnit, workQueue, threadFactory);
     }
 
     /**
      * 初始化线程池
      *
-     * @param corePoolSize    初始Size
+     * @param corePoolSize 初始Size
      * @param maximumPoolSize 最大Size
-     * @param keepAliveTime   存活时长
-     * @param timeUnit        时间单位
+     * @param keepAliveTime 存活时长
+     * @param timeUnit 时间单位
      */
     public static void init(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit timeUnit) {
         ThreadPool.corePoolSize = corePoolSize;

@@ -20,6 +20,18 @@ public class Dialogs {
 
     private static final String CANCEL_BUTTON_TEXT = "取消";
 
+    private Dialogs() {}
+
+    /**
+     * 弹出输入框
+     *
+     * @param title 标题
+     * @param header 信息头
+     * @param content 内容
+     * @param defaultValue 输入框默认值
+     *
+     * @return 输入的内容
+     */
     public static String showInputDialog(String title, String header, String content, String defaultValue) {
         TextInputDialog dialog = new TextInputDialog(defaultValue);
         dialog.setTitle(title);
@@ -30,7 +42,12 @@ public class Dialogs {
         return result.orElse(null);
     }
 
-    public GridPane getGridPane() {
+    /**
+     * 获取一个{@link GridPane}对象
+     *
+     * @return {@link GridPane}
+     */
+    public static GridPane getGridPane() {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -38,7 +55,15 @@ public class Dialogs {
         return grid;
     }
 
-    public Dialog<String[]> getDialog(String title, ButtonType ok) {
+    /**
+     * 获得一个{@link Dialog}对象
+     *
+     * @param title 标题
+     * @param ok 确认按钮
+     *
+     * @return {@link Dialog}
+     */
+    public static Dialog<String[]> getDialog(String title, ButtonType ok) {
         Dialog<String[]> dialog = new Dialog<String[]>();
         dialog.setTitle(title);
         dialog.setHeaderText(null);

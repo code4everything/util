@@ -7,6 +7,8 @@ import com.zhazhapan.modules.constant.Values;
  */
 public class ArraySort {
 
+    private ArraySort() {}
+
     /**
      * 堆排序
      *

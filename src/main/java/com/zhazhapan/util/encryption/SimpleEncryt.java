@@ -10,11 +10,14 @@ import com.zhazhapan.util.CryptUtil;
  */
 public class SimpleEncryt {
 
+    private SimpleEncryt() {}
+
     /**
      * 混合加密
      *
      * @param string {@link String}
-     * @param key    {@link Integer}
+     * @param key {@link Integer}
+     *
      * @return {@link String}
      */
     public static String mix(String string, int key) {
@@ -25,7 +28,8 @@ public class SimpleEncryt {
      * 异或加密
      *
      * @param string {@link String}
-     * @param key    {@link Integer}
+     * @param key {@link Integer}
+     *
      * @return {@link String}
      */
     public static String xor(String string, int key) {
@@ -40,7 +44,8 @@ public class SimpleEncryt {
      * 异或加密
      *
      * @param string {@link String}
-     * @param key    {@link String}
+     * @param key {@link String}
+     *
      * @return {@link String}
      */
     public static String xor(String string, String key) {
@@ -51,7 +56,8 @@ public class SimpleEncryt {
      * ascii加密
      *
      * @param string {@link String}
-     * @param key    {@link Integer}
+     * @param key {@link Integer}
+     *
      * @return {@link String}
      */
     public static String ascii(String string, int key) {
@@ -67,7 +73,8 @@ public class SimpleEncryt {
      * ascii加密
      *
      * @param string {@link String}
-     * @param key    {@link String}
+     * @param key {@link String}
+     *
      * @return {@link String}
      */
     public static String ascii(String string, String key) {

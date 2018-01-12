@@ -10,17 +10,21 @@ import java.util.Date;
 /**
  * @author pantao
  */
-public class DateUtils {
+public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     private static Calendar calendar = Calendar.getInstance();
+
+    private DateUtils() {}
 
     /**
      * 计算日期为星期几
      *
      * @param date 日期
+     *
      * @return 格式为“星期？”的字符串
+     *
      * @throws ParseException 异常
-     * @throws Exception      异常
+     * @throws Exception 异常
      */
     public static String getWeekAsChinese(String date) throws ParseException, Exception {
         return getWeekAsChinese(Formatter.stringToDate(date));
@@ -30,7 +34,9 @@ public class DateUtils {
      * 计算日期为星期几
      *
      * @param date 日期
+     *
      * @return 格式为“星期？”的字符串
+     *
      * @throws Exception 异常
      */
     public static String getWeekAsChinese(Date date) throws Exception {
@@ -67,7 +73,9 @@ public class DateUtils {
      * 计算日期为星期几
      *
      * @param date 日期
+     *
      * @return 从星期天开始，星期天是1，依次类推
+     *
      * @throws ParseException 异常
      */
     public static int getWeek(String date) throws ParseException {
@@ -78,6 +86,7 @@ public class DateUtils {
      * 计算日期为星期几
      *
      * @param date 日期
+     *
      * @return 从星期天开始，星期天是1，依次类推
      */
     public static int getWeek(Date date) {
@@ -88,9 +97,11 @@ public class DateUtils {
     /**
      * 添加小时
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
+     *
      * @throws ParseException 异常
      */
     public static Date addHour(String date, int amount) throws ParseException {
@@ -100,9 +111,11 @@ public class DateUtils {
     /**
      * 添加分钟
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
+     *
      * @throws ParseException 异常
      */
     public static Date addMinute(String date, int amount) throws ParseException {
@@ -112,9 +125,11 @@ public class DateUtils {
     /**
      * 添加秒
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
+     *
      * @throws ParseException 异常
      */
     public static Date addSecond(String date, int amount) throws ParseException {
@@ -124,9 +139,11 @@ public class DateUtils {
     /**
      * 添加年份
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
+     *
      * @throws ParseException 异常
      */
     public static Date addYear(String date, int amount) throws ParseException {
@@ -136,9 +153,11 @@ public class DateUtils {
     /**
      * 添加月份
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
+     *
      * @throws ParseException 异常
      */
     public static Date addMonth(String date, int amount) throws ParseException {
@@ -148,9 +167,11 @@ public class DateUtils {
     /**
      * 添加日期
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
+     *
      * @throws ParseException 异常
      */
     public static Date addDay(String date, int amount) throws ParseException {
@@ -160,8 +181,9 @@ public class DateUtils {
     /**
      * 添加小时
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
      */
     public static Date addHour(Date date, int amount) {
@@ -171,8 +193,9 @@ public class DateUtils {
     /**
      * 添加分钟
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
      */
     public static Date addMinute(Date date, int amount) {
@@ -182,8 +205,9 @@ public class DateUtils {
     /**
      * 添加秒
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
      */
     public static Date addSecond(Date date, int amount) {
@@ -193,8 +217,9 @@ public class DateUtils {
     /**
      * 添加年份
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
      */
     public static Date addYear(Date date, int amount) {
@@ -204,8 +229,9 @@ public class DateUtils {
     /**
      * 添加月份
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
      */
     public static Date addMonth(Date date, int amount) {
@@ -215,8 +241,9 @@ public class DateUtils {
     /**
      * 添加日期
      *
-     * @param date   日期
+     * @param date 日期
      * @param amount 数量
+     *
      * @return 添加后的日期
      */
     public static Date addDay(Date date, int amount) {
@@ -226,11 +253,12 @@ public class DateUtils {
     /**
      * 日期添加
      *
-     * @param date   日期
-     * @param field  添加区域 {@link Calendar#DATE} {@link Calendar#MONTH}
-     *               {@link Calendar#YEAR}
+     * @param date 日期
+     * @param field 添加区域 {@link Calendar#DATE} {@link Calendar#MONTH} {@link Calendar#YEAR}
      * @param amount 数量
+     *
      * @return 添加后的日期
+     *
      * @throws ParseException 异常
      */
     public static Date add(String date, int field, int amount) throws ParseException {
@@ -240,10 +268,10 @@ public class DateUtils {
     /**
      * 日期添加
      *
-     * @param date   日期
-     * @param field  添加区域 {@link Calendar#DATE} {@link Calendar#MONTH}
-     *               {@link Calendar#YEAR}
+     * @param date 日期
+     * @param field 添加区域 {@link Calendar#DATE} {@link Calendar#MONTH} {@link Calendar#YEAR}
      * @param amount 数量
+     *
      * @return 添加后的日期
      */
     public static Date add(Date date, int field, int amount) {

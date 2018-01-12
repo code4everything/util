@@ -14,10 +14,13 @@ public class CryptUtil {
 
     private static final int THOUSAND = 1000;
 
+    private CryptUtil() {}
+
     /**
      * 通过获取一个KEY数组
      *
      * @param key 可自定义一个INT型数值
+     *
      * @return 长度为3的KEY数组
      */
     public static int[] getKeys(int key) {
@@ -53,6 +56,7 @@ public class CryptUtil {
      * 通过字符串获取KEY
      *
      * @param string 可随机一个字符串
+     *
      * @return INT型KEY
      */
     public static int stringToKey(String string) {
@@ -67,5 +71,4 @@ public class CryptUtil {
         }
         return key;
     }
-
 }

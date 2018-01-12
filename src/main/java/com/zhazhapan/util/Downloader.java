@@ -25,11 +25,14 @@ public class Downloader {
      */
     private static String storageFolder = Values.USER_HOME + Values.SEPARATOR + "util";
 
+    private Downloader() {}
+
     /**
      * 下载
      *
      * @param storageFolder 下载到指定目录
-     * @param downloadURL   下载的URL
+     * @param downloadURL 下载的URL
+     *
      * @return 是否下载成功
      */
     public static boolean download(String storageFolder, String downloadURL) {
@@ -41,6 +44,7 @@ public class Downloader {
      * 下载文件
      *
      * @param downloadURL 下载的URL
+     *
      * @return 是否下载成功
      */
     public static boolean download(String downloadURL) {
@@ -93,6 +97,7 @@ public class Downloader {
      * 检查文件路径是否存在
      *
      * @param path 文件路径
+     *
      * @return 文件的绝对路径，如果文件存在，则生成一个新路径
      */
     private static String checkPath(String path) {

@@ -14,6 +14,8 @@ import java.util.Random;
  */
 public class RandomUtils {
 
+    private RandomUtils() {}
+
     /**
      * 获取随机浮点数，保留2位小数，下限为0，上限为{@link Double#MAX_VALUE}
      *
@@ -27,7 +29,8 @@ public class RandomUtils {
      * 获取随机浮点数，保留2位小数
      *
      * @param floor 下限
-     * @param ceil  上限
+     * @param ceil 上限
+     *
      * @return {@link Double}
      */
     public static double getRandomDouble(double floor, double ceil) {
@@ -37,9 +40,10 @@ public class RandomUtils {
     /**
      * 获取随机浮点数
      *
-     * @param floor     下限
-     * @param ceil      上限
+     * @param floor 下限
+     * @param ceil 上限
      * @param precision 精度（小数位数）
+     *
      * @return {@link Double}
      */
     public static double getRandomDouble(double floor, double ceil, int precision) {
@@ -60,7 +64,8 @@ public class RandomUtils {
      * 获取随机整数
      *
      * @param floor 下限
-     * @param ceil  上限
+     * @param ceil 上限
+     *
      * @return {@link Integer}
      */
     public static int getRandomInteger(int floor, int ceil) {
@@ -71,6 +76,7 @@ public class RandomUtils {
      * 获取随机颜色
      *
      * @param opacity 不透明度
+     *
      * @return {@link SimpleColor}
      */
     public static SimpleColor getRandomColor(double opacity) {
