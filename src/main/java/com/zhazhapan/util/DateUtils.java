@@ -3,6 +3,7 @@
  */
 package com.zhazhapan.util;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +16,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     private static Calendar calendar = Calendar.getInstance();
 
     private DateUtils() {}
+
+    /**
+     * 获取当前时间戳
+     *
+     * @return {@link Timestamp}
+     */
+    public static Timestamp getCurrentTimestamp() {
+        return new Timestamp(System.currentTimeMillis());
+    }
 
     /**
      * 计算日期为星期几

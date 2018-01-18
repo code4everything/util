@@ -10,6 +10,8 @@ import java.lang.reflect.Field;
  */
 public class BeanUtils {
 
+    private BeanUtils() {}
+
     /**
      * 将Bean类的全部属性转换成JSON字符串
      *
@@ -61,19 +63,21 @@ public class BeanUtils {
      * @throws IllegalAccessException 异常
      */
     public static String toJsonString(Object object, FieldModifier modifier) throws IllegalAccessException {
-        Class<?> bean = object.getClass();
         JSONObject jsonObject = new JSONObject();
-        if (modifier == FieldModifier.ALL || modifier == FieldModifier.PUBLIC) {
-            Field[] fields = bean.getFields();
-            for (Field field : fields) {
-                jsonObject.put(field.getName(), field.get(object));
+        if (Checker.isNotNull(object)) {
+            Class<?> bean = object.getClass();
+            if (modifier == FieldModifier.ALL || modifier == FieldModifier.PUBLIC) {
+                Field[] fields = bean.getFields();
+                for (Field field : fields) {
+                    jsonObject.put(field.getName(), field.get(object));
+                }
             }
-        }
-        if (modifier == FieldModifier.ALL || modifier == FieldModifier.PRIVATE) {
-            Field[] declaredFields = bean.getDeclaredFields();
-            for (Field field : declaredFields) {
-                field.setAccessible(true);
-                jsonObject.put(field.getName(), field.get(object));
+            if (modifier == FieldModifier.ALL || modifier == FieldModifier.PRIVATE) {
+                Field[] declaredFields = bean.getDeclaredFields();
+                for (Field field : declaredFields) {
+                    field.setAccessible(true);
+                    jsonObject.put(field.getName(), field.get(object));
+                }
             }
         }
         return jsonObject.toString();
