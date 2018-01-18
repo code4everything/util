@@ -210,7 +210,7 @@ public class Formatter {
      *
      * @return {@link String}
      */
-    public static String listToJson(List<Object> list) {
+    public static String listToJson(List<?> list) {
         StringBuilder result = new StringBuilder("[");
         if (Checker.isNotEmpty(list)) {
             int i = 0;
