@@ -63,12 +63,7 @@ public class Downloader {
             log += file.getAbsolutePath() + "'";
             URL url = new URL(downloadURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(1000 * 6);
-            conn.setRequestProperty("Charset", "UTF-8");
-            conn.setRequestProperty("User-Agent", Values.USER_AGENT);
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            conn.setRequestProperty("Accept", "*/*");
-            InputStream inStream = conn.getInputStream();
+            InputStream inStream = NetUtils.getInputStreamOfConnection(conn);
             if (conn.getResponseCode() != Values.RESPONSE_OK || conn.getContentLength() <= 0) {
                 return false;
             }

@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.net.URL;
 
 /**
  * @author pantao
@@ -17,6 +18,32 @@ public class FileExecutor extends FileUtils {
     private static Logger logger = Logger.getLogger(FileExecutor.class);
 
     private FileExecutor() {}
+
+    /**
+     * 从网络链接中读取内容
+     *
+     * @param url 网络链接
+     *
+     * @return {@link String}
+     *
+     * @throws IOException 异常
+     */
+    public static String read(String url) throws IOException {
+        return read(new URL(url));
+    }
+
+    /**
+     * 从网络链接中读取内容
+     *
+     * @param url 网络链接
+     *
+     * @return {@link String}
+     *
+     * @throws IOException 异常
+     */
+    public static String read(URL url) throws IOException {
+        return NetUtils.getDataOfUrl(url);
+    }
 
     /**
      * 读取输入流

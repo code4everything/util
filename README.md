@@ -30,6 +30,8 @@ String json = "{key1:test,key2:{child1:node1,child2:node2},key3:[{fast:json1},{f
 JsonParser jsonParser = new JsonParser(json, false);
 // 2.2 或使用文件路径（可能抛出IO异常）
 JsonParser jsonParser = new JsonParser("/Users/pantao/Desktop/test.json");
+// 2.3 或使用URL对象
+JsonParser jsonParser = new JsonParser(new URL("http://somehost.com/sometext.json"));
 
 // 3. 愉快的使用
 String str = jsonParser.getString("key3[1].fast");
@@ -315,4 +317,60 @@ MailSender.sendMail("tao@zhazhapan.com", "title", "this is a test email");
 |------|---------------|
 |getRandomDouble|获取一个随机的双精度类型|
 |getRandomInteger|获取一个随机的整型|
+|getRandomIntegerIgnoreRange|获取一个可以忽略某个区间的随机整型|
 |getRandomColor|获取一个随机的颜色|
+|getRandomEmail|获取一个随机邮箱|
+|getRandomString|获取一个随机字符串|
+|getRandomStringWithoutSymbol|获取一个只有数字和字母的随机字符串|
+|getRandomStringOnlyLetter|获取一个只有字母的随机字符串|
+|getRandomStringOnlyLowerCase|获取一个只有小写字母的随机字符串|
+|getRandomStringOnlyUpperCase|获取一个只有大写字母的随机字符串|
+|getRandomTextIgnoreRange|获取一个可以忽略某个范围字符的随机字符串|
+|getRandomStringOnlyLowerCase|获取一个只有小写字母的随机字符串|
+|getRandomText|获取一个字符串|
+
+**15. 将Bean类的属性字段转换成JSON**
+
+``` java
+// 导包
+import com.zhazhapan.util.BeanUtils;
+
+// 一个Bean类
+public class User {
+    public int id;
+    private String name;
+    private Date birth;
+
+    public User() {}
+
+    public User(int id, String name, Date birth) {
+        this.id = id;
+        this.name = name;
+        this.birth = birth;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return BeanUtils.toJsonString(this);
+        } catch (IllegalAccessException e) {
+            return e.getMessage();
+        }
+    }
+}
+
+// 外部类调用
+User user = new User(1, "test", new Date());
+System.out.println(user.toString());
+
+// 输出
+{"name":"test","birth":1516354822567,"id":1}
+```
+
+**16. `com.zhazhapan.util.NetUtils`类**
+
+|方法名|简要说明|
+|------|---------------|
+|getDataOfUrl|获取URL对应的网页内容|
+|getInputStreamOfUrl|获取URL对应的InputStream对象|
+|getInputStreamOfConnection|获取HttpURLConnection对应的InputStream对象|

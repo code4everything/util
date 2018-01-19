@@ -14,6 +14,7 @@ import com.zhazhapan.util.Formatter;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -43,8 +44,8 @@ public class JsonParser {
     private volatile HashMap<String, JSONObject> jsonStore = new HashMap<String, JSONObject>(16);
 
     /**
-     * 默认构造函数，如果您需要配置jsonPath，请调用{@link JsonParser#setJsonPath(String)}；
-     * 或配置jsonObject，请调用{@link JsonParser#setJsonObject(String)}或{@link JsonParser#setJsonObject(JSONObject)}
+     * 默认构造函数，如果您需要配置jsonPath，请调用{@link JsonParser#setJsonPath(String)}； 或配置jsonObject，请调用{@link
+     * JsonParser#setJsonObject(String)}或{@link JsonParser#setJsonObject(JSONObject)}
      */
     public JsonParser() {
 
@@ -63,6 +64,7 @@ public class JsonParser {
      * 自动配置jsonPath，根据JSON文件路径读取json并转换为JSONObject
      *
      * @param jsonPath JSON文件的路径
+     *
      * @throws IOException 异常
      */
     public JsonParser(String jsonPath) throws IOException {
@@ -70,9 +72,20 @@ public class JsonParser {
     }
 
     /**
+     * 读取URL中的内容，并将结果转换成JSON
+     *
+     * @param url 网络链接
+     *
+     * @throws IOException 异常
+     */
+    public JsonParser(URL url) throws IOException {
+        setJsonPath(url);
+    }
+
+    /**
      * 自动配置jsonObject
      *
-     * @param json     Json文本
+     * @param json Json文本
      * @param isPretty 是否是格式化的Json，不清楚的话请设置为false
      */
     public JsonParser(String json, boolean isPretty) {
@@ -85,10 +98,11 @@ public class JsonParser {
     /**
      * 根据路径设置值
      *
-     * @param path  <a href=
-     *              "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     * @param path <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
      * @param value 值对象
+     *
      * @return 是否设置成功
+     *
      * @throws Exception 异常
      */
     public boolean set(String path, Object value) throws Exception {
@@ -99,8 +113,8 @@ public class JsonParser {
     /**
      * 根据路径获取对象
      *
-     * @param path <a href=
-     *             "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     * @param path <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     *
      * @return 对象
      */
     public Object eval(String path) {
@@ -121,8 +135,8 @@ public class JsonParser {
     /**
      * 获取大小
      *
-     * @param path <a href=
-     *             "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     * @param path <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     *
      * @return 大小
      */
     public int size(String path) {
@@ -132,8 +146,8 @@ public class JsonParser {
     /**
      * 是否包含某个对象
      *
-     * @param path <a href=
-     *             "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     * @param path <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     *
      * @return {@link Boolean}
      */
     public boolean contains(String path) {
@@ -143,9 +157,9 @@ public class JsonParser {
     /**
      * 是否包含某个值
      *
-     * @param path  <a href=
-     *              "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     * @param path <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
      * @param value 值
+     *
      * @return {@link Boolean}
      */
     public boolean containsValue(String path, Object value) {
@@ -155,7 +169,7 @@ public class JsonParser {
     /**
      * 数组追加数组
      *
-     * @param path   <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     * @param path <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
      * @param values 数组
      */
     public void arrayAdd(String path, Object... values) {
@@ -166,8 +180,8 @@ public class JsonParser {
     /**
      * 移除某个路径
      *
-     * @param path <a href=
-     *             "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     * @param path <a href= "https://github.com/alibaba/fastjson/wiki/JSONPath">路径语法</a>
+     *
      * @return 是否移除成功
      */
     public boolean remove(String path) {
@@ -179,6 +193,7 @@ public class JsonParser {
      * 检查路径头是否正确
      *
      * @param key 路径
+     *
      * @return 正确路径头
      */
     private String checkPath(String key) {
@@ -198,7 +213,9 @@ public class JsonParser {
      * 获取JsonObject
      *
      * @param key 例如：country
+     *
      * @return {@link JSONObject}
+     *
      * @throws Exception when key is invalid
      */
     public JSONObject getObject(String key) throws Exception {
@@ -206,10 +223,23 @@ public class JsonParser {
     }
 
     /**
+     * 获取JsonObject
+     *
+     * @param key 例如：country
+     *
+     * @return {@link JSONObject}
+     */
+    public JSONObject getObjectUseEval(String key) {
+        return (JSONObject) eval(key);
+    }
+
+    /**
      * 获取JsonArray
      *
      * @param key 例如：country.province
+     *
      * @return {@link JSONArray}
+     *
      * @throws Exception when key is invalid
      */
     public JSONArray getArray(String key) throws Exception {
@@ -217,10 +247,23 @@ public class JsonParser {
     }
 
     /**
+     * 获取JsonArray
+     *
+     * @param key 例如：country.province
+     *
+     * @return {@link JSONArray}
+     */
+    public JSONArray getArrayUseEval(String key) {
+        return (JSONArray) eval(key);
+    }
+
+    /**
      * 获取String
      *
      * @param key 例如：country.province[13].name
+     *
      * @return {@link String}
+     *
      * @throws Exception when key is invalid
      */
     public String getString(String key) throws Exception {
@@ -228,10 +271,23 @@ public class JsonParser {
     }
 
     /**
+     * 获取String
+     *
+     * @param key 例如：country.province[13].name
+     *
+     * @return {@link String}
+     */
+    public String getStringUseEval(String key) {
+        return eval(key).toString();
+    }
+
+    /**
      * 获取Integer
      *
      * @param key 例如：country.province[13].peopleNums
+     *
      * @return {@link Integer}
+     *
      * @throws Exception when key is invalid
      */
     public int getInteger(String key) throws Exception {
@@ -239,10 +295,23 @@ public class JsonParser {
     }
 
     /**
+     * 获取Integer
+     *
+     * @param key 例如：country.province[13].peopleNums
+     *
+     * @return {@link Integer}
+     */
+    public int getIntegerUseEval(String key) {
+        return Formatter.stringToInt(getStringUseEval(key));
+    }
+
+    /**
      * 获取Double
      *
      * @param key 例如：country.province[13].area
+     *
      * @return {@link Double}
+     *
      * @throws Exception when key is invalid
      */
     public double getDouble(String key) throws Exception {
@@ -250,9 +319,20 @@ public class JsonParser {
     }
 
     /**
+     * 获取Double
+     *
+     * @param key 例如：country.province[13].area
+     *
+     * @return {@link Double}
+     */
+    public double getDoubleUseEval(String key) {
+        return Formatter.stringToDouble(getStringUseEval(key));
+    }
+
+    /**
      * 缓存
      *
-     * @param key        键
+     * @param key 键
      * @param jsonObject 值
      */
     private void put(String key, JSONObject jsonObject) {
@@ -267,7 +347,9 @@ public class JsonParser {
      * 通过key解析JsonObject
      *
      * @param key
+     *
      * @return {@link JSONObject}
+     *
      * @throws Exception when key is invalid
      */
     private <T> Object get(String key, Class<T> classT) throws Exception {
@@ -347,11 +429,28 @@ public class JsonParser {
      * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
      *
      * @param jsonPath JSON文件的路径
+     *
      * @throws IOException 异常
      */
     public void setJsonPath(String jsonPath) throws IOException {
         this.jsonPath = jsonPath;
         load();
+    }
+
+    /**
+     * 设置JSON对应的URL
+     *
+     * @param url 网络链接
+     *
+     * @throws IOException 异常
+     */
+    public void setJsonPath(URL url) throws IOException {
+        String path = url.toString();
+        if (path.startsWith(Values.LOCAL_FILE_URL)) {
+            setJsonPath(path.split(":")[1]);
+        } else {
+            setJsonObject(FileExecutor.read(url));
+        }
     }
 
     /**
@@ -420,6 +519,7 @@ public class JsonParser {
      * 将JSONPath的路径简单地转换为JsonParser支持的key
      *
      * @param path 路径
+     *
      * @return key
      */
     private String pathToKey(String path) {

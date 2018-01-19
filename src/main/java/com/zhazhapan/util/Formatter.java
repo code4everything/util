@@ -109,8 +109,13 @@ public class Formatter {
     public static long sizeToLong(String size) {
         size = size.trim();
         if (Checker.isNotEmpty(size)) {
-            String num = size.split(" ")[0];
-            double result = 0;
+            String num;
+            if (size.contains(Values.SPACE)) {
+                num = size.split(Values.SPACE)[0];
+            } else {
+                num = Utils.extractDigit(size);
+            }
+            double result;
             if (size.contains(SIZE_TB)) {
                 result = stringToDouble(num) * Values.TB;
             } else if (size.contains(SIZE_GB)) {
