@@ -11,6 +11,11 @@ import java.io.File;
 public class Values {
 
     /**
+     * toString
+     */
+    public static final String TO_STRING_METHOD_NAME = "toString";
+
+    /**
      * 用户的主目录
      */
     public static final String USER_HOME = System.getProperty("user.home");

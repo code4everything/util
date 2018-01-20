@@ -6,7 +6,7 @@
 <dependency>
     <groupId>com.zhazhapan</groupId>
     <artifactId>util</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
@@ -120,6 +120,9 @@ FileExecutor.createNewFile("test.txt");
 
 // 10. 删除文件或文件夹（递归删除）
 FileExecutor.deleteFile("/Users/pantao/Desktop/test/test_merge.sql");
+
+// 11. 扫描文件夹下面所有的文件（返回一个文件列表）
+FileExecutor.scanFolder("/Users/Pantao/Desktop");
 ```
 
 **5. 简单的线程池**
@@ -332,10 +335,10 @@ MailSender.sendMail("tao@zhazhapan.com", "title", "this is a test email");
 **15. 将Bean类的属性字段转换成JSON**
 
 ``` java
-// 导包
-import com.zhazhapan.util.BeanUtils;
 
 // 一个Bean类
+// 也可以不用注解
+@ToJsonString(type = JsonType.PRETTY, modifier = FieldModifier.PRIVATE, method = JsonMethod.HANDLE)
 public class User {
     public int id;
     private String name;
@@ -352,7 +355,10 @@ public class User {
     @Override
     public String toString() {
         try {
+            // 1. 不使用注解
             return BeanUtils.toJsonString(this);
+            // 2. 使用注解
+            return BeanUtils.toJsonStringByAnnotation(this);
         } catch (IllegalAccessException e) {
             return e.getMessage();
         }
@@ -363,8 +369,14 @@ public class User {
 User user = new User(1, "test", new Date());
 System.out.println(user.toString());
 
-// 输出
-{"name":"test","birth":1516354822567,"id":1}
+// 不使用注解的输出
+{"name":"test","birth":1516429105846,"id":1}
+
+// 使用注解的输出
+{
+  "name": "test",
+  "birth": "Sat Jan 20 14:18:25 CST 2018"
+}
 ```
 
 **16. `com.zhazhapan.util.NetUtils`类**
@@ -374,3 +386,10 @@ System.out.println(user.toString());
 |getDataOfUrl|获取URL对应的网页内容|
 |getInputStreamOfUrl|获取URL对应的InputStream对象|
 |getInputStreamOfConnection|获取HttpURLConnection对应的InputStream对象|
+
+**16. `com.zhazhapan.util.ReflectUtils`类**
+
+|方法名|简要说明|
+|------|---------------|
+|newInstance|生成一个类的实例|
+|scanPackage|扫描包下面所有的类|

@@ -1,8 +1,14 @@
 package com.zhazhapan.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhazhapan.util.enums.FieldModifier;
+import com.zhazhapan.util.enums.JsonMethod;
+import com.zhazhapan.util.enums.JsonType;
+import com.zhazhapan.util.annotation.ToJsonString;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /**
  * @author pantao
@@ -11,6 +17,8 @@ import java.lang.reflect.Field;
 public class BeanUtils {
 
     private BeanUtils() {}
+
+    private static Logger logger = Logger.getLogger(BeanUtils.class);
 
     /**
      * 将Bean类的全部属性转换成JSON字符串
@@ -63,43 +71,54 @@ public class BeanUtils {
      * @throws IllegalAccessException 异常
      */
     public static String toJsonString(Object object, FieldModifier modifier) throws IllegalAccessException {
+        return toJsonString(object, modifier, JsonMethod.AUTO);
+    }
+
+    public static String toJsonString(Object object, FieldModifier modifier, JsonMethod method) throws IllegalAccessException {
         JSONObject jsonObject = new JSONObject();
+        StringBuilder builder = new StringBuilder("{");
         if (Checker.isNotNull(object)) {
             Class<?> bean = object.getClass();
-            if (modifier == FieldModifier.ALL || modifier == FieldModifier.PUBLIC) {
-                Field[] fields = bean.getFields();
-                for (Field field : fields) {
-                    jsonObject.put(field.getName(), field.get(object));
-                }
-            }
-            if (modifier == FieldModifier.ALL || modifier == FieldModifier.PRIVATE) {
-                Field[] declaredFields = bean.getDeclaredFields();
-                for (Field field : declaredFields) {
+            Field[] fields = bean.getDeclaredFields();
+            for (Field field : fields) {
+                int mod = field.getModifiers();
+                boolean addable = modifier == FieldModifier.ALL || (modifier == FieldModifier.PRIVATE && Modifier.isPrivate(mod)) || (modifier == FieldModifier.PUBLIC && Modifier.isPublic(mod));
+                if (addable) {
                     field.setAccessible(true);
-                    jsonObject.put(field.getName(), field.get(object));
+                    if (method == JsonMethod.HANDLE) {
+                        builder.append("\"").append(field.getName()).append("\":\"").append(field.get(object)).append("\",");
+                    } else {
+                        jsonObject.put(field.getName(), field.get(object));
+                    }
                 }
             }
         }
-        return jsonObject.toString();
+        return JsonMethod.HANDLE == method ? builder.substring(0, builder.length() - 1) + "}" : jsonObject.toString();
     }
 
     /**
-     * 字段的权限修饰符
+     * 通过注解将Bean转换为JSON
+     *
+     * @param object Bean对象
+     *
+     * @return {@link String}
+     *
+     * @throws IllegalAccessException 异常
      */
-    public enum FieldModifier {
-        /**
-         * public类型
-         */
-        PUBLIC,
-
-        /**
-         * private类型
-         */
-        PRIVATE,
-
-        /**
-         * 全部类型
-         */
-        ALL
+    public static String toJsonStringByAnnotation(Object object) throws IllegalAccessException {
+        JsonType jsonType = JsonType.CONDENSED;
+        FieldModifier modifier = FieldModifier.ALL;
+        JsonMethod method = JsonMethod.AUTO;
+        if (Checker.isNotNull(object)) {
+            Class<?> bean = object.getClass();
+            if (bean.isAnnotationPresent(ToJsonString.class)) {
+                ToJsonString annotation = bean.getAnnotation(ToJsonString.class);
+                jsonType = annotation.type();
+                modifier = annotation.modifier();
+                method = annotation.method();
+            }
+        }
+        String json = toJsonString(object, modifier, method);
+        return jsonType == JsonType.PRETTY ? Formatter.formatJson(json) : json;
     }
 }

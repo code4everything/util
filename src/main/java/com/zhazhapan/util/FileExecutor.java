@@ -9,6 +9,9 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author pantao
@@ -18,6 +21,42 @@ public class FileExecutor extends FileUtils {
     private static Logger logger = Logger.getLogger(FileExecutor.class);
 
     private FileExecutor() {}
+
+    /**
+     * 扫描文件夹下面所有文件
+     *
+     * @param folder 文件夹
+     *
+     * @return 文件路径列表
+     */
+    public static List<String> scanFolder(String folder) {
+        return scanFolder(new File(folder));
+    }
+
+    /**
+     * 扫描文件夹下面所有文件
+     *
+     * @param folder 文件夹
+     *
+     * @return 文件路径列表
+     */
+    public static List<String> scanFolder(File folder) {
+        List<String> list = new ArrayList<>(16);
+        if (folder.isDirectory()) {
+            String[] children = folder.list();
+            if (Checker.isNotNull(children)) {
+                for (String child : children) {
+                    File file = new File(child);
+                    if (file.isFile()) {
+                        list.add(file.getAbsolutePath());
+                    } else {
+                        list.addAll(scanFolder(file));
+                    }
+                }
+            }
+        }
+        return list;
+    }
 
     /**
      * 从网络链接中读取内容
@@ -385,9 +424,20 @@ public class FileExecutor extends FileUtils {
      * @return 文件数组
      */
     public static File[] getFiles(String[] filePath) {
-        File[] files = new File[filePath.length];
+        return getFiles(Arrays.asList(filePath));
+    }
+
+    /**
+     * 根据文件路径数组获取文件数组
+     *
+     * @param paths 路径数组
+     *
+     * @return 文件数组
+     */
+    public static File[] getFiles(List<String> paths) {
+        File[] files = new File[paths.size()];
         int i = 0;
-        for (String file : filePath) {
+        for (String file : paths) {
             files[i++] = new File(file);
         }
         return files;

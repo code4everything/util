@@ -1,7 +1,14 @@
 package com.zhazhapan.util;
 
+import com.zhazhapan.util.enums.FieldModifier;
+import com.zhazhapan.util.enums.JsonMethod;
+import com.zhazhapan.util.enums.JsonType;
+import com.zhazhapan.util.annotation.ToJsonString;
+import com.zhazhapan.util.common.interceptor.ToStringMethodInterceptor;
+import net.sf.cglib.proxy.Enhancer;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -11,13 +18,22 @@ import java.util.Date;
 public class BeanUtilsTest {
 
     @Test
-    public void testToJsonString() throws IllegalAccessException {
+    public void testToJsonString() throws IllegalAccessException, IOException, ClassNotFoundException {
         User user = new User(1, "test", new Date());
         System.out.println(user.toString());
         System.out.println(new User().toString());
+        System.out.println(BeanUtils.toJsonStringByAnnotation(user));
+
+        //测试cglib代理
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(User.class);
+        enhancer.setCallback(new ToStringMethodInterceptor());
+        User hello = (User) enhancer.create();
+        System.out.println(hello.hashCode());
     }
 }
 
+@ToJsonString(type = JsonType.PRETTY, modifier = FieldModifier.PRIVATE, method = JsonMethod.HANDLE)
 class User {
     public int id;
     private String name;
@@ -34,7 +50,7 @@ class User {
     @Override
     public String toString() {
         try {
-            return BeanUtils.toJsonString(this);
+            return BeanUtils.toJsonString(this, FieldModifier.ALL);
         } catch (IllegalAccessException e) {
             return e.getMessage();
         }
