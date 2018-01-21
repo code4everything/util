@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 /**
  * @author pantao
@@ -80,7 +81,7 @@ public class NetUtils {
     public static InputStream getInputStreamOfConnection(HttpURLConnection connection) throws IOException {
         connection.setConnectTimeout(1000 * 6);
         connection.setRequestProperty("Charset", "UTF-8");
-        connection.setRequestProperty("User-Agent", Values.USER_AGENT);
+        connection.setRequestProperty("User-Agent", Values.USER_AGENT[new Random().nextInt(Values.USER_AGENT.length)]);
         connection.setRequestProperty("Connection", "Keep-Alive");
         connection.setRequestProperty("Accept", "*/*");
         return connection.getInputStream();

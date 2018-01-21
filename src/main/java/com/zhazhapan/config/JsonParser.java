@@ -41,7 +41,7 @@ public class JsonParser {
     /**
      * 用来存储已经解析过Json对象
      */
-    private volatile HashMap<String, JSONObject> jsonStore = new HashMap<String, JSONObject>(16);
+    private volatile HashMap<String, JSONObject> jsonStore = new HashMap<>(16);
 
     /**
      * 默认构造函数，如果您需要配置jsonPath，请调用{@link JsonParser#setJsonPath(String)}； 或配置jsonObject，请调用{@link
@@ -470,6 +470,16 @@ public class JsonParser {
     public void setJsonObject(JSONObject jsonObject) {
         jsonStore.put(".", jsonObject);
         this.jsonObject = jsonObject;
+    }
+
+    /**
+     * 重写了toString方法，返回并格式化当前解析的JSONObject
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return Formatter.formatJson(jsonObject.toString());
     }
 
     /**

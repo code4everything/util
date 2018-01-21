@@ -461,6 +461,30 @@ public class FileExecutor extends FileUtils {
     }
 
     /**
+     * 创建文件，如果文件不存在的话
+     *
+     * @param filePath 文件路径
+     *
+     * @throws IOException 异常
+     */
+    public static void createFile(String filePath) throws IOException {
+        createFile(new File(filePath));
+    }
+
+    /**
+     * 创建文件，如果文件不存在的话
+     *
+     * @param file 文件
+     *
+     * @throws IOException 异常
+     */
+    public static void createFile(File file) throws IOException {
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+    }
+
+    /**
      * 创建一个新的空文件（如果文件存在，则删除重新创建）
      *
      * @param filePath 文件路径
@@ -486,7 +510,7 @@ public class FileExecutor extends FileUtils {
     }
 
     /**
-     * 删除文件
+     * 删除文件或文件夹
      *
      * @param filePath 文件路径
      *
@@ -497,7 +521,7 @@ public class FileExecutor extends FileUtils {
     }
 
     /**
-     * 删除文件
+     * 删除文件或文件夹
      *
      * @param file 文件
      *

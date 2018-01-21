@@ -49,6 +49,9 @@ jsonParser.remove("key1");
 
 // 6. 指定路径是否包含某个值
 boolean b = jsonParser.containsValue("key1", "test");
+
+// 7. 返回并格式化JSON
+jsonParser.toString();
 ```
 
 备注：[fastjson jsonpath路径语法](https://github.com/alibaba/fastjson/wiki/JSONPath)
@@ -123,6 +126,9 @@ FileExecutor.deleteFile("/Users/pantao/Desktop/test/test_merge.sql");
 
 // 11. 扫描文件夹下面所有的文件（返回一个文件列表）
 FileExecutor.scanFolder("/Users/Pantao/Desktop");
+
+// 12. 创建文件，如果文件不存在的话
+FileExecutor.createFile("test.txt");
 ```
 
 **5. 简单的线程池**
