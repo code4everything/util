@@ -38,12 +38,31 @@ public class MailSender {
     private static String key = "";
 
     /**
+     * 邮件服务器端口
+     */
+    private static int port = 0;
+
+    /**
      * 配置邮箱
      *
      * @param mailHost 邮件服务器
      * @param personal 个人名称
-     * @param from     发件箱
-     * @param key      密码
+     * @param from 发件箱
+     * @param key 密码
+     * @param port 端口
+     */
+    public static void config(MailHost mailHost, String personal, String from, String key, int port) {
+        config(mailHost, personal, from, key);
+        setPort(port);
+    }
+
+    /**
+     * 配置邮箱
+     *
+     * @param mailHost 邮件服务器
+     * @param personal 个人名称
+     * @param from 发件箱
+     * @param key 密码
      */
     public static void config(MailHost mailHost, String personal, String from, String key) {
         setHost(mailHost);
@@ -55,10 +74,10 @@ public class MailSender {
     /**
      * 配置邮箱
      *
-     * @param host     邮件服务器
+     * @param host 邮件服务器
      * @param personal 个人名称
-     * @param from     发件箱
-     * @param key      密码
+     * @param from 发件箱
+     * @param key 密码
      */
     public static void config(String host, String personal, String from, String key) {
         setHost(host);
@@ -72,18 +91,17 @@ public class MailSender {
      *
      * @param mailHost 邮件服务器
      * @param personal 个人名称
-     * @param to       收件箱
-     * @param title    标题
-     * @param content  内容
-     * @param from     收件箱
-     * @param key      密码
+     * @param to 收件箱
+     * @param title 标题
+     * @param content 内容
+     * @param from 收件箱
+     * @param key 密码
+     *
      * @throws UnsupportedEncodingException 异常
-     * @throws GeneralSecurityException     异常
-     * @throws MessagingException           异常
+     * @throws GeneralSecurityException 异常
+     * @throws MessagingException 异常
      */
-    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content,
-                                final String from, final String key)
-            throws UnsupportedEncodingException, GeneralSecurityException, MessagingException {
+    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content, final String from, final String key) throws UnsupportedEncodingException, GeneralSecurityException, MessagingException {
         setHost(mailHost);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
@@ -92,62 +110,62 @@ public class MailSender {
     /**
      * 发送邮件
      *
-     * @param host     邮件服务器
+     * @param host 邮件服务器
      * @param personal 个人名称
-     * @param to       收件箱
-     * @param title    标题
-     * @param content  内容
-     * @param from     收件箱
-     * @param key      密码
+     * @param to 收件箱
+     * @param title 标题
+     * @param content 内容
+     * @param from 收件箱
+     * @param key 密码
+     *
      * @throws UnsupportedEncodingException 异常
-     * @throws GeneralSecurityException     异常
-     * @throws MessagingException           异常
+     * @throws GeneralSecurityException 异常
+     * @throws MessagingException 异常
      */
-    public static void sendMail(String host, String personal, String to, String title, String content,
-                                final String from, final String key)
-            throws UnsupportedEncodingException, GeneralSecurityException, MessagingException {
+    public static void sendMail(String host, String personal, String to, String title, String content, final String from, final String key) throws UnsupportedEncodingException, GeneralSecurityException, MessagingException {
         setHost(host);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
     }
 
     /**
-     * 发送邮件，调用此方法前请先检查邮件服务器是否已经设置，如果没有设置，请先设置{@link MailSender#setHost(String)}，
-     * 如不设置将使用默认的QQ邮件服务器
+     * 发送邮件，调用此方法前请先检查邮件服务器是否已经设置，如果没有设置，请先设置{@link MailSender#setHost(String)}， 如不设置将使用默认的QQ邮件服务器
      *
-     * @param to      收件箱
-     * @param title   标题
+     * @param to 收件箱
+     * @param title 标题
      * @param content 内容
-     * @param from    发件箱
-     * @param key     密码
-     * @throws GeneralSecurityException     异常
+     * @param from 发件箱
+     * @param key 密码
+     *
+     * @throws GeneralSecurityException 异常
      * @throws UnsupportedEncodingException 异常
-     * @throws MessagingException           异常
+     * @throws MessagingException 异常
      */
-    public static void sendMail(String to, String title, String content, String from, String key)
-            throws GeneralSecurityException, UnsupportedEncodingException, MessagingException {
+    public static void sendMail(String to, String title, String content, String from, String key) throws GeneralSecurityException, UnsupportedEncodingException, MessagingException {
         setFrom(from);
         setKey(key);
         sendMail(to, title, content);
     }
 
     /**
-     * 发送邮件，调用此方法前请先检查邮件服务器是否已经设置，如果没有设置，请先设置{@link MailSender#setHost(String)}，
-     * 如不设置将使用默认的QQ邮件服务器
+     * 发送邮件，调用此方法前请先检查邮件服务器是否已经设置，如果没有设置，请先设置{@link MailSender#setHost(String)}， 如不设置将使用默认的QQ邮件服务器
      *
-     * @param to      收件箱
-     * @param title   标题
+     * @param to 收件箱
+     * @param title 标题
      * @param content 内容
-     * @throws GeneralSecurityException     异常
+     *
+     * @throws GeneralSecurityException 异常
      * @throws UnsupportedEncodingException 异常
-     * @throws MessagingException           异常
+     * @throws MessagingException 异常
      */
-    public static void sendMail(String to, String title, String content)
-            throws GeneralSecurityException, UnsupportedEncodingException, MessagingException {
+    public static void sendMail(String to, String title, String content) throws GeneralSecurityException, UnsupportedEncodingException, MessagingException {
         // 获取系统属性
         Properties properties = System.getProperties();
         // 设置邮件服务器
         properties.setProperty("mail.smtp.host", host);
+        if (port > 0) {
+            properties.setProperty("mail.smtp.port", String.valueOf(port));
+        }
         properties.put("mail.smtp.auth", "true");
         MailSSLSocketFactory sf;
         sf = new MailSSLSocketFactory();
@@ -189,15 +207,6 @@ public class MailSender {
     /**
      * 设置邮件服务器
      *
-     * @param host {@link String}
-     */
-    public static void setHost(String host) {
-        MailSender.host = host;
-    }
-
-    /**
-     * 设置邮件服务器
-     *
      * @param mailHost {@link MailHost}
      */
     public static void setHost(MailHost mailHost) {
@@ -218,6 +227,15 @@ public class MailSender {
                 host = "smtp.qq.com";
                 break;
         }
+    }
+
+    /**
+     * 设置邮件服务器
+     *
+     * @param host {@link String}
+     */
+    public static void setHost(String host) {
+        MailSender.host = host;
     }
 
     /**
@@ -274,23 +292,35 @@ public class MailSender {
         MailSender.key = key;
     }
 
+    public static int getPort() {
+        return port;
+    }
+
+    public static void setPort(int port) {
+        MailSender.port = port;
+    }
+
     public enum MailHost {
         /**
          * QQ邮件服务器
          */
         QQ,
+
         /**
          * 网易163邮件服务器
          */
         NE163,
+
         /**
          * 谷歌邮件服务器
          */
         GMAIL,
+
         /**
          * 新浪邮件服务器
          */
         SINA,
+
         /**
          * OutLook邮件服务器
          */
