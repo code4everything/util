@@ -11,6 +11,7 @@ import com.zhazhapan.modules.constant.Values;
 import com.zhazhapan.util.Checker;
 import com.zhazhapan.util.FileExecutor;
 import com.zhazhapan.util.Formatter;
+import com.zhazhapan.util.NetUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -130,6 +131,17 @@ public class JsonParser {
             }
             return object;
         }
+    }
+
+    /**
+     * 获取一个boolean
+     *
+     * @param key 路径
+     *
+     * @return {@link Boolean}
+     */
+    public boolean getBooleanUseEval(String key) {
+        return (boolean) eval(key);
     }
 
     /**
@@ -447,7 +459,7 @@ public class JsonParser {
     public void setJsonPath(URL url) throws IOException {
         String path = url.toString();
         if (path.startsWith(Values.LOCAL_FILE_URL)) {
-            setJsonPath(path.split(":")[1]);
+            setJsonPath(NetUtils.UrlToString(url));
         } else {
             setJsonObject(FileExecutor.read(url));
         }

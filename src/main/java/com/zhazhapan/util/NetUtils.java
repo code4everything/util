@@ -17,6 +17,17 @@ public class NetUtils {
     private NetUtils() {}
 
     /**
+     * 将URL转换成String
+     *
+     * @param url {@link URL}
+     *
+     * @return {@link String}
+     */
+    public static String UrlToString(URL url) {
+        return Checker.isNull(url) ? "" : url.toString().replaceAll("file:/?", "");
+    }
+
+    /**
      * 获取URL中的数据
      *
      * @param url 网络链接
