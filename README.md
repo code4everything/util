@@ -230,6 +230,9 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 | isEmpty       | 列表或集合是否为空                        |
 | isHyperLink   | 是否是超链接（URL）                      |
 | checkDate     | 检测日期是否为null，如果是，返回当前日期，否则返回原日期   |
+|isWindows|判断当前系统是否是Windows|
+|isMacOS|判断当前系统是否是Mac|
+|isLinux|判断当前系统是否是Linux|
 
 **9. `com.zhazhapan.util.Formatter`类**
 
@@ -283,6 +286,7 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 | getYear           | 获取年份                    |
 | getMaxValue       | 从多个数字中获取最大值             |
 | mergeSortedArrays | 将两个已经排好序（同序）的数组合并一个有序数组 |
+|getCurrentOS()|获取当前系统名称|
 
 **11. `com.zhazhapan.util.ArraySort`类**
 

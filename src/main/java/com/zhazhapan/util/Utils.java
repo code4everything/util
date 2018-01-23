@@ -35,6 +35,15 @@ public class Utils {
     private Utils() {}
 
     /**
+     * 获取当前系统名称
+     *
+     * @return {@link String}
+     */
+    public static String getCurrentOS() {
+        return System.getProperties().getProperty("os.name").toLowerCase();
+    }
+
+    /**
      * 抽取字符串的数字，并转换为Double
      *
      * @param string {@link String}

@@ -3,13 +3,13 @@
  */
 package com.zhazhapan.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -37,10 +37,45 @@ public class MailSender {
      */
     private static String key = "";
 
+    private static String sslEnable = "true";
+
     /**
      * 邮件服务器端口
      */
     private static int port = 0;
+
+    /**
+     * 通过JSON配置
+     *
+     * @param jsonString {@link String}
+     */
+    public static void config(String jsonString) {
+        config(JSON.parseObject(jsonString));
+    }
+
+    /**
+     * 通过JSON配置
+     *
+     * @param jsonObject {@link JSONObject}
+     */
+    public static void config(JSONObject jsonObject) {
+        config(jsonObject.getString("host"), jsonObject.getString("personal"), jsonObject.getString("from"), jsonObject.getString("key"), jsonObject.getInteger("port"));
+        setSslEnable(jsonObject.getString("ssl"));
+    }
+
+    /**
+     * 配置邮箱
+     *
+     * @param host 邮件服务器
+     * @param personal 个人名称
+     * @param from 发件箱
+     * @param key 密码
+     * @param port 端口
+     */
+    public static void config(String host, String personal, String from, String key, int port) {
+        config(host, personal, from, key);
+        setPort(port);
+    }
 
     /**
      * 配置邮箱
@@ -97,11 +132,9 @@ public class MailSender {
      * @param from 收件箱
      * @param key 密码
      *
-     * @throws UnsupportedEncodingException 异常
-     * @throws GeneralSecurityException 异常
-     * @throws MessagingException 异常
+     * @throws Exception 异常
      */
-    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content, final String from, final String key) throws UnsupportedEncodingException, GeneralSecurityException, MessagingException {
+    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content, final String from, final String key) throws Exception {
         setHost(mailHost);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
@@ -118,11 +151,9 @@ public class MailSender {
      * @param from 收件箱
      * @param key 密码
      *
-     * @throws UnsupportedEncodingException 异常
-     * @throws GeneralSecurityException 异常
-     * @throws MessagingException 异常
+     * @throws Exception 异常
      */
-    public static void sendMail(String host, String personal, String to, String title, String content, final String from, final String key) throws UnsupportedEncodingException, GeneralSecurityException, MessagingException {
+    public static void sendMail(String host, String personal, String to, String title, String content, final String from, final String key) throws Exception {
         setHost(host);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
@@ -137,11 +168,9 @@ public class MailSender {
      * @param from 发件箱
      * @param key 密码
      *
-     * @throws GeneralSecurityException 异常
-     * @throws UnsupportedEncodingException 异常
-     * @throws MessagingException 异常
+     * @throws Exception 异常
      */
-    public static void sendMail(String to, String title, String content, String from, String key) throws GeneralSecurityException, UnsupportedEncodingException, MessagingException {
+    public static void sendMail(String to, String title, String content, String from, String key) throws Exception {
         setFrom(from);
         setKey(key);
         sendMail(to, title, content);
@@ -154,11 +183,12 @@ public class MailSender {
      * @param title 标题
      * @param content 内容
      *
-     * @throws GeneralSecurityException 异常
-     * @throws UnsupportedEncodingException 异常
-     * @throws MessagingException 异常
+     * @throws Exception 异常
      */
-    public static void sendMail(String to, String title, String content) throws GeneralSecurityException, UnsupportedEncodingException, MessagingException {
+    public static void sendMail(String to, String title, String content) throws Exception {
+        if (!Checker.isEmail(to)) {
+            throw new Exception("this email address is not valid. please check it again");
+        }
         // 获取系统属性
         Properties properties = System.getProperties();
         // 设置邮件服务器
@@ -170,7 +200,7 @@ public class MailSender {
         MailSSLSocketFactory sf;
         sf = new MailSSLSocketFactory();
         sf.setTrustAllHosts(true);
-        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.ssl.enable", sslEnable);
         properties.put("mail.smtp.ssl.socketFactory", sf);
         // 获取默认session对象
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
@@ -292,12 +322,31 @@ public class MailSender {
         MailSender.key = key;
     }
 
+    /**
+     * 获取端口
+     *
+     * @return {@link Integer}
+     */
     public static int getPort() {
         return port;
     }
 
+    /**
+     * 设置端口
+     *
+     * @param port {@link Integer}
+     */
     public static void setPort(int port) {
         MailSender.port = port;
+    }
+
+    /**
+     * 是否开启SSL
+     *
+     * @param sslEnable
+     */
+    public static void setSslEnable(String sslEnable) {
+        MailSender.sslEnable = sslEnable;
     }
 
     public enum MailHost {

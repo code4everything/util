@@ -32,9 +32,36 @@ public class Checker {
     /**
      * 邮箱匹配，忽略大小写
      */
-    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z]+([0-9a-z]|(\\.[0-9a-z]+))*@[0-9a-z]+(\\.{1}[0-9a-z]+)+$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))*@[0-9a-z\\-]+(\\.{1}[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
 
     private Checker() {}
+
+    /**
+     * 判断当前系统是否是Windows
+     *
+     * @return {@link Boolean}
+     */
+    public static boolean isWindows() {
+        return Utils.getCurrentOS().startsWith("windows");
+    }
+
+    /**
+     * 判断当前系统是否是Mac
+     *
+     * @return {@link Boolean}
+     */
+    public static boolean isMacOS() {
+        return Utils.getCurrentOS().startsWith("mac");
+    }
+
+    /**
+     * 判断当前系统是否是Linux
+     *
+     * @return {@link Boolean}
+     */
+    public static boolean isLinux() {
+        return Utils.getCurrentOS().startsWith("linux");
+    }
 
     /**
      * 检查数组是否已经排好序

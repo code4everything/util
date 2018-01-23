@@ -24,7 +24,7 @@ public class NetUtils {
      * @return {@link String}
      */
     public static String UrlToString(URL url) {
-        return Checker.isNull(url) ? "" : url.toString().replaceAll("file:/?", "");
+        return Checker.isNull(url) ? "" : url.toString().replaceAll("file:" + (Checker.isWindows() ? "/?" : ""), "");
     }
 
     /**
