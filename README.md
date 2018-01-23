@@ -233,6 +233,7 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 |isWindows|判断当前系统是否是Windows|
 |isMacOS|判断当前系统是否是Mac|
 |isLinux|判断当前系统是否是Linux|
+|isLimited|判断字符串的长度是否在某个范围|
 
 **9. `com.zhazhapan.util.Formatter`类**
 

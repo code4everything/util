@@ -123,13 +123,7 @@ public class JsonParser {
         if (jsonStore.containsKey(key)) {
             return jsonStore.get(key);
         } else {
-            Object object = JSONPath.eval(jsonObject, checkPath(path));
-            try {
-                put(key, (JSONObject) object);
-            } catch (Exception e) {
-                logger.error("save json cache error(this message has no effect for you): " + e.getMessage());
-            }
-            return object;
+            return JSONPath.eval(jsonObject, checkPath(path));
         }
     }
 
@@ -138,7 +132,7 @@ public class JsonParser {
      *
      * @param key 路径
      *
-     * @return {@link Boolean}
+     * @return
      */
     public boolean getBooleanUseEval(String key) {
         return (boolean) eval(key);
@@ -438,6 +432,18 @@ public class JsonParser {
     }
 
     /**
+     * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
+     *
+     * @param jsonPath JSON文件的路径
+     *
+     * @throws IOException 异常
+     */
+    public void setJsonPath(String jsonPath) throws IOException {
+        this.jsonPath = jsonPath;
+        load();
+    }
+
+    /**
      * 设置JSON对应的URL
      *
      * @param url 网络链接
@@ -454,33 +460,12 @@ public class JsonParser {
     }
 
     /**
-     * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
-     *
-     * @param jsonPath JSON文件的路径
-     *
-     * @throws IOException 异常
-     */
-    public void setJsonPath(String jsonPath) throws IOException {
-        this.jsonPath = jsonPath;
-        load();
-    }
-
-    /**
      * 获取当前解析的JsonObject
      *
      * @return {@link JSONObject}
      */
     public JSONObject getJsonObject() {
         return jsonObject;
-    }
-
-    /**
-     * 配置JsonObject
-     *
-     * @param json 传入json文本，自动转换为JsonObject
-     */
-    public void setJsonObject(String json) {
-        setJsonObject(JSON.parseObject(json));
     }
 
     /**
@@ -501,6 +486,15 @@ public class JsonParser {
     @Override
     public String toString() {
         return Formatter.formatJson(jsonObject.toString());
+    }
+
+    /**
+     * 配置JsonObject
+     *
+     * @param json 传入json文本，自动转换为JsonObject
+     */
+    public void setJsonObject(String json) {
+        setJsonObject(JSON.parseObject(json));
     }
 
     /**

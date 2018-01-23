@@ -37,7 +37,7 @@ public class MailSender {
      */
     private static String key = "";
 
-    private static String sslEnable = "true";
+    private static boolean sslEnable = true;
 
     /**
      * 邮件服务器端口
@@ -60,7 +60,7 @@ public class MailSender {
      */
     public static void config(JSONObject jsonObject) {
         config(jsonObject.getString("host"), jsonObject.getString("personal"), jsonObject.getString("from"), jsonObject.getString("key"), jsonObject.getInteger("port"));
-        setSslEnable(jsonObject.getString("ssl"));
+        setSslEnable(jsonObject.getBoolean("ssl"));
     }
 
     /**
@@ -202,14 +202,15 @@ public class MailSender {
         sf.setTrustAllHosts(true);
         properties.put("mail.smtp.ssl.enable", sslEnable);
         properties.put("mail.smtp.ssl.socketFactory", sf);
-        // 获取默认session对象
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+        // 获取session对象
+        Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             public PasswordAuthentication getPasswordAuthentication() {
                 // 发件人邮件用户名、密码
                 return new PasswordAuthentication(from, key);
             }
         });
+
         // 创建默认的MimeMessage对象
         MimeMessage message = new MimeMessage(session);
         // Set From:头部头字段
@@ -345,7 +346,7 @@ public class MailSender {
      *
      * @param sslEnable
      */
-    public static void setSslEnable(String sslEnable) {
+    public static void setSslEnable(boolean sslEnable) {
         MailSender.sslEnable = sslEnable;
     }
 

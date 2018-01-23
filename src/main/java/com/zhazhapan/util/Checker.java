@@ -37,6 +37,19 @@ public class Checker {
     private Checker() {}
 
     /**
+     * 判断字符串的长度是否在某个范围
+     *
+     * @param string 字符串
+     * @param min 最小长度
+     * @param max 最大长度
+     *
+     * @return {@link Boolean}
+     */
+    public static boolean isLimited(String string, int min, int max) {
+        return string.length() >= min && string.length() <= max;
+    }
+
+    /**
      * 判断当前系统是否是Windows
      *
      * @return {@link Boolean}
