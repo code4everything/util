@@ -1,8 +1,6 @@
-/**
- *
- */
 package com.zhazhapan.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -216,17 +214,11 @@ public class Formatter {
      * @return {@link String}
      */
     public static String listToJson(List<?> list) {
-        StringBuilder result = new StringBuilder("[");
+        JSONArray array = new JSONArray();
         if (Checker.isNotEmpty(list)) {
-            int i = 0;
-            for (Object object : list) {
-                result.append(object.toString());
-                if (++i < list.size()) {
-                    result.append(",");
-                }
-            }
+            list.forEach(item -> array.add(item.toString()));
         }
-        return formatJson(result.append("]").toString());
+        return formatJson(array.toString());
     }
 
     /**

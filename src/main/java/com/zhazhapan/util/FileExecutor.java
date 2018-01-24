@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util;
 
 import com.zhazhapan.modules.constant.Values;
@@ -22,6 +19,16 @@ public class FileExecutor extends FileUtils {
 
     private FileExecutor() {}
 
+    public static String[] scanFolderAsArray(String folder) {
+        List<String> list = scanFolder(folder);
+        String[] arrays = new String[list.size()];
+        int i = 0;
+        for (String item : list) {
+            arrays[i++] = item;
+        }
+        return arrays;
+    }
+
     /**
      * 扫描文件夹下面所有文件
      *
@@ -41,16 +48,17 @@ public class FileExecutor extends FileUtils {
      * @return 文件路径列表
      */
     public static List<String> scanFolder(File folder) {
+        String parent = folder.getAbsolutePath() + Values.SEPARATOR;
         List<String> list = new ArrayList<>(16);
         if (folder.isDirectory()) {
             String[] children = folder.list();
             if (Checker.isNotNull(children)) {
                 for (String child : children) {
-                    File file = new File(child);
-                    if (file.isFile()) {
-                        list.add(file.getAbsolutePath());
-                    } else {
+                    File file = new File(parent + child);
+                    if (file.isDirectory()) {
                         list.addAll(scanFolder(file));
+                    } else {
+                        list.add(file.getAbsolutePath());
                     }
                 }
             }
@@ -137,8 +145,8 @@ public class FileExecutor extends FileUtils {
      */
     public static void copyDirectories(File[] directories, String storageFolder) throws IOException {
         storageFolder = checkFolder(storageFolder) + Values.SEPARATOR;
-        for (int i = 0; i < directories.length; i++) {
-            copyDirectory(directories[i], new File(storageFolder + directories[i].getName()));
+        for (File directory : directories) {
+            copyDirectory(directory, new File(storageFolder + directory.getName()));
         }
     }
 
@@ -206,11 +214,11 @@ public class FileExecutor extends FileUtils {
      * 新建文件夹，如果文件夹存在则不创建
      *
      * @param director 文件夹
+     *
+     * @return 文件夹是否创建成功（如果文件夹存在同样返回true）
      */
-    public static void createFolder(File director) {
-        if (director.isDirectory() && !director.exists()) {
-            director.mkdir();
-        }
+    public static boolean createFolder(File director) {
+        return director.isDirectory() && (director.exists() || director.mkdir());
     }
 
     /**
@@ -239,8 +247,8 @@ public class FileExecutor extends FileUtils {
      */
     public static void copyFiles(File[] files, String storageFolder) throws IOException {
         storageFolder = checkFolder(storageFolder) + Values.SEPARATOR;
-        for (int i = 0; i < files.length; i++) {
-            copyFile(files[i], new File(storageFolder + files[i].getName()));
+        for (File file : files) {
+            copyFile(file, new File(storageFolder + file.getName()));
         }
     }
 
@@ -327,6 +335,56 @@ public class FileExecutor extends FileUtils {
     }
 
     /**
+     * 批量重命名文件
+     *
+     * @param folder 文件夹
+     * @param prefix 文件前缀
+     * @param suffix 文件后缀
+     * @param start 开始位置
+     */
+    public static void renameFiles(String folder, String prefix, String suffix, int start) {
+        renameFiles(scanFolderAsArray(folder), prefix, suffix, start);
+    }
+
+    /**
+     * 批量重命名文件
+     *
+     * @param filePath 文件路径数组
+     * @param prefix 文件前缀
+     * @param suffix 文件后缀
+     * @param start 开始位置
+     */
+    public static void renameFiles(String[] filePath, String prefix, String suffix, int start) {
+        renameFiles(getFiles(filePath), prefix, suffix, start);
+    }
+
+    /**
+     * 批量重命名文件
+     *
+     * @param filePath 文件数组
+     * @param prefix 文件前缀
+     * @param suffix 文件后缀
+     * @param start 开始位置
+     */
+    public static void renameFiles(File[] filePath, String prefix, String suffix, int start) {
+        String[] fileNames = new String[filePath.length];
+        for (int i = 0; i < fileNames.length; i++) {
+            fileNames[i] = prefix + (start++) + suffix;
+        }
+        renameFiles(filePath, fileNames);
+    }
+
+    /**
+     * 批量重命名文件
+     *
+     * @param folder 文件夹
+     * @param fileNames 文件名，与文件数组一一对应
+     */
+    public static void renameFiles(String folder, String[] fileNames) {
+        renameFiles(scanFolderAsArray(folder), fileNames);
+    }
+
+    /**
      * 重命名多个文件
      *
      * @param filePath 文件路径数组
@@ -349,8 +407,11 @@ public class FileExecutor extends FileUtils {
             if (!fileName.contains(".")) {
                 fileName += files[i].getName().substring(files[i].getName().lastIndexOf("."));
             }
-            files[i].renameTo(new File(fileName));
-            logger.info("rename file '" + files[i].getAbsolutePath() + "' to '" + fileName + "'");
+            if (files[i].renameTo(new File(fileName))) {
+                logger.info("rename file '" + files[i].getAbsolutePath() + "' to '" + fileName + "'");
+            } else {
+                logger.info("rename file '" + files[i].getAbsolutePath() + "' error");
+            }
         }
     }
 
@@ -465,10 +526,12 @@ public class FileExecutor extends FileUtils {
      *
      * @param filePath 文件路径
      *
+     * @return 文件是否创建成功（如果文件已经存在同样返回true）
+     *
      * @throws IOException 异常
      */
-    public static void createFile(String filePath) throws IOException {
-        createFile(new File(filePath));
+    public static boolean createFile(String filePath) throws IOException {
+        return createFile(new File(filePath));
     }
 
     /**
@@ -476,12 +539,12 @@ public class FileExecutor extends FileUtils {
      *
      * @param file 文件
      *
+     * @return 文件是否创建成功（如果文件已经存在同样返回true）
+     *
      * @throws IOException 异常
      */
-    public static void createFile(File file) throws IOException {
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+    public static boolean createFile(File file) throws IOException {
+        return file.exists() || file.createNewFile();
     }
 
     /**
@@ -489,10 +552,12 @@ public class FileExecutor extends FileUtils {
      *
      * @param filePath 文件路径
      *
+     * @return 文件是否创建成功
+     *
      * @throws IOException 异常
      */
-    public static void createNewFile(String filePath) throws IOException {
-        createNewFile(new File(filePath));
+    public static boolean createNewFile(String filePath) throws IOException {
+        return createNewFile(new File(filePath));
     }
 
     /**
@@ -500,13 +565,12 @@ public class FileExecutor extends FileUtils {
      *
      * @param file 文件
      *
+     * @return 文件是否创建成功
+     *
      * @throws IOException 异常
      */
-    public static void createNewFile(File file) throws IOException {
-        if (file.exists()) {
-            file.delete();
-        }
-        file.createNewFile();
+    public static boolean createNewFile(File file) throws IOException {
+        return (!file.exists() || file.delete()) && file.createNewFile();
     }
 
     /**
