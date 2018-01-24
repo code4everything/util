@@ -32,7 +32,7 @@ public class Checker {
     /**
      * 邮箱匹配，忽略大小写
      */
-    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))*@[0-9a-z\\-]+(\\.{1}[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
 
     private Checker() {}
 
