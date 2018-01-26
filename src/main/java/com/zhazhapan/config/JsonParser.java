@@ -31,14 +31,17 @@ public class JsonParser {
      * 最大缓存大小
      */
     private int maxCache = 1024;
+
     /**
      * json文件的绝对路径
      */
     private String jsonPath;
+
     /**
      * 需要解析的JsonObject
      */
     private JSONObject jsonObject;
+
     /**
      * 用来存储已经解析过Json对象
      */
@@ -120,11 +123,7 @@ public class JsonParser {
      */
     public Object eval(String path) {
         String key = pathToKey(path);
-        if (jsonStore.containsKey(key)) {
-            return jsonStore.get(key);
-        } else {
-            return JSONPath.eval(jsonObject, checkPath(path));
-        }
+        return jsonStore.containsKey(key) ? jsonStore.get(key) : JSONPath.eval(jsonObject, checkPath(path));
     }
 
     /**
@@ -135,7 +134,8 @@ public class JsonParser {
      * @return
      */
     public boolean getBooleanUseEval(String key) {
-        return (boolean) eval(key);
+        Object object = eval(key);
+        return Checker.isNull(object) ? null : (boolean) object;
     }
 
     /**
@@ -236,7 +236,8 @@ public class JsonParser {
      * @return {@link JSONObject}
      */
     public JSONObject getObjectUseEval(String key) {
-        return (JSONObject) eval(key);
+        Object object = eval(key);
+        return Checker.isNull(object) ? null : (JSONObject) object;
     }
 
     /**
@@ -260,7 +261,8 @@ public class JsonParser {
      * @return {@link JSONArray}
      */
     public JSONArray getArrayUseEval(String key) {
-        return (JSONArray) eval(key);
+        Object object = eval(key);
+        return Checker.isNull(object) ? null : (JSONArray) object;
     }
 
     /**
@@ -284,7 +286,8 @@ public class JsonParser {
      * @return {@link String}
      */
     public String getStringUseEval(String key) {
-        return eval(key).toString();
+        Object object = eval(key);
+        return Checker.isNull(object) ? null : object.toString();
     }
 
     /**
@@ -308,7 +311,8 @@ public class JsonParser {
      * @return {@link Integer}
      */
     public int getIntegerUseEval(String key) {
-        return Formatter.stringToInt(getStringUseEval(key));
+        String string = getStringUseEval(key);
+        return Checker.isNull(string) ? null : Formatter.stringToInt(string);
     }
 
     /**
@@ -332,7 +336,8 @@ public class JsonParser {
      * @return {@link Double}
      */
     public double getDoubleUseEval(String key) {
-        return Formatter.stringToDouble(getStringUseEval(key));
+        String string = getStringUseEval(key);
+        return Checker.isNull(string) ? null : Formatter.stringToDouble(string);
     }
 
     /**
@@ -432,18 +437,6 @@ public class JsonParser {
     }
 
     /**
-     * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
-     *
-     * @param jsonPath JSON文件的路径
-     *
-     * @throws IOException 异常
-     */
-    public void setJsonPath(String jsonPath) throws IOException {
-        this.jsonPath = jsonPath;
-        load();
-    }
-
-    /**
      * 设置JSON对应的URL
      *
      * @param url 网络链接
@@ -460,12 +453,33 @@ public class JsonParser {
     }
 
     /**
+     * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
+     *
+     * @param jsonPath JSON文件的路径
+     *
+     * @throws IOException 异常
+     */
+    public void setJsonPath(String jsonPath) throws IOException {
+        this.jsonPath = jsonPath;
+        load();
+    }
+
+    /**
      * 获取当前解析的JsonObject
      *
      * @return {@link JSONObject}
      */
     public JSONObject getJsonObject() {
         return jsonObject;
+    }
+
+    /**
+     * 配置JsonObject
+     *
+     * @param json 传入json文本，自动转换为JsonObject
+     */
+    public void setJsonObject(String json) {
+        setJsonObject(JSON.parseObject(json));
     }
 
     /**
@@ -486,15 +500,6 @@ public class JsonParser {
     @Override
     public String toString() {
         return Formatter.formatJson(jsonObject.toString());
-    }
-
-    /**
-     * 配置JsonObject
-     *
-     * @param json 传入json文本，自动转换为JsonObject
-     */
-    public void setJsonObject(String json) {
-        setJsonObject(JSON.parseObject(json));
     }
 
     /**

@@ -3,6 +3,7 @@
  */
 package com.zhazhapan.util.encryption;
 
+import org.apache.commons.codec.binary.Hex;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.*;
@@ -267,6 +268,23 @@ public class JavaEncrypt {
      */
     public static String sha(String string) throws NoSuchAlgorithmException {
         return messageDigest("SHA", string, 32);
+    }
+
+    /**
+     * SHA-256加密
+     *
+     * @param string {@link String}
+     *
+     * @return {@link String}
+     *
+     * @throws NoSuchAlgorithmException 异常
+     * @throws UnsupportedEncodingException 异常
+     */
+    public static String sha256(String string) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest messageDigest;
+        messageDigest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
+        return Hex.encodeHexString(hash);
     }
 
     /**

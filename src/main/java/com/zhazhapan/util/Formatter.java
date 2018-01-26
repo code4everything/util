@@ -1,6 +1,7 @@
 package com.zhazhapan.util;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,34 +32,42 @@ public class Formatter {
      * 文件名匹配（不能包含非法字符）,忽略大小写
      */
     public static final Pattern FILE_NAME_PATTERN = Pattern.compile("([^/\\\\:*\"<>|?]+\\.)*[^/\\\\:*\"<>|?]+(\\?.*)?$", Pattern.CASE_INSENSITIVE);
+
     /**
      * 单位KB
      */
     private static final String SIZE_KB = "KB";
+
     /**
      * 单位MB
      */
     private static final String SIZE_MB = "MB";
+
     /**
      * 单位GB
      */
     private static final String SIZE_GB = "GB";
+
     /**
      * 单位TB
      */
     private static final String SIZE_TB = "TB";
+
     /**
      * yyyy-MM-dd HH:mm:ss格式
      */
     private static final SimpleDateFormat DATE_WITH_LONG_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     /**
      * yyyy-MM-dd格式
      */
     private static SimpleDateFormat DATE_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
+
     /**
      * HH:mm:ss格式
      */
     private static SimpleDateFormat LONG_TIME = new SimpleDateFormat("HH:mm:ss");
+
     /**
      * HH:mm格式
      */
@@ -204,6 +214,26 @@ public class Formatter {
      */
     public static synchronized String timeStampToString(long time) {
         return DATE_WITH_LONG_TIME.format(time);
+    }
+
+    /**
+     * 将Map转换成JSON，调用对象的toString方法
+     *
+     * @param map {@link Map}
+     *
+     * @return {@link String}
+     */
+    public static String mapToJson(Map<?, ?> map) {
+        JSONArray array = new JSONArray();
+        if (Checker.isNotEmpty(map)) {
+            map.forEach((key, value) -> {
+                JSONObject object = new JSONObject();
+                object.put("key", key);
+                object.put("value", value);
+                array.add(object);
+            });
+        }
+        return formatJson(array.toString());
     }
 
     /**

@@ -1,11 +1,11 @@
 package com.zhazhapan.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
+import com.zhazhapan.util.annotation.ToJsonString;
 import com.zhazhapan.util.enums.FieldModifier;
 import com.zhazhapan.util.enums.JsonMethod;
 import com.zhazhapan.util.enums.JsonType;
-import com.zhazhapan.util.annotation.ToJsonString;
-import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -18,7 +18,21 @@ public class BeanUtils {
 
     private BeanUtils() {}
 
-    private static Logger logger = Logger.getLogger(BeanUtils.class);
+    /**
+     * 将JOSNObject转换为Bean
+     *
+     * @param jsonObject {@link JSONObject}
+     * @param object {@link Object}
+     *
+     * @throws IllegalAccessException 异常
+     */
+    public static void jsonPutIn(JSONObject jsonObject, Object object) throws IllegalAccessException {
+        Field[] fields = object.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            field.set(object, TypeUtils.castToJavaBean(jsonObject.get(field.getName()), field.getType()));
+        }
+    }
 
     /**
      * 将Bean类的全部属性转换成JSON字符串

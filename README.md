@@ -172,6 +172,8 @@ import com.zhazhapan.util.decryption.JavaEncrypt;
 // 如何使用
 String code = JavaEncrypt.md5("this is a md5 encrypt method");
 
+String sha256 = JavaEncrypt.sha256("123456");
+
 // 主要是base64解密
 import com.zhazhapan.util.decryption.JavaDecrypt;
 
@@ -265,6 +267,8 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 | numberFormat           | 将数字格式化为指定长度的字符串（不足用0补齐）               |
 | localDateToDate        | 将java.time.LocalDate转换为java.util.Date |
 | dateToLocalDate        | 将java.util.Date转换为java.time.LocalDate |
+| listToJson        | 将List转换为JSON |
+| mapToJson        | 将Map转换为JSON |
 
 **10. `com.zhazhapan.util.Utils`类**
 
@@ -343,10 +347,11 @@ MailSender.sendMail("tao@zhazhapan.com", "title", "this is a test email");
 |getRandomStringOnlyLowerCase|获取一个只有小写字母的随机字符串|
 |getRandomText|获取一个字符串|
 
-**15. 将Bean类的属性字段转换成JSON**
+**15. JSON与Bean互相转换**
+
+*Bean转JSON*
 
 ``` java
-
 // 一个Bean类
 // 也可以不用注解
 @ToJsonString(type = JsonType.PRETTY, modifier = FieldModifier.PRIVATE, method = JsonMethod.HANDLE)
@@ -390,6 +395,12 @@ System.out.println(user.toString());
 }
 ```
 
+*JSON转Bean*
+``` java
+BeanUtils.jsonPutIn(jsonObject, bean);
+```
+
+
 **16. `com.zhazhapan.util.NetUtils`类**
 
 |方法名|简要说明|
@@ -404,3 +415,9 @@ System.out.println(user.toString());
 |------|---------------|
 |newInstance|生成一个类的实例|
 |scanPackage|扫描包下面所有的类|
+
+**17. `com.zhazhapan.util.HttpUtils`类**
+
+|方法名|简要说明|
+|------|---------------|
+|getCookie|通过名称获取Cookie|
