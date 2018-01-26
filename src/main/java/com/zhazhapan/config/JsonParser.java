@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
-import com.zhazhapan.modules.constant.Values;
+import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.Checker;
 import com.zhazhapan.util.FileExecutor;
 import com.zhazhapan.util.Formatter;
@@ -203,13 +203,13 @@ public class JsonParser {
      * @return 正确路径头
      */
     private String checkPath(String key) {
-        if (!key.startsWith(Values.DOLLAR_SIGN)) {
-            if (!key.startsWith(Values.DOT_SIGN)) {
+        if (!key.startsWith(ValueConsts.DOLLAR_SIGN)) {
+            if (!key.startsWith(ValueConsts.DOT_SIGN)) {
                 key = "." + key;
             }
             key = "$" + key;
         }
-        if (key.endsWith(Values.DOT_SIGN)) {
+        if (key.endsWith(ValueConsts.DOT_SIGN)) {
             key = key.substring(0, key.length() - 1);
         }
         return key;
@@ -445,7 +445,7 @@ public class JsonParser {
      */
     public void setJsonPath(URL url) throws IOException {
         String path = url.toString();
-        if (path.startsWith(Values.LOCAL_FILE_URL)) {
+        if (path.startsWith(ValueConsts.LOCAL_FILE_URL)) {
             setJsonPath(NetUtils.UrlToString(url));
         } else {
             setJsonObject(FileExecutor.read(url));
@@ -544,14 +544,14 @@ public class JsonParser {
      * @return key
      */
     private String pathToKey(String path) {
-        if (path.startsWith(Values.DOLLAR_SIGN)) {
+        if (path.startsWith(ValueConsts.DOLLAR_SIGN)) {
             path = path.substring(1);
         }
-        if (!path.startsWith(Values.DOT_SIGN)) {
-            path = Values.DOT_SIGN + path;
+        if (!path.startsWith(ValueConsts.DOT_SIGN)) {
+            path = ValueConsts.DOT_SIGN + path;
         }
-        if (!path.endsWith(Values.DOT_SIGN)) {
-            path += Values.DOT_SIGN;
+        if (!path.endsWith(ValueConsts.DOT_SIGN)) {
+            path += ValueConsts.DOT_SIGN;
         }
         return path;
     }

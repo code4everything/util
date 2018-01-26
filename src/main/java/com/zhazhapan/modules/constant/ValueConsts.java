@@ -8,7 +8,7 @@ import java.io.File;
 /**
  * @author pantao
  */
-public class Values {
+public class ValueConsts {
 
     /**
      * toString
@@ -97,5 +97,5 @@ public class Values {
      */
     public static final String SPACE = " ";
 
-    private Values() {}
+    private ValueConsts() {}
 }

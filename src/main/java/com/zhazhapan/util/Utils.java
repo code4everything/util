@@ -3,7 +3,7 @@
  */
 package com.zhazhapan.util;
 
-import com.zhazhapan.modules.constant.Values;
+import com.zhazhapan.modules.constant.ValueConsts;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import org.apache.commons.lang3.ArrayUtils;
@@ -117,9 +117,9 @@ public class Utils {
                     res.append(c);
                 }
             }
-            if (res.indexOf(Values.DOT_SIGN) == 0) {
+            if (res.indexOf(ValueConsts.DOT_SIGN) == 0) {
                 res.insert(0, "0");
-            } else if (res.indexOf(Values.NEGATIVE_DOT_SIGN) == 0) {
+            } else if (res.indexOf(ValueConsts.NEGATIVE_DOT_SIGN) == 0) {
                 res = new StringBuilder("-0." + res.substring(2, res.length()));
             }
         }
@@ -454,7 +454,7 @@ public class Utils {
     public static int getMaxValue(int... nums) {
         int max = 0;
         int last = nums.length - 1;
-        for (int i = 0; i < last; i += Values.TWO_INT) {
+        for (int i = 0; i < last; i += ValueConsts.TWO_INT) {
             max = Integer.max(max, Integer.max(nums[i], nums[i + 1]));
         }
         return Integer.max(max, nums[last]);

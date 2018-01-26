@@ -3,7 +3,7 @@
  */
 package com.zhazhapan.util;
 
-import com.zhazhapan.modules.constant.Values;
+import com.zhazhapan.modules.constant.ValueConsts;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -23,7 +23,7 @@ public class Downloader {
     /**
      * 默认下载目录
      */
-    private static String storageFolder = Values.USER_HOME + Values.SEPARATOR + "util";
+    private static String storageFolder = ValueConsts.USER_HOME + ValueConsts.SEPARATOR + "util";
 
     private Downloader() {}
 
@@ -57,14 +57,14 @@ public class Downloader {
         int byteread = 0;
         String log = "download success from url '" + downloadURL + "' to local '";
         try {
-            String fname = checkPath(storageFolder + Values.SEPARATOR + Formatter.getFileName(downloadURL));
+            String fname = checkPath(storageFolder + ValueConsts.SEPARATOR + Formatter.getFileName(downloadURL));
             String tmp = fname + ".tmp";
             File file = new File(tmp);
             log += file.getAbsolutePath() + "'";
             URL url = new URL(downloadURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream inStream = NetUtils.getInputStreamOfConnection(conn);
-            if (conn.getResponseCode() != Values.RESPONSE_OK || conn.getContentLength() <= 0) {
+            if (conn.getResponseCode() != ValueConsts.RESPONSE_OK || conn.getContentLength() <= 0) {
                 return false;
             }
             FileOutputStream fs = new FileOutputStream(file);

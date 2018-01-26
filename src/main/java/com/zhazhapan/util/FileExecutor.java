@@ -1,6 +1,6 @@
 package com.zhazhapan.util;
 
-import com.zhazhapan.modules.constant.Values;
+import com.zhazhapan.modules.constant.ValueConsts;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -48,7 +48,7 @@ public class FileExecutor extends FileUtils {
      * @return 文件路径列表
      */
     public static List<String> scanFolder(File folder) {
-        String parent = folder.getAbsolutePath() + Values.SEPARATOR;
+        String parent = folder.getAbsolutePath() + ValueConsts.SEPARATOR;
         List<String> list = new ArrayList<>(16);
         if (folder.isDirectory()) {
             String[] children = folder.list();
@@ -144,7 +144,7 @@ public class FileExecutor extends FileUtils {
      * @throws IOException 异常
      */
     public static void copyDirectories(File[] directories, String storageFolder) throws IOException {
-        storageFolder = checkFolder(storageFolder) + Values.SEPARATOR;
+        storageFolder = checkFolder(storageFolder) + ValueConsts.SEPARATOR;
         for (File directory : directories) {
             copyDirectory(directory, new File(storageFolder + directory.getName()));
         }
@@ -246,7 +246,7 @@ public class FileExecutor extends FileUtils {
      * @throws IOException 异常
      */
     public static void copyFiles(File[] files, String storageFolder) throws IOException {
-        storageFolder = checkFolder(storageFolder) + Values.SEPARATOR;
+        storageFolder = checkFolder(storageFolder) + ValueConsts.SEPARATOR;
         for (File file : files) {
             copyFile(file, new File(storageFolder + file.getName()));
         }
@@ -316,7 +316,7 @@ public class FileExecutor extends FileUtils {
     public static void splitFile(File file, long[] splitPoints, String storageFolder) throws IOException {
         splitPoints = Utils.concatArrays(new long[]{0}, splitPoints, new long[]{file.length()});
         String[] fileName = file.getName().split("\\.", 2);
-        storageFolder += Values.SEPARATOR;
+        storageFolder += ValueConsts.SEPARATOR;
         logger.info("start to split file '" + file.getAbsolutePath() + "'");
         for (int i = 0; i < splitPoints.length - 1; i++) {
             long start = splitPoints[i], end = splitPoints[i + 1];
@@ -403,7 +403,7 @@ public class FileExecutor extends FileUtils {
     public static void renameFiles(File[] files, String[] fileNames) {
         int length = Integer.min(files.length, fileNames.length);
         for (int i = 0; i < length; i++) {
-            String fileName = files[i].getParent() + Values.SEPARATOR + fileNames[i];
+            String fileName = files[i].getParent() + ValueConsts.SEPARATOR + fileNames[i];
             if (!fileName.contains(".")) {
                 fileName += files[i].getName().substring(files[i].getName().lastIndexOf("."));
             }

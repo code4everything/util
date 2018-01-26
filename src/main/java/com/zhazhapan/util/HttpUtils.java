@@ -19,9 +19,11 @@ public class HttpUtils extends com.sun.deploy.net.HttpUtils {
      * @return {@link Cookie}
      */
     public static Cookie getCookie(String name, Cookie[] cookies) {
-        for (Cookie cookie : cookies) {
-            if (name.equals(cookie.getName())) {
-                return cookie;
+        if (Checker.isNotNull(cookies)) {
+            for (Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
+                    return cookie;
+                }
             }
         }
         return null;

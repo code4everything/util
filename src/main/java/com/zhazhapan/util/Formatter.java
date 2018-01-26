@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.zhazhapan.modules.constant.Values;
+import com.zhazhapan.modules.constant.ValueConsts;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -94,16 +94,16 @@ public class Formatter {
      * @return 格式化为KB、MB、GB、TB的{@link String}
      */
     public static String formatSize(long size) {
-        if (size < Values.KB) {
+        if (size < ValueConsts.KB) {
             return size + " B";
-        } else if (size < Values.MB) {
-            return formatDecimal((double) size / Values.KB) + " KB";
-        } else if (size < Values.GB) {
-            return formatDecimal((double) size / Values.MB) + " MB";
-        } else if (size < Values.TB) {
-            return formatDecimal((double) size / Values.GB) + " GB";
+        } else if (size < ValueConsts.MB) {
+            return formatDecimal((double) size / ValueConsts.KB) + " KB";
+        } else if (size < ValueConsts.GB) {
+            return formatDecimal((double) size / ValueConsts.MB) + " MB";
+        } else if (size < ValueConsts.TB) {
+            return formatDecimal((double) size / ValueConsts.GB) + " GB";
         } else {
-            return formatDecimal((double) size / Values.TB) + " TB";
+            return formatDecimal((double) size / ValueConsts.TB) + " TB";
         }
     }
 
@@ -118,20 +118,20 @@ public class Formatter {
         size = size.trim();
         if (Checker.isNotEmpty(size)) {
             String num;
-            if (size.contains(Values.SPACE)) {
-                num = size.split(Values.SPACE)[0];
+            if (size.contains(ValueConsts.SPACE)) {
+                num = size.split(ValueConsts.SPACE)[0];
             } else {
                 num = Utils.extractDigit(size);
             }
             double result;
             if (size.contains(SIZE_TB)) {
-                result = stringToDouble(num) * Values.TB;
+                result = stringToDouble(num) * ValueConsts.TB;
             } else if (size.contains(SIZE_GB)) {
-                result = stringToDouble(num) * Values.GB;
+                result = stringToDouble(num) * ValueConsts.GB;
             } else if (size.contains(SIZE_MB)) {
-                result = stringToDouble(num) * Values.MB;
+                result = stringToDouble(num) * ValueConsts.MB;
             } else if (size.contains(SIZE_KB)) {
-                result = stringToDouble(num) * Values.KB;
+                result = stringToDouble(num) * ValueConsts.KB;
             } else {
                 result = stringToDouble(num);
             }
