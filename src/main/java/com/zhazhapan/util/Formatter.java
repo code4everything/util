@@ -246,7 +246,7 @@ public class Formatter {
     public static String listToJson(List<?> list) {
         JSONArray array = new JSONArray();
         if (Checker.isNotEmpty(list)) {
-            list.forEach(item -> array.add(item.toString()));
+            array.addAll(list);
         }
         return formatJson(array.toString());
     }

@@ -16,6 +16,11 @@ public class UtilsTest {
     private int[] test4 = {3, 5, 7, 8};
 
     @Test
+    public void testGetCurrentDate() {
+        System.out.println(Utils.getCurrentMonth());
+    }
+
+    @Test
     public void testNumberExtract() {
         String s1 = "+.12   3";
         String s2 = "+ab12.c123  ";
@@ -52,7 +57,7 @@ public class UtilsTest {
     }
 
     @Test
-    public void testMerageSortedArrays() {
+    public void testMergeSortedArrays() {
         assertTrue(Checker.isSorted(Utils.mergeSortedArrays(test1, test2, true)));
         assertTrue(Checker.isSorted(Utils.mergeSortedArrays(test4, test3)));
     }

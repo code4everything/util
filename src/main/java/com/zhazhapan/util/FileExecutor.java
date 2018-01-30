@@ -19,6 +19,35 @@ public class FileExecutor extends FileUtils {
 
     private FileExecutor() {}
 
+    /**
+     * 获取文件后缀名
+     *
+     * @param fileName 文件名
+     *
+     * @return 后缀名
+     */
+    public static String getFileSuffix(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(ValueConsts.DOT_SIGN) + 1);
+    }
+
+    /**
+     * 获取文件后缀名
+     *
+     * @param file 文件
+     *
+     * @return 后缀名
+     */
+    public static String getFileSuffix(File file) {
+        return getFileSuffix(file.getName());
+    }
+
+    /**
+     * 扫描文件夹下面所有文件
+     *
+     * @param folder 文件夹
+     *
+     * @return 文件路径列表
+     */
     public static String[] scanFolderAsArray(String folder) {
         List<String> list = scanFolder(folder);
         String[] arrays = new String[list.size()];
@@ -570,6 +599,7 @@ public class FileExecutor extends FileUtils {
      * @throws IOException 异常
      */
     public static boolean createNewFile(File file) throws IOException {
+        createFolder(file.getParent());
         return (!file.exists() || file.delete()) && file.createNewFile();
     }
 

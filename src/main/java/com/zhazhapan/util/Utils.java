@@ -329,7 +329,7 @@ public class Utils {
      * @return 长度2的{@link Integer}
      */
     public static int getCurrentMonth() {
-        return Calendar.getInstance().get(Calendar.MONTH);
+        return Calendar.getInstance().get(Calendar.MONTH) + 1;
     }
 
     /**

@@ -46,7 +46,7 @@ public class Checker {
      * @return {@link Boolean}
      */
     public static boolean isLimited(String string, int min, int max) {
-        return string.length() >= min && string.length() <= max;
+        return isNotEmpty(string) && string.length() >= min && string.length() <= max;
     }
 
     /**
