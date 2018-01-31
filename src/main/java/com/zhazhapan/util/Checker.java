@@ -3,6 +3,7 @@
  */
 package com.zhazhapan.util;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,24 +18,50 @@ public class Checker {
      * 超链接匹配，忽略大小写
      */
     public static final Pattern HYPER_LINK_PATTERN = Pattern.compile("^(https*://)?([^\\s&;\"':<>]+\\.)+[a-z0-9]+(/[^\\s]*)*$", Pattern.CASE_INSENSITIVE);
+
     /**
      * 日期匹配
      */
     public static final Pattern DATE_PATTERN = Pattern.compile("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$");
+
     /**
      * 整数匹配
      */
     public static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]+$");
+
     /**
      * 数字匹配
      */
     public static final Pattern DECIMAL_PATTERN = Pattern.compile("^[0-9]+(\\.[0-9]+)?$");
+
     /**
      * 邮箱匹配，忽略大小写
      */
     public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
 
     private Checker() {}
+
+    /**
+     * 文件是否不存在
+     *
+     * @param file 文件
+     *
+     * @return 是否不存在
+     */
+    public static boolean isNotExists(String file) {
+        return !isExists(file);
+    }
+
+    /**
+     * 文件是否存在
+     *
+     * @param file 文件
+     *
+     * @return 是否存在
+     */
+    public static boolean isExists(String file) {
+        return new File(Checker.checkNull(file)).exists();
+    }
 
     /**
      * 判断字符串的长度是否在某个范围

@@ -1,13 +1,18 @@
 package com.zhazhapan.util;
 
-import java.io.IOException;
-
 import org.junit.Test;
+
+import java.io.IOException;
 
 /**
  * @author pantao
  */
 public class FileExecutorTest {
+
+    @Test
+    public void testCreateFolder() {
+        assert FileExecutor.createFolder("/Users/pantao/Desktop/upload/20180131");
+    }
 
     @Test
     public void testScanFolder() {

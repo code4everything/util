@@ -234,9 +234,11 @@ public class FileExecutor extends FileUtils {
      * 新建文件夹，如果文件夹存在则不创建
      *
      * @param directory 文件夹
+     *
+     * @return 文件夹是否创建成功（如果文件夹存在同样返回true）
      */
-    public static void createFolder(String directory) {
-        createFolder(new File(directory));
+    public static boolean createFolder(String directory) {
+        return createFolder(new File(directory));
     }
 
     /**
@@ -247,7 +249,7 @@ public class FileExecutor extends FileUtils {
      * @return 文件夹是否创建成功（如果文件夹存在同样返回true）
      */
     public static boolean createFolder(File director) {
-        return director.isDirectory() && (director.exists() || director.mkdir());
+        return director.exists() || (createFolder(director.getParent()) && director.mkdir());
     }
 
     /**
