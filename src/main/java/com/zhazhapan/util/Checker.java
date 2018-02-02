@@ -17,7 +17,8 @@ public class Checker {
     /**
      * 超链接匹配，忽略大小写
      */
-    public static final Pattern HYPER_LINK_PATTERN = Pattern.compile("^(https*://)?([^\\s&;\"':<>]+\\.)+[a-z0-9]+(/[^\\s]*)*$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern HYPER_LINK_PATTERN = Pattern.compile("^(https*://)?([^\\s&;\"':<>]+\\.)+[a-z0-9]+" +
+            "(/[^\\s]*)*$", Pattern.CASE_INSENSITIVE);
 
     /**
      * 日期匹配
@@ -37,9 +38,38 @@ public class Checker {
     /**
      * 邮箱匹配，忽略大小写
      */
-    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))" +
+            "*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
+
+    /**
+     * 图片匹配
+     */
+    public static final Pattern IMAGES_PATTERN = Pattern.compile(".*\\.(bmp|gif|jpe?g|png|tiff?|pcx|tga|svg|pic)$",
+            Pattern.CASE_INSENSITIVE);
 
     private Checker() {}
+
+    /**
+     * 判断文件是否是图片
+     *
+     * @param file 文件
+     *
+     * @return {@link Boolean}
+     */
+    public static boolean isImage(File file) {
+        return isNotNull(file) && isImage(file.getName());
+    }
+
+    /**
+     * 判断文件是否是图片
+     *
+     * @param file 文件
+     *
+     * @return {@link Boolean}
+     */
+    public static boolean isImage(String file) {
+        return isNotEmpty(file) && IMAGES_PATTERN.matcher(file).matches();
+    }
 
     /**
      * 文件是否不存在

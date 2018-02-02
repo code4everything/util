@@ -236,6 +236,7 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 |isMacOS|判断当前系统是否是Mac|
 |isLinux|判断当前系统是否是Linux|
 |isLimited|判断字符串的长度是否在某个范围|
+|isImage|判断文件是否是图片|
 
 **9. `com.zhazhapan.util.Formatter`类**
 
