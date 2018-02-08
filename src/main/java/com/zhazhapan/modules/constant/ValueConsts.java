@@ -3,12 +3,83 @@
  */
 package com.zhazhapan.modules.constant;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
 /**
  * @author pantao
  */
 public class ValueConsts {
+
+    /**
+     * 字符串“value”
+     */
+    public static final String VALUE_STRING = "value";
+
+    /**
+     * 字符串“key”
+     */
+    public static final String KEY_STRING = "key";
+
+    /**
+     * 数字32
+     */
+    public static final int THIRTY_TWO_INT = 32;
+
+    /**
+     * 字符串“token”
+     */
+    public static final String TOKEN_STRING = "token";
+
+    /**
+     * 分隔符“/”
+     */
+    public static final String SPLASH_STRING = "/";
+
+    /**
+     * 数字16
+     */
+    public static final int SIXTEEN_INT = 16;
+
+    /**
+     * 验证码上限
+     */
+    public static final int VERIFY_CODE_CEIL = 999999;
+
+    /**
+     * 验证码下限
+     */
+    public static final int VERIFY_CODE_FLOOR = 100000;
+
+    /**
+     * 字符串“password”
+     */
+    public static final String PASSWORD_STRING = "password";
+
+    /**
+     * 字符串“id”
+     */
+    public static final String ID_STRING = "id";
+
+    /**
+     * HttpServletResponse null
+     */
+    public static final HttpServletResponse NULL_RESPONSE = null;
+
+    /**
+     * 字符串null
+     */
+    public static final String NULL_STRING = null;
+
+    /**
+     * 字符串“user”
+     */
+    public static final String USER_STRING = "user";
+
+    /**
+     * 数字0
+     */
+    public static final int ZERO_INT = 0;
 
     /**
      * false
@@ -64,17 +135,24 @@ public class ValueConsts {
      * 请求头
      */
     public static final String[] USER_AGENT = {"mozilla/5.0 (windows nt 10.0; win64; x64) applewebkit/537.36 (khtml, " +
-            "" + "" + "" + "" + "" + "" + "" + "" + "" + "like gecko) chrome/59.0.3071.115 safari/537.36",
-            "Mozilla/5.0 " + "(Windows NT " + "6.1; " + "" + "Win64; " + "x64; " + "rv:47.0)" + " " + "Gecko/20100101" +
-                    " Firefox/47.0", "Mozilla/5.0 " + "(Macintosh; " + "Intel " + "Mac OS X x.y; " + "rv:42.0) " +
-            "Gecko/20100101" + " " + "Firefox/42.0", "Mozilla/5.0 (X11; " + "Linux " + "x86_64) " +
-            "AppleWebKit/537.36 (KHTML, like" + " Gecko) " + "Chrome/51.0.2704.103 " + "Safari/537.36", "Mozilla/5.0 " +
-            "(X11;" + " Linux x86_64) " + "AppleWebKit/537.36 " + "(KHTML, like " + "Gecko) " + "Chrome/51.0.2704.106" +
-            " Safari/537.36 " + "OPR/38.0.2220.41", "Mozilla/5.0 (iPhone; CPU" + " iPhone" + " " + "OS " + "10_3_1 "
-            + "like Mac OS X) " + "AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 " + "Mobile/14E304 " +
-            "Safari/602.1", "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0;" + "" + "" + " " +
-            "IEMobile/9.0)", "Mozilla/5.0 " + "" + "(iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ " + "(KHTML,"
-            + " like " + "Gecko) Version/3.0 " + "Mobile/1A543a " + "Safari/419.3"};
+            "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" +
+            "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" +
+            "" + "" + "" + "" + "like" + "" + " " + "gecko) " + "chrome/59.0.3071.115 " + "safari/537.36",
+            "Mozilla/5.0 " + "" + "" + "" + "(Windows NT " + "" + "6.1; " + "" + "" + "" + "Win64; " + "x64; " +
+                    "rv:47.0)" + " " + "" + "Gecko/20100101" + "" + " " + "Firefox/47.0", "Mozilla/5.0 " + "" + "" +
+            "" + "" + "" + "" + "" + "(Macintosh;" + "" + "" + "" + " " + "" + "" + "" + "" + "Intel " + "Mac OS X" +
+            " x.y; " + "rv:42.0) " + "Gecko/20100101" + "" + " " + "Firefox/42.0", "Mozilla/5.0 " + "(X11; " +
+            "Linux" + " " + "x86_64) " + "AppleWebKit/537.36 " + "(KHTML, " + "like" + "" + " " + "Gecko) " +
+            "Chrome/51.0.2704.103 " + "" + "" + "" + "" + "Safari/537.36", "Mozilla/5.0 " + "" + "" + "" + "" + "" +
+            "(X11;" + " " + "Linux " + "x86_64) " + "" + "" + "" + "AppleWebKit/537.36 " + "" + "(KHTML, like " +
+            "Gecko) " + "" + "Chrome/51.0.2704.106" + "" + " " + "Safari/537.36 " + "OPR/38.0.2220.41", "Mozilla/5.0 " +
+            "" + "(iPhone; " + "CPU" + " " + "iPhone" + " " + "" + "" + "OS " + "10_3_1 " + "like" + " Mac OS " + ""
+            + "" + "" + "X) " + "AppleWebKit/603.1.30 " + "" + "" + "(KHTML, " + "like " + "Gecko) " + "Version/10.0"
+            + " " + "Mobile/14E304 " + "Safari/602.1", "Mozilla/5.0" + " (compatible;" + "" + " " + "MSIE 9.0; " +
+            "Windows Phone " + "OS" + " 7.5;" + "" + " " + "Trident/5.0;" + "" + "" + "" + "" + "" + "" + " " +
+            "IEMobile/9.0)", "Mozilla/5.0 " + "" + "" + "" + "(iPhone; U; CPU " + "like " + "" + "" + "Mac OS " + "X;" +
+            " en)" + " " + "AppleWebKit/420+ " + "" + "" + "(KHTML," + "" + " like " + "" + "Gecko) " + "Version/3.0 " +
+            "" + "Mobile/1A543a" + " " + "Safari/419.3"};
 
     public static final int DEFAULT_DOWNLOAD_REMAINING_CENTER = 1048576;
 
@@ -82,6 +160,11 @@ public class ValueConsts {
      * 网页响应200
      */
     public static final int RESPONSE_OK = 200;
+
+    /**
+     * 数字 1
+     */
+    public static final int ONE_INT = 1;
 
     /**
      * 数字 2
