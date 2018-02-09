@@ -251,8 +251,21 @@ public class Checker {
      * @param string 需要判断的字符串
      *
      * @return {@link Boolean}
+     *
+     * @deprecated 请使用isEmpty方法
      */
     public static boolean isNullOrEmpty(String string) {
+        return isEmpty(string);
+    }
+
+    /**
+     * 字符串是否为NULL或空
+     *
+     * @param string 需要判断的字符串
+     *
+     * @return {@link Boolean}
+     */
+    public static boolean isEmpty(String string) {
         return isNull(string) || string.isEmpty();
     }
 
@@ -264,7 +277,7 @@ public class Checker {
      * @return {@link Boolean}
      */
     public static boolean isNotEmpty(String string) {
-        return !isNullOrEmpty(string);
+        return !isEmpty(string);
     }
 
     /**
