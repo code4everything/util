@@ -23,7 +23,7 @@ public class NetUtils {
      *
      * @return {@link String}
      */
-    public static String UrlToString(URL url) {
+    public static String urlToString(URL url) {
         return Checker.isNull(url) ? "" : url.toString().replaceAll("file:" + (Checker.isWindows() ? "/?" : ""), "");
     }
 
@@ -92,7 +92,8 @@ public class NetUtils {
     public static InputStream getInputStreamOfConnection(HttpURLConnection connection) throws IOException {
         connection.setConnectTimeout(1000 * 6);
         connection.setRequestProperty("Charset", "UTF-8");
-        connection.setRequestProperty("User-Agent", ValueConsts.USER_AGENT[new Random().nextInt(ValueConsts.USER_AGENT.length)]);
+        connection.setRequestProperty("User-Agent", ValueConsts.USER_AGENT[new Random().nextInt(ValueConsts
+                .USER_AGENT.length)]);
         connection.setRequestProperty("Connection", "Keep-Alive");
         connection.setRequestProperty("Accept", "*/*");
         return connection.getInputStream();

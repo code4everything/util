@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.config;
 
 import com.alibaba.fastjson.JSON;
@@ -12,7 +9,6 @@ import com.zhazhapan.util.Checker;
 import com.zhazhapan.util.FileExecutor;
 import com.zhazhapan.util.Formatter;
 import com.zhazhapan.util.NetUtils;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,8 +20,6 @@ import java.util.HashMap;
  * @author pantao
  */
 public class JsonParser {
-
-    private Logger logger = Logger.getLogger(getClass());
 
     /**
      * 最大缓存大小
@@ -106,10 +100,8 @@ public class JsonParser {
      * @param value 值对象
      *
      * @return 是否设置成功
-     *
-     * @throws Exception 异常
      */
-    public boolean set(String path, Object value) throws Exception {
+    public boolean set(String path, Object value) {
         jsonStore.clear();
         return JSONPath.set(jsonObject, checkPath(path), value);
     }
@@ -131,7 +123,7 @@ public class JsonParser {
      *
      * @param key 路径
      *
-     * @return
+     * @return {@link Boolean}
      */
     public boolean getBooleanUseEval(String key) {
         Object object = eval(key);
@@ -357,13 +349,11 @@ public class JsonParser {
     /**
      * 通过key解析JsonObject
      *
-     * @param key
+     * @param key 路径KEY
      *
      * @return {@link JSONObject}
-     *
-     * @throws Exception when key is invalid
      */
-    private <T> Object get(String key, Class<T> classT) throws Exception {
+    private <T> Object get(String key, Class<T> classT) {
         if (Checker.isNotEmpty(key)) {
             JSONObject object = jsonObject;
             // 拆分key
@@ -437,22 +427,6 @@ public class JsonParser {
     }
 
     /**
-     * 设置JSON对应的URL
-     *
-     * @param url 网络链接
-     *
-     * @throws IOException 异常
-     */
-    public void setJsonPath(URL url) throws IOException {
-        String path = url.toString();
-        if (path.startsWith(ValueConsts.LOCAL_FILE_URL)) {
-            setJsonPath(NetUtils.UrlToString(url));
-        } else {
-            setJsonObject(FileExecutor.read(url));
-        }
-    }
-
-    /**
      * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
      *
      * @param jsonPath JSON文件的路径
@@ -462,6 +436,22 @@ public class JsonParser {
     public void setJsonPath(String jsonPath) throws IOException {
         this.jsonPath = jsonPath;
         load();
+    }
+
+    /**
+     * 设置JSON对应的URL
+     *
+     * @param url 网络链接
+     *
+     * @throws IOException 异常
+     */
+    public void setJsonPath(URL url) throws IOException {
+        String path = url.toString();
+        if (path.startsWith(ValueConsts.LOCAL_FILE_URL)) {
+            setJsonPath(NetUtils.urlToString(url));
+        } else {
+            setJsonObject(FileExecutor.read(url));
+        }
     }
 
     /**
@@ -476,15 +466,6 @@ public class JsonParser {
     /**
      * 配置JsonObject
      *
-     * @param json 传入json文本，自动转换为JsonObject
-     */
-    public void setJsonObject(String json) {
-        setJsonObject(JSON.parseObject(json));
-    }
-
-    /**
-     * 配置JsonObject
-     *
      * @param jsonObject {@link JSONObject}
      */
     public void setJsonObject(JSONObject jsonObject) {
@@ -493,9 +474,18 @@ public class JsonParser {
     }
 
     /**
+     * 配置JsonObject
+     *
+     * @param json 传入json文本，自动转换为JsonObject
+     */
+    public void setJsonObject(String json) {
+        setJsonObject(JSON.parseObject(json));
+    }
+
+    /**
      * 重写了toString方法，返回并格式化当前解析的JSONObject
      *
-     * @return
+     * @return {@link String}
      */
     @Override
     public String toString() {

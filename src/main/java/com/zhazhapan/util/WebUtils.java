@@ -8,6 +8,8 @@ import com.zhazhapan.modules.constant.ValueConsts;
  */
 public class WebUtils {
 
+    private WebUtils() {}
+
     /**
      * 脚本过滤
      *

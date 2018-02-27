@@ -20,12 +20,9 @@ public class PrettyJsonObject extends JSONObject {
      */
     @Override
     public String toString() {
-        SerializeWriter out = new SerializeWriter();
-        try {
+        try (SerializeWriter out = new SerializeWriter()) {
             new JSONSerializer(out).write(this);
             return Formatter.formatJson(out.toString());
-        } finally {
-            out.close();
         }
     }
 }
