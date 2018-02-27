@@ -59,7 +59,8 @@ public class MailSender {
      * @param jsonObject {@link JSONObject}
      */
     public static void config(JSONObject jsonObject) {
-        config(jsonObject.getString("host"), jsonObject.getString("personal"), jsonObject.getString("from"), jsonObject.getString("key"), jsonObject.getInteger("port"));
+        config(jsonObject.getString("host"), jsonObject.getString("personal"), jsonObject.getString("from"),
+                jsonObject.getString("key"), jsonObject.getInteger("port"));
         setSslEnable(jsonObject.getBoolean("ssl"));
     }
 
@@ -134,7 +135,8 @@ public class MailSender {
      *
      * @throws Exception 异常
      */
-    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content, final String from, final String key) throws Exception {
+    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content, final
+    String from, final String key) throws Exception {
         setHost(mailHost);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
@@ -153,7 +155,8 @@ public class MailSender {
      *
      * @throws Exception 异常
      */
-    public static void sendMail(String host, String personal, String to, String title, String content, final String from, final String key) throws Exception {
+    public static void sendMail(String host, String personal, String to, String title, String content, final String
+            from, final String key) throws Exception {
         setHost(host);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
@@ -238,6 +241,15 @@ public class MailSender {
     /**
      * 设置邮件服务器
      *
+     * @param host {@link String}
+     */
+    public static void setHost(String host) {
+        MailSender.host = host;
+    }
+
+    /**
+     * 设置邮件服务器
+     *
      * @param mailHost {@link MailHost}
      */
     public static void setHost(MailHost mailHost) {
@@ -258,15 +270,6 @@ public class MailSender {
                 host = "smtp.qq.com";
                 break;
         }
-    }
-
-    /**
-     * 设置邮件服务器
-     *
-     * @param host {@link String}
-     */
-    public static void setHost(String host) {
-        MailSender.host = host;
     }
 
     /**
@@ -344,7 +347,7 @@ public class MailSender {
     /**
      * 是否开启SSL
      *
-     * @param sslEnable
+     * @param sslEnable 是否开启SSL
      */
     public static void setSslEnable(boolean sslEnable) {
         MailSender.sslEnable = sslEnable;

@@ -1,7 +1,5 @@
 package com.zhazhapan.util;
 
-import sun.reflect.misc.ReflectUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;
@@ -15,25 +13,11 @@ import java.util.jar.JarFile;
 
 /**
  * @author pantao
- * @date 2018/1/20
+ * @since 2018/1/20
  */
 public class ReflectUtils {
 
     private ReflectUtils() { }
-
-    /**
-     * 创建一个实例
-     *
-     * @param aClass 类
-     *
-     * @return 类对象
-     *
-     * @throws IllegalAccessException 异常
-     * @throws InstantiationException 异常
-     */
-    public static Object newInstance(Class<?> aClass) throws IllegalAccessException, InstantiationException {
-        return ReflectUtil.newInstance(aClass);
-    }
 
     /**
      * 扫描包下面的所有类
@@ -107,7 +91,8 @@ public class ReflectUtils {
      *
      * @throws ClassNotFoundException 异常
      */
-    public static void addClassesInPackageByFile(String packageName, String packagePath, List<Class<?>> classes) throws ClassNotFoundException {
+    public static void addClassesInPackageByFile(String packageName, String packagePath, List<Class<?>> classes)
+            throws ClassNotFoundException {
         File dir = new File(packagePath);
         if (!dir.exists() || !dir.isDirectory()) {
             return;

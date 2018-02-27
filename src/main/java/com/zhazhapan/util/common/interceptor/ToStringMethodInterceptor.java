@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author pantao
- * @date 2018/1/20
+ * @since 2018/1/20
  */
 public class ToStringMethodInterceptor implements MethodInterceptor {
 

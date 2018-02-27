@@ -4,11 +4,9 @@ import javax.servlet.http.Cookie;
 
 /**
  * @author pantao
- * @date 2018/1/26
+ * @since 2018/1/26
  */
-public class HttpUtils extends com.sun.deploy.net.HttpUtils {
-
-    private HttpUtils() {}
+public class HttpUtils {
 
     /**
      * 通过名称获取Cookie

@@ -4,7 +4,7 @@ package com.zhazhapan.util.enums;
  * 字段的权限修饰符
  *
  * @author pantao
- * @date 2018/1/20
+ * @since 2018/1/20
  */
 public enum FieldModifier {
 

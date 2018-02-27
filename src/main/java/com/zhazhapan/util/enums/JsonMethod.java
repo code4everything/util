@@ -4,7 +4,7 @@ package com.zhazhapan.util.enums;
  * Bean类字段转换成JSON的方式
  *
  * @author pantao
- * @date 2018/1/20
+ * @since 2018/1/20
  */
 public enum JsonMethod {
 

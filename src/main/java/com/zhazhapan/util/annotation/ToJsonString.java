@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  * 重写类的toString方法，返回一个JSON字符串
  *
  * @author pantao
- * @date 2018/1/19
+ * @since 2018/1/19
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

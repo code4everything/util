@@ -12,7 +12,7 @@ import java.lang.reflect.Modifier;
 
 /**
  * @author pantao
- * @date 2018/1/18
+ * @since 2018/1/18
  */
 public class BeanUtils {
 
@@ -88,7 +88,8 @@ public class BeanUtils {
         return toJsonString(object, modifier, JsonMethod.AUTO);
     }
 
-    public static String toJsonString(Object object, FieldModifier modifier, JsonMethod method) throws IllegalAccessException {
+    public static String toJsonString(Object object, FieldModifier modifier, JsonMethod method) throws
+            IllegalAccessException {
         JSONObject jsonObject = new JSONObject();
         StringBuilder builder = new StringBuilder("{");
         if (Checker.isNotNull(object)) {
@@ -96,11 +97,13 @@ public class BeanUtils {
             Field[] fields = bean.getDeclaredFields();
             for (Field field : fields) {
                 int mod = field.getModifiers();
-                boolean addable = modifier == FieldModifier.ALL || (modifier == FieldModifier.PRIVATE && Modifier.isPrivate(mod)) || (modifier == FieldModifier.PUBLIC && Modifier.isPublic(mod));
+                boolean addable = modifier == FieldModifier.ALL || (modifier == FieldModifier.PRIVATE && Modifier
+                        .isPrivate(mod)) || (modifier == FieldModifier.PUBLIC && Modifier.isPublic(mod));
                 if (addable) {
                     field.setAccessible(true);
                     if (method == JsonMethod.HANDLE) {
-                        builder.append("\"").append(field.getName()).append("\":\"").append(field.get(object)).append("\",");
+                        builder.append("\"").append(field.getName()).append("\":\"").append(field.get(object)).append
+                                ("\",");
                     } else {
                         jsonObject.put(field.getName(), field.get(object));
                     }
