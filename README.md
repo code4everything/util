@@ -413,7 +413,6 @@ BeanUtils.jsonPutIn(jsonObject, bean);
 
 |方法名|简要说明|
 |------|---------------|
-|newInstance|生成一个类的实例|
 |scanPackage|扫描包下面所有的类|
 
 **18. `com.zhazhapan.util.HttpUtils`类**
