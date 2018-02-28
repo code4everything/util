@@ -10,7 +10,7 @@
 </dependency>
 ```
 
-**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.2.jar)
+**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.3.jar)
 
 ## 功能
 
@@ -345,7 +345,6 @@ MailSender.sendMail("tao@zhazhapan.com", "title", "this is a test email");
 |getRandomStringOnlyLowerCase|获取一个只有小写字母的随机字符串|
 |getRandomStringOnlyUpperCase|获取一个只有大写字母的随机字符串|
 |getRandomTextIgnoreRange|获取一个可以忽略某个范围字符的随机字符串|
-|getRandomStringOnlyLowerCase|获取一个只有小写字母的随机字符串|
 |getRandomText|获取一个字符串|
 
 **15. JSON与Bean互相转换**
@@ -410,14 +409,14 @@ BeanUtils.jsonPutIn(jsonObject, bean);
 |getInputStreamOfUrl|获取URL对应的InputStream对象|
 |getInputStreamOfConnection|获取HttpURLConnection对应的InputStream对象|
 
-**16. `com.zhazhapan.util.ReflectUtils`类**
+**17. `com.zhazhapan.util.ReflectUtils`类**
 
 |方法名|简要说明|
 |------|---------------|
 |newInstance|生成一个类的实例|
 |scanPackage|扫描包下面所有的类|
 
-**17. `com.zhazhapan.util.HttpUtils`类**
+**18. `com.zhazhapan.util.HttpUtils`类**
 
 |方法名|简要说明|
 |------|---------------|
