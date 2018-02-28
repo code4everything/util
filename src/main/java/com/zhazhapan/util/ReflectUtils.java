@@ -1,7 +1,11 @@
 package com.zhazhapan.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -17,7 +21,106 @@ import java.util.jar.JarFile;
  */
 public class ReflectUtils {
 
+    private static Logger logger = Logger.getLogger(ReflectUtils.class);
+
     private ReflectUtils() { }
+
+    /**
+     * 调用方法
+     *
+     * @param object 对象
+     * @param methodName 方法名
+     * @param parameters 参数
+     *
+     * @return 方法返回的结果
+     *
+     * @throws NoSuchMethodException 异常
+     * @throws InvocationTargetException 异常
+     * @throws IllegalAccessException 异常
+     */
+    public static Object invokeMethod(Object object, String methodName, Object[] parameters) throws
+            NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = object.getClass().getMethod(methodName, getTypes(parameters));
+        return method.invoke(object, parameters);
+    }
+
+    /**
+     * 调用方法
+     *
+     * @param object 对象
+     * @param methodName 方法名
+     * @param parameters 参数
+     *
+     * @return 方法返回的结果
+     *
+     * @throws NoSuchMethodException 异常
+     * @throws InvocationTargetException 异常
+     * @throws IllegalAccessException 异常
+     */
+    public static Object invokeMethodUseBasicType(Object object, String methodName, Object[] parameters) throws
+            NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = object.getClass().getMethod(methodName, getBasicTypes(parameters));
+        return method.invoke(object, parameters);
+    }
+
+    /**
+     * 获取所有对象的基本类型
+     *
+     * @param objects 对象
+     *
+     * @return 所有对象类型
+     */
+    public static Class<?>[] getBasicTypes(Object[] objects) {
+        if (!Checker.isNull(objects)) {
+            Class<?>[] classes = new Class<?>[objects.length];
+            int i = 0;
+            for (Object object : objects) {
+                if (Checker.isNull(object)) {
+                    classes[i] = null;
+                } else if (object instanceof Integer) {
+                    classes[i] = int.class;
+                } else if (object instanceof Long) {
+                    classes[i] = long.class;
+                } else if (object instanceof Short) {
+                    classes[i] = short.class;
+                } else if (object instanceof Byte) {
+                    classes[i] = byte.class;
+                } else if (object instanceof Float) {
+                    classes[i] = float.class;
+                } else if (object instanceof Double) {
+                    classes[i] = double.class;
+                } else if (object instanceof Boolean) {
+                    classes[i] = boolean.class;
+                } else if (object instanceof Character) {
+                    classes[i] = char.class;
+                } else {
+                    classes[i] = object.getClass();
+                }
+                i++;
+            }
+            return classes;
+        }
+        return null;
+    }
+
+    /**
+     * 获取所有对象类型
+     *
+     * @param objects 对象
+     *
+     * @return 所有对象类型
+     */
+    public static Class<?>[] getTypes(Object[] objects) {
+        if (!Checker.isNull(objects)) {
+            Class<?>[] classes = new Class<?>[objects.length];
+            int i = 0;
+            for (Object object : objects) {
+                classes[i++] = Checker.isNull(object) ? null : object.getClass();
+            }
+            return classes;
+        }
+        return null;
+    }
 
     /**
      * 扫描包下面的所有类

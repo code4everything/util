@@ -414,6 +414,10 @@ BeanUtils.jsonPutIn(jsonObject, bean);
 |方法名|简要说明|
 |------|---------------|
 |scanPackage|扫描包下面所有的类|
+|invokeMethod|通过反射调用方法|
+|getTypes|获取对象集的所有类型|
+|getBasicTypes|获取所有对象的基本类型|
+|invokeMethodUseBasicType|使用基本类型调用方法|
 
 **18. `com.zhazhapan.util.HttpUtils`类**
 
