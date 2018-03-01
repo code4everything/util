@@ -218,7 +218,17 @@ public class MsWordUtils {
     }
 
     /**
-     * 设置XWPFRun样式
+     * 设置XWPFRun样式<br/><br/>
+     * <p>
+     * 样式接受的参数：<br/> property: italic, type: boolean<br/> property: underline, type: class
+     * org.apache.poi.xwpf.usermodel.UnderlinePatterns<br/> property: strikeThrough, type: boolean<br/> property:
+     * strike, type: boolean<br/> property: doubleStrikethrough, type: boolean<br/> property: smallCaps, type:
+     * boolean<br/> property: capitalized, type: boolean<br/> property: shadow, type: boolean<br/> property: imprinted,
+     * type: boolean<br/> property: embossed, type: boolean<br/> property: subscript, type: class
+     * org.apache.poi.xwpf.usermodel.VerticalAlign<br/> property: kerning, type: int<br/> property: characterSpacing,
+     * type: int<br/> property: fontFamily, type: class java.lang.String<br/> property: fontSize, type: int<br/>
+     * property: textPosition, type: int<br/> property: text, type: class java.lang.String<br/> property: bold, type:
+     * boolean<br/> property: color, type: class java.lang.String<br/>
      *
      * @param run XWPFRun对象
      * @param styles 样式

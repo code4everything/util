@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -40,8 +39,7 @@ public class ReflectUtils {
      */
     public static Object invokeMethod(Object object, String methodName, Object[] parameters) throws
             NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = object.getClass().getMethod(methodName, getTypes(parameters));
-        return method.invoke(object, parameters);
+        return invokeMethod(object, methodName, getTypes(parameters), parameters);
     }
 
     /**
@@ -59,8 +57,26 @@ public class ReflectUtils {
      */
     public static Object invokeMethodUseBasicType(Object object, String methodName, Object[] parameters) throws
             NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = object.getClass().getMethod(methodName, getBasicTypes(parameters));
-        return method.invoke(object, parameters);
+        return invokeMethod(object, methodName, getBasicTypes(parameters), parameters);
+    }
+
+    /**
+     * 调用方法
+     *
+     * @param object 对象
+     * @param methodName 方法名
+     * @param parameterTypes 参数类型
+     * @param parameters 参数
+     *
+     * @return 方法返回的结果
+     *
+     * @throws NoSuchMethodException 异常
+     * @throws InvocationTargetException 异常
+     * @throws IllegalAccessException 异常
+     */
+    public static Object invokeMethod(Object object, String methodName, Class<?>[] parameterTypes, Object[]
+            parameters) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        return object.getClass().getMethod(methodName, parameterTypes).invoke(object, parameters);
     }
 
     /**
