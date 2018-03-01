@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * @author pantao
- * @date 2018/1/18
+ * @since 2018/1/18
  */
 public class JavaEncryptTest {
 

@@ -5,7 +5,7 @@ import org.junit.Test;
 
 /**
  * @author pantao
- * @date 2018/1/22
+ * @since 2018/1/22
  */
 public class PrettyJsonObjectTest {
 
