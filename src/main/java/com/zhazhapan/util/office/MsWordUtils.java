@@ -23,21 +23,27 @@ public class MsWordUtils {
 
     private static Logger logger = Logger.getLogger(MsWordUtils.class);
 
+    private static XWPFDocument xwpfDocument = null;
+
     private MsWordUtils() {}
 
     /**
-     * 添加一行
-     *
-     * @param document 文档对象
+     * 创建一个新的XWPFDocument对象
      */
-    public static void appendLine(XWPFDocument document) {
-        document.createParagraph().createRun();
+    public static void createXwpfDocument() {
+        xwpfDocument = new XWPFDocument();
+    }
+
+    /**
+     * 添加一行
+     */
+    public static void appendLine() {
+        xwpfDocument.createParagraph().createRun();
     }
 
     /**
      * 添加一张图片
      *
-     * @param document 文档对象
      * @param imagePath 图片路径
      * @param pictureType 图片类型
      * @param width 宽度
@@ -47,9 +53,9 @@ public class MsWordUtils {
      * @throws IOException 异常
      * @throws InvalidFormatException 异常
      */
-    public static void appendImage(XWPFDocument document, String imagePath, int pictureType, int width, int height,
-                                   ParagraphAlignment alignment) throws IOException, InvalidFormatException {
-        appendImage(getNewRun(document, alignment), imagePath, pictureType, width, height);
+    public static void appendImage(String imagePath, int pictureType, int width, int height, ParagraphAlignment
+            alignment) throws IOException, InvalidFormatException {
+        appendImage(getNewRun(alignment), imagePath, pictureType, width, height);
     }
 
     /**
@@ -73,13 +79,13 @@ public class MsWordUtils {
     /**
      * 获取一个新的XWPFRun对象
      *
-     * @param document 文档对象
      * @param alignment 对齐方式
      *
      * @return {@link XWPFRun}
      */
-    public static XWPFRun getNewRun(XWPFDocument document, ParagraphAlignment alignment) {
-        XWPFParagraph paragraph = document.createParagraph();
+    public static XWPFRun getNewRun(ParagraphAlignment alignment) {
+        createXwpfDocumentIfNull();
+        XWPFParagraph paragraph = xwpfDocument.createParagraph();
         paragraph.setAlignment(alignment);
         return paragraph.createRun();
     }
@@ -87,67 +93,62 @@ public class MsWordUtils {
     /**
      * 从XWPFParagraph获取一个新的XWPFRun对象
      *
-     * @param document 文档对象
      * @param paragraphIndex XWPFParagraph位置
      *
      * @return {@link XWPFRun}
      */
-    public static XWPFRun getNewRunOfParagraph(XWPFDocument document, int paragraphIndex) {
-        return getParagraph(document, paragraphIndex).createRun();
+    public static XWPFRun getNewRunOfParagraph(int paragraphIndex) {
+        return getParagraph(paragraphIndex).createRun();
     }
 
     /**
      * 获取一个XWPFRun对象
      *
-     * @param document 文档对象
      * @param paragraphIndex XWPFParagraph位置
      * @param runIndex XWPFRun位置
      *
      * @return {@link XWPFRun}
      */
-    public static XWPFRun getRun(XWPFDocument document, int paragraphIndex, int runIndex) {
-        return document.getParagraphs().get(paragraphIndex).getRuns().get(runIndex);
+    public static XWPFRun getRun(int paragraphIndex, int runIndex) {
+        createXwpfDocumentIfNull();
+        return xwpfDocument.getParagraphs().get(paragraphIndex).getRuns().get(runIndex);
     }
 
     /**
      * 获取XWPFParagraph中XWPFRun的大小
      *
-     * @param document 文档对象
      * @param paragraphIndex XWPFParagraph位置
      *
      * @return {@link Integer}
      */
-    public static int getRunSize(XWPFDocument document, int paragraphIndex) {
-        return getParagraph(document, paragraphIndex).getRuns().size();
+    public static int getRunSize(int paragraphIndex) {
+        return getParagraph(paragraphIndex).getRuns().size();
     }
 
     /**
      * 获取一个XWPFParagraph对象
      *
-     * @param document 文档对象
      * @param paragraphIndex XWPFParagraph位置
      *
      * @return {@link XWPFParagraph}
      */
-    public static XWPFParagraph getParagraph(XWPFDocument document, int paragraphIndex) {
-        return document.getParagraphs().get(paragraphIndex);
+    public static XWPFParagraph getParagraph(int paragraphIndex) {
+        createXwpfDocumentIfNull();
+        return xwpfDocument.getParagraphs().get(paragraphIndex);
     }
 
     /**
      * 获取XWPFParagraph长度
      *
-     * @param document 文档对象
-     *
      * @return {@link Integer}
      */
-    public static int getParagraphSize(XWPFDocument document) {
-        return document.getParagraphs().size();
+    public static int getParagraphSize() {
+        return xwpfDocument.getParagraphs().size();
     }
 
     /**
      * 添加一张表格
      *
-     * @param document 文档对象
      * @param alignment 对齐方式
      * @param rows 行数
      * @param cols 列数
@@ -157,11 +158,11 @@ public class MsWordUtils {
      * @param cellMargins 单元格边缘
      * @param styles 样式
      */
-    public static void appendTable(XWPFDocument document, ParagraphAlignment[] alignment, int rows, int cols,
-                                   String[][] values, int[] rowHeight, int[] colWidth, Map<String, Integer>
-                                           cellMargins, Map<String, Object> styles) {
-        document.createParagraph();
-        XWPFTable table = document.createTable(rows, cols);
+    public static void appendTable(ParagraphAlignment[] alignment, int rows, int cols, String[][] values, int[]
+            rowHeight, int[] colWidth, Map<String, Integer> cellMargins, Map<String, Object> styles) {
+        createXwpfDocumentIfNull();
+        xwpfDocument.createParagraph();
+        XWPFTable table = xwpfDocument.createTable(rows, cols);
         XWPFParagraph paragraph;
         XWPFTableRow row;
         XWPFTableCell cell;
@@ -200,7 +201,6 @@ public class MsWordUtils {
     /**
      * 添加一张表格
      *
-     * @param document 文档对象
      * @param alignment 对齐方式
      * @param rows 行数
      * @param cols 列数
@@ -210,11 +210,53 @@ public class MsWordUtils {
      * @param cellMargins 单元格边缘
      * @param styles 样式
      */
-    public static void appendTable(XWPFDocument document, ParagraphAlignment alignment, int rows, int cols,
-                                   String[][] values, int rowHeight, int colWidth, Map<String, Integer> cellMargins,
-                                   Map<String, Object> styles) {
-        appendTable(document, new ParagraphAlignment[]{alignment}, rows, cols, values, new int[]{rowHeight}, new
+    public static void appendTable(ParagraphAlignment alignment, int rows, int cols, String[][] values, int
+            rowHeight, int colWidth, Map<String, Integer> cellMargins, Map<String, Object> styles) {
+        appendTable(new ParagraphAlignment[]{alignment}, rows, cols, values, new int[]{rowHeight}, new
                 int[]{colWidth}, cellMargins, styles);
+    }
+
+    /**
+     * 保存word文档，不关闭当前文档
+     *
+     * @param path 路径
+     *
+     * @throws IOException 异常
+     */
+    public static void writeTo(String path) throws IOException, NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException {
+        createXwpfDocumentIfNull();
+        MsUtils.writeTo(xwpfDocument, path);
+    }
+
+    /**
+     * 保存word文档，关闭当前文档，并生成新的文档对象
+     *
+     * @param path 路径
+     *
+     * @throws IOException 异常
+     */
+    public static void writeAndClose(String path) throws IOException, NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException {
+        createXwpfDocumentIfNull();
+        writeTo(path);
+        xwpfDocument.close();
+        xwpfDocument = new XWPFDocument();
+    }
+
+    /**
+     * 读取word文档
+     *
+     * @param path 路径
+     *
+     * @return {@link XWPFDocument}
+     *
+     * @throws IOException 异常
+     */
+    public static void setXwpfDocument(String path) throws IOException {
+        InputStream is = new FileInputStream(path);
+        xwpfDocument = new XWPFDocument(is);
+        is.close();
     }
 
     /**
@@ -243,6 +285,31 @@ public class MsWordUtils {
                     logger.error("set property " + key + " failed use method " + methodName + ", " + e.getMessage());
                 }
             });
+        }
+    }
+
+    /**
+     * 获取当前操作的XWPFDocument对象
+     *
+     * @return {@link XWPFDocument}
+     */
+    public static XWPFDocument getXwpfDocument() {
+        createXwpfDocumentIfNull();
+        return xwpfDocument;
+    }
+
+    /**
+     * 添加待操作的XWPFDocument对象
+     *
+     * @param xwpfDocument {@link XWPFDocument}
+     */
+    public static void setXwpfDocument(XWPFDocument xwpfDocument) {
+        MsWordUtils.xwpfDocument = xwpfDocument;
+    }
+
+    private static void createXwpfDocumentIfNull() {
+        if (Checker.isNull(xwpfDocument)) {
+            xwpfDocument = new XWPFDocument();
         }
     }
 }
