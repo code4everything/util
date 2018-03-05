@@ -119,7 +119,8 @@ public class JavaEncrypt {
      * @throws NoSuchAlgorithmException 异常
      * @throws InvalidKeyException 异常
      */
-    public static String decryptDES(String code, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String decryptDES(String code, String key) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return cryptDES(code, Cipher.DECRYPT_MODE, key);
     }
 
@@ -139,7 +140,9 @@ public class JavaEncrypt {
      * @throws IllegalBlockSizeException 异常
      * @throws UnsupportedEncodingException 异常
      */
-    private static String cryptDES(String string, int opmode, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    private static String cryptDES(String string, int opmode, String key) throws NoSuchAlgorithmException,
+            NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException,
+            BadPaddingException {
         String result = "";
         int isInit = "DES".equals(key) ? DES : ("AES".equals(key) ? AES : ("RSA".equals(key) ? RSA : DES3));
         if (isInit == 1 || initDES(key) || initDES(key)) {
@@ -153,7 +156,8 @@ public class JavaEncrypt {
                 aes.init(opmode, aesKey);
                 result = new String(aes.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
             } else {
-                rsa.init(opmode, opmode == Cipher.ENCRYPT_MODE ? (RSAPublicKey) rsaKey.getPublic() : (RSAPrivateKey) rsaKey.getPrivate());
+                rsa.init(opmode, opmode == Cipher.ENCRYPT_MODE ? (RSAPublicKey) rsaKey.getPublic() : (RSAPrivateKey)
+                        rsaKey.getPrivate());
                 result = new String(rsa.doFinal(string.getBytes("ISO-8859-1")), "ISO-8859-1");
             }
         }
@@ -174,7 +178,8 @@ public class JavaEncrypt {
      * @throws NoSuchAlgorithmException 异常
      * @throws InvalidKeyException 异常
      */
-    public static String rsa(String string) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String rsa(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return cryptDES(string, Cipher.ENCRYPT_MODE, "RSA");
     }
 
@@ -192,7 +197,8 @@ public class JavaEncrypt {
      * @throws NoSuchAlgorithmException 异常
      * @throws InvalidKeyException 异常
      */
-    public static String des3(String string) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String des3(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return cryptDES(string, Cipher.ENCRYPT_MODE, "DESede");
     }
 
@@ -210,7 +216,8 @@ public class JavaEncrypt {
      * @throws NoSuchAlgorithmException 异常
      * @throws InvalidKeyException 异常
      */
-    public static String aes(String string) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String aes(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return cryptDES(string, Cipher.ENCRYPT_MODE, "AES");
     }
 
@@ -228,7 +235,8 @@ public class JavaEncrypt {
      * @throws NoSuchAlgorithmException 异常
      * @throws InvalidKeyException 异常
      */
-    public static String des(String string) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String des(String string) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return cryptDES(string, Cipher.ENCRYPT_MODE, "DES");
     }
 
@@ -284,7 +292,7 @@ public class JavaEncrypt {
         MessageDigest messageDigest;
         messageDigest = MessageDigest.getInstance("SHA-256");
         byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
-        return Hex.encodeHexString(hash);
+        return String.valueOf(Hex.encodeHex(hash));
     }
 
     /**

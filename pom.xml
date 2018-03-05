@@ -55,6 +55,12 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>3.17</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-codec</artifactId>
+                    <groupId>commons-codec</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -79,12 +85,40 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>3.15</version>
+            <version>3.17</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>poi</artifactId>
+                    <groupId>org.apache.poi</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-ImportXHTML</artifactId>
             <version>3.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>poi</artifactId>
+                    <groupId>org.apache.poi</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-io</artifactId>
+                    <groupId>commons-io</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
