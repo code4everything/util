@@ -8,6 +8,8 @@ import com.zhazhapan.util.enums.JsonMethod;
 import com.zhazhapan.util.enums.JsonType;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
@@ -17,6 +19,31 @@ import java.lang.reflect.Modifier;
 public class BeanUtils {
 
     private BeanUtils() {}
+
+    /**
+     * 将类属性装换成JSON（只能转换有get和is方法的）
+     *
+     * @param object 转换的对象
+     *
+     * @return {@link JSONObject}
+     *
+     * @throws IllegalAccessException 异常
+     * @throws InvocationTargetException 异常
+     */
+    public static JSONObject beanToJson(Object object) throws IllegalAccessException, InvocationTargetException {
+        Method[] methods = object.getClass().getMethods();
+        JSONObject jsonObject = new JSONObject();
+        for (Method method : methods) {
+            String name = method.getName();
+            if (name.startsWith("get") && !"getClass".equals(name)) {
+                name = name.substring(3);
+                jsonObject.put(name.substring(0, 1).toLowerCase() + name.substring(1), method.invoke(object));
+            } else if (name.startsWith("is")) {
+                jsonObject.put(name, method.invoke(object));
+            }
+        }
+        return jsonObject;
+    }
 
     /**
      * 将JOSNObject转换为Bean

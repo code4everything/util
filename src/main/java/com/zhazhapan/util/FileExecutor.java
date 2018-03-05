@@ -20,6 +20,38 @@ public class FileExecutor extends FileUtils {
     private FileExecutor() {}
 
     /**
+     * 列出文件夹所有文件，不递归
+     *
+     * @param director 文件夹
+     *
+     * @return 所有文件
+     */
+    public static File[] listFile(String director) {
+        return listFile(new File(director));
+    }
+
+    /**
+     * 列出文件夹所有文件，不递归
+     *
+     * @param director 文件夹
+     *
+     * @return 所有文件
+     */
+    public static File[] listFile(File director) {
+        String basePath = director.getAbsolutePath() + ValueConsts.SEPARATOR;
+        String[] filePath = director.list();
+        File[] files = null;
+        if (Checker.isNotNull(filePath)) {
+            files = new File[filePath.length];
+            int i = 0;
+            for (String s : filePath) {
+                files[i++] = new File(basePath + s);
+            }
+        }
+        return files;
+    }
+
+    /**
      * 获取文件后缀名
      *
      * @param fileName 文件名
@@ -455,7 +487,8 @@ public class FileExecutor extends FileUtils {
      *
      * @throws IOException 异常
      */
-    public static void mergeFiles(String[] filePath, String destinationFilePath, String filterRegex) throws IOException {
+    public static void mergeFiles(String[] filePath, String destinationFilePath, String filterRegex) throws
+            IOException {
         mergeFiles(getFiles(filePath), new File(destinationFilePath), filterRegex);
     }
 
@@ -484,7 +517,8 @@ public class FileExecutor extends FileUtils {
      *
      * @throws IOException 异常
      */
-    public static void mergeFiles(String[] filePath, String destinationFilePath, String[] filterRegex) throws IOException {
+    public static void mergeFiles(String[] filePath, String destinationFilePath, String[] filterRegex) throws
+            IOException {
         mergeFiles(getFiles(filePath), new File(destinationFilePath), filterRegex);
     }
 

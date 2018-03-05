@@ -76,7 +76,11 @@ public class ReflectUtils {
      */
     public static Object invokeMethod(Object object, String methodName, Class<?>[] parameterTypes, Object[]
             parameters) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        return object.getClass().getMethod(methodName, parameterTypes).invoke(object, parameters);
+        if (Checker.isNull(parameters)) {
+            return object.getClass().getMethod(methodName).invoke(object);
+        } else {
+            return object.getClass().getMethod(methodName, parameterTypes).invoke(object, parameters);
+        }
     }
 
     /**
