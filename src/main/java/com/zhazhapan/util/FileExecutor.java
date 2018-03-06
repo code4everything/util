@@ -20,6 +20,29 @@ public class FileExecutor extends FileUtils {
     private FileExecutor() {}
 
     /**
+     * 重命名文件，自动创建不存在的文件夹
+     *
+     * @param sourceFile 源文件
+     * @param destFile 目的文件
+     */
+    public static void renameTo(String sourceFile, String destFile) {
+        renameTo(new File(sourceFile), new File(destFile));
+    }
+
+    /**
+     * 重命名文件，自动创建不存在的文件夹
+     *
+     * @param sourceFile 源文件
+     * @param destFile 目的文件
+     */
+    public static void renameTo(File sourceFile, File destFile) {
+        if (sourceFile.exists() && !destFile.exists()) {
+            createFolder(destFile.getParent());
+            sourceFile.renameTo(destFile);
+        }
+    }
+
+    /**
      * 列出文件夹所有文件，不递归
      *
      * @param director 文件夹
