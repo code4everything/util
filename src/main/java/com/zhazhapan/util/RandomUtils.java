@@ -17,7 +17,19 @@ public class RandomUtils {
     private RandomUtils() {}
 
     public static String getRandomEmail() {
-        return getRandomStringOnlyLowerCase(getRandomInteger(3, 10)) + "@" + getRandomStringOnlyLowerCase(getRandomInteger(3, 5)) + "." + getRandomStringOnlyLowerCase(getRandomInteger(1, 5));
+        return getRandomStringOnlyLowerCase(getRandomInteger(3, 10)) + "@" + getRandomStringOnlyLowerCase
+                (getRandomInteger(3, 5)) + "." + getRandomStringOnlyLowerCase(getRandomInteger(1, 5));
+    }
+
+    /**
+     * 获取随机整数
+     *
+     * @param length 长度
+     *
+     * @return {@link Integer}
+     */
+    public static int getRandomInteger(int length) {
+        return getRandomInteger((int) Math.pow(10, length - 1), (int) Math.pow(10, length));
     }
 
     /**
