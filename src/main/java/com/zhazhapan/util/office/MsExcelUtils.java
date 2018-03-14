@@ -172,6 +172,8 @@ public class MsExcelUtils {
      * 修改当前操作的工作簿
      *
      * @param path 本地工作簿文件路径
+     *
+     * @throws IOException 异常
      */
     public static void setXssfWorkbook(String path) throws IOException {
         MsExcelUtils.xssfWorkbook = new XSSFWorkbook(path);

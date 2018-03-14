@@ -6,11 +6,11 @@
 <dependency>
     <groupId>com.zhazhapan</groupId>
     <artifactId>util</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ```
 
-**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.3.jar)
+**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.4.jar)
 
 ## 功能
 
