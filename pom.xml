@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zhazhapan</groupId>
     <artifactId>util</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
 
     <name>util</name>
@@ -107,8 +107,8 @@
                     <groupId>commons-io</groupId>
                 </exclusion>
                 <!--<exclusion>-->
-                    <!--<artifactId>commons-logging</artifactId>-->
-                    <!--<groupId>commons-logging</groupId>-->
+                <!--<artifactId>commons-logging</artifactId>-->
+                <!--<groupId>commons-logging</groupId>-->
                 <!--</exclusion>-->
                 <exclusion>
                     <artifactId>junit</artifactId>
