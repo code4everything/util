@@ -213,10 +213,8 @@ public class JsonParser {
      * @param key 例如：country
      *
      * @return {@link JSONObject}
-     *
-     * @throws Exception when key is invalid
      */
-    public JSONObject getObject(String key) throws Exception {
+    public JSONObject getObject(String key) {
         return (JSONObject) get(key, JSONObject.class);
     }
 
@@ -238,10 +236,8 @@ public class JsonParser {
      * @param key 例如：country.province
      *
      * @return {@link JSONArray}
-     *
-     * @throws Exception when key is invalid
      */
-    public JSONArray getArray(String key) throws Exception {
+    public JSONArray getArray(String key) {
         return (JSONArray) get(key, JSONArray.class);
     }
 
@@ -263,10 +259,8 @@ public class JsonParser {
      * @param key 例如：country.province[13].name
      *
      * @return {@link String}
-     *
-     * @throws Exception when key is invalid
      */
-    public String getString(String key) throws Exception {
+    public String getString(String key) {
         return (String) get(key, String.class);
     }
 
@@ -350,6 +344,8 @@ public class JsonParser {
      * 通过key解析JsonObject
      *
      * @param key 路径KEY
+     * @param classT {@link Class}
+     * @param <T> {@link T}
      *
      * @return {@link JSONObject}
      */
@@ -369,7 +365,7 @@ public class JsonParser {
                     if (jsonStore.containsKey(tempKey)) {
                         object = jsonStore.get(tempKey);
                     } else if (i < keys.length - 1) {
-                        if (tempKey.matches(".*\\[\\d+\\]$")) {
+                        if (tempKey.matches(".*\\[\\d+]$")) {
                             // 解析数组
                             JSONArray array = object.getJSONArray(tempKey.split("\\[")[0]);
                             String idx = tempKey.substring(tempKey.indexOf("[") + 1, tempKey.length() - 1);
@@ -380,7 +376,7 @@ public class JsonParser {
                         put(prefixKey, object);
                     } else {
                         key = keys[keys.length - 1];
-                        if (key.matches(".*\\[\\d+\\]$")) {
+                        if (key.matches(".*\\[\\d+]$")) {
                             int leftIdx = key.lastIndexOf("[");
                             JSONArray array = object.getJSONArray(key.substring(0, leftIdx));
                             int idx = Formatter.stringToInt(key.substring(leftIdx + 1, key.length() - 1));
