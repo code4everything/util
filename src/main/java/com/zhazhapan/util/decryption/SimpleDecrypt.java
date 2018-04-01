@@ -1,9 +1,6 @@
-/**
- *
- */
 package com.zhazhapan.util.decryption;
 
-import com.zhazhapan.util.CryptUtil;
+import com.zhazhapan.util.CryptUtils;
 import com.zhazhapan.util.encryption.SimpleEncryt;
 
 import java.io.IOException;
@@ -36,12 +33,12 @@ public class SimpleDecrypt {
      * @return {@link String}
      */
     public static String ascii(String code, int key) {
-        String string = "";
-        int[] keys = CryptUtil.getKeys(key);
+        StringBuilder string = new StringBuilder();
+        int[] keys = CryptUtils.getKeys(key);
         for (int i = 0; i < code.length(); i++) {
-            string += (char) (code.charAt(i) - (i + keys[0]) % keys[1] % keys[2]);
+            string.append((char) (code.charAt(i) - (i + keys[0]) % keys[1] % keys[2]));
         }
-        return string;
+        return string.toString();
     }
 
     /**
@@ -53,7 +50,7 @@ public class SimpleDecrypt {
      * @return {@link String}
      */
     public static String ascii(String code, String key) {
-        return ascii(code, CryptUtil.stringToKey(key));
+        return ascii(code, CryptUtils.stringToKey(key));
     }
 
     /**

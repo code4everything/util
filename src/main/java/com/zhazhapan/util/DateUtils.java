@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util;
 
 import java.sql.Timestamp;
@@ -16,6 +13,90 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     private static Calendar calendar = Calendar.getInstance();
 
     private DateUtils() {}
+
+    /**
+     * 获取当前年份
+     *
+     * @return 长度为4的{@link Integer}
+     */
+    public static int getCurrentYear() {
+        return Calendar.getInstance().get(Calendar.YEAR);
+    }
+
+    /**
+     * 获取当前月份
+     *
+     * @return 长度2的{@link Integer}
+     */
+    public static int getCurrentMonth() {
+        return Calendar.getInstance().get(Calendar.MONTH) + 1;
+    }
+
+    /**
+     * 获取日期格式的号数
+     *
+     * @param date 日期格式的字符串
+     *
+     * @return 类型为字符串的数值
+     */
+    public static String getDay(String date) {
+        return date.split(" ")[0].substring(8);
+    }
+
+    /**
+     * 获取日期格式的号数
+     *
+     * @param date 日期
+     *
+     * @return 类型为字符串的数值
+     */
+    public static String getDay(Date date) {
+        return getDay(Formatter.dateToString(date));
+    }
+
+    /**
+     * 获取日期格式的月份
+     *
+     * @param date 日期格式的字符串
+     *
+     * @return 类型为字符串的数值
+     */
+    public static String getMonth(String date) {
+        return date.substring(5, 7);
+    }
+
+    /**
+     * 获取日期格式的月份
+     *
+     * @param date 日期
+     *
+     * @return 类型为字符串的数值
+     */
+    public static String getMonth(Date date) {
+        return getMonth(Formatter.dateToString(date));
+    }
+
+    /**
+     * 获取日期格式的年份
+     *
+     * @param date 日期格式的字符串
+     *
+     * @return 类型为字符串的数值
+     */
+    public static String getYear(String date) {
+        return date.substring(0, 4);
+    }
+
+    /**
+     * 获取日期格式的年份
+     *
+     * @param date 日期
+     *
+     * @return 类型为字符串的数值
+     */
+    public static String getYear(Date date) {
+        return getYear(Formatter.dateToString(date));
+    }
 
     /**
      * 获取当前时间戳

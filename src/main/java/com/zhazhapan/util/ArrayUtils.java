@@ -13,6 +13,206 @@ public class ArrayUtils {
     private ArrayUtils() {}
 
     /**
+     * 合并多个Short数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static short[] concatArrays(short[] array, short[]... arrays) {
+        short[] res = array;
+        for (short[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个Long数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static long[] concatArrays(long[] array, long[]... arrays) {
+        long[] res = array;
+        for (long[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个Float数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static float[] concatArrays(float[] array, float[]... arrays) {
+        float[] res = array;
+        for (float[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个Double数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static double[] concatArrays(double[] array, double[]... arrays) {
+        double[] res = array;
+        for (double[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个Character数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static char[] concatArrays(char[] array, char[]... arrays) {
+        char[] res = array;
+        for (char[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个Byte数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static byte[] concatArrays(byte[] array, byte[]... arrays) {
+        byte[] res = array;
+        for (byte[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个Boolean数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static boolean[] concatArrays(boolean[] array, boolean[]... arrays) {
+        boolean[] res = array;
+        for (boolean[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个String数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static String[] concatArrays(String[] array, String[]... arrays) {
+        String[] res = array;
+        for (String[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个Integer数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     *
+     * @return 数组
+     */
+    public static int[] concatArrays(int[] array, int[]... arrays) {
+        int[] res = array;
+        for (int[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+    /**
+     * 合并多个T数组
+     *
+     * @param array 数组
+     * @param arrays 数组
+     * @param <T> T类型
+     *
+     * @return 数组
+     */
+    @SafeVarargs
+    public static <T> T[] concatArrays(T[] array, T[]... arrays) {
+        T[] res = array;
+        for (T[] ele : arrays) {
+            res = org.apache.commons.lang3.ArrayUtils.addAll(res, ele);
+        }
+        return res;
+    }
+
+
+    /**
+     * 合并两个升序数组
+     *
+     * @param nums1 数组
+     * @param nums2 数组
+     *
+     * @return 数组
+     */
+    public static int[] mergeSortedArrays(int[] nums1, int[] nums2) {
+        return mergeSortedArrays(nums1, nums2, false);
+    }
+
+    /**
+     * 将两个有序数组（同序）合并成一个有序数组
+     *
+     * @param nums1 数组
+     * @param nums2 数组
+     * @param desc 是否为降序
+     *
+     * @return 数组
+     */
+    public static int[] mergeSortedArrays(int[] nums1, int[] nums2, boolean desc) {
+        int len = nums1.length + nums2.length;
+        int[] nums = new int[len];
+        int m = 0;
+        int n = 0;
+        for (int i = 0; i < len; i++) {
+            boolean inNums1 = n == nums2.length || (m != nums1.length && ((nums1[m] < nums2[n]) ^ desc));
+            if (inNums1) {
+                nums[i] = nums1[m++];
+            } else {
+                nums[i] = nums2[n++];
+            }
+        }
+        return nums;
+    }
+
+    /**
      * 去重
      *
      * @param arrays 数组
@@ -180,9 +380,7 @@ public class ArrayUtils {
         while (j <= high) {
             temp[k++] = arrays[j++];
         }
-        for (int k2 = 0; k2 < temp.length; k2++) {
-            arrays[k2 + low] = temp[k2];
-        }
+        System.arraycopy(temp, ValueConsts.ZERO_INT, arrays, low, temp.length);
     }
 
     /**
