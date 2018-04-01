@@ -287,16 +287,10 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 | extractInt        | 从字符串中提取数字并转换为Integer    |
 | extractDigit      | 从字符串中提取出数字，包括最后一个“.”号   |
 | maxLengthString   | 返回多个字符串中长度最长的字符串        |
-| concatArrays      | 合并多个数组                  |
-| getCurrentMonth() | 获取当前月份                  |
 | copyToClipboard   | 复制字符串至系统剪贴板             |
 | openLink          | 使用系统默认的浏览器打开超链接         |
 | openFile          | 使用系统默认的方式打开文件           |
-| getDay            | 获取日期                    |
-| getMonth          | 获取月份                    |
-| getYear           | 获取年份                    |
 | getMaxValue       | 从多个数字中获取最大值             |
-| mergeSortedArrays | 将两个已经排好序（同序）的数组合并一个有序数组 |
 |getCurrentOS()|获取当前系统名称|
 
 **11. `com.zhazhapan.util.ArrayUtils`类**
@@ -311,6 +305,8 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 |insertSort|插入排序|
 |bubbleSort|冒泡排序|
 |unique|数组去重|
+| concatArrays      | 合并多个数组                  |
+| mergeSortedArrays | 将两个已经排好序（同序）的数组合并一个有序数组 |
 
 **12. `com.zhazhapan.util.DateUtils`类**
 
@@ -324,6 +320,10 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 |addYear|某个日期后推多少个年|
 |addMonth|某个日期后推多少个月|
 |addDay|某个日期后推多少个天|
+| getCurrentMonth() | 获取当前月份                  |
+| getDay            | 获取日期                    |
+| getMonth          | 获取月份                    |
+| getYear           | 获取年份                    |
 
 **13. 发送邮件**
 

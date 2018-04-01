@@ -17,7 +17,7 @@ public class UtilsTest {
 
     @Test
     public void testGetCurrentDate() {
-        System.out.println(Utils.getCurrentMonth());
+        System.out.println(DateUtils.getCurrentMonth());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class UtilsTest {
 
     @Test
     public void testConcatArrays() {
-        int[] nums = Utils.concatArrays(test1, test2, test4, test3);
+        int[] nums = ArrayUtils.concatArrays(test1, test2, test4, test3);
         for (int i : nums) {
             System.out.print(i + " ");
         }
@@ -58,7 +58,7 @@ public class UtilsTest {
 
     @Test
     public void testMergeSortedArrays() {
-        assertTrue(Checker.isSorted(Utils.mergeSortedArrays(test1, test2, true)));
-        assertTrue(Checker.isSorted(Utils.mergeSortedArrays(test4, test3)));
+        assertTrue(Checker.isSorted(ArrayUtils.mergeSortedArrays(test1, test2, true)));
+        assertTrue(Checker.isSorted(ArrayUtils.mergeSortedArrays(test4, test3)));
     }
 }

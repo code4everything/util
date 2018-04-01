@@ -400,7 +400,7 @@ public class FileExecutor extends FileUtils {
      * @throws IOException 异常
      */
     public static void splitFile(File file, long[] splitPoints, String storageFolder) throws IOException {
-        splitPoints = Utils.concatArrays(new long[]{0}, splitPoints, new long[]{file.length()});
+        splitPoints = ArrayUtils.concatArrays(new long[]{0}, splitPoints, new long[]{file.length()});
         String[] fileName = file.getName().split("\\.", 2);
         storageFolder += ValueConsts.SEPARATOR;
         logger.info("start to split file '" + file.getAbsolutePath() + "'");
@@ -556,7 +556,7 @@ public class FileExecutor extends FileUtils {
      */
     public static void mergeFiles(File[] files, File destinationFile, String[] filterRegex) throws IOException {
         if (filterRegex.length < files.length) {
-            filterRegex = Utils.concatArrays(filterRegex, new String[files.length - filterRegex.length]);
+            filterRegex = ArrayUtils.concatArrays(filterRegex, new String[files.length - filterRegex.length]);
         }
         createNewFile(destinationFile);
         int i = 0;
