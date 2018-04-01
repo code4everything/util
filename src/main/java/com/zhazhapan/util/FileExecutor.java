@@ -604,9 +604,9 @@ public class FileExecutor extends FileUtils {
     private static void mergeFiles(File file, File destinationFile, String filter) throws IOException {
         String content = readFile(file);
         if (Checker.isNotEmpty(filter)) {
-            content = content.replaceAll(filter, "");
+            content = content.replaceAll(filter, ValueConsts.EMPTY_STRING);
         }
-        saveFile(destinationFile, content, true);
+        saveFile(destinationFile, content, ValueConsts.TRUE);
     }
 
     /**

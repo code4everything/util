@@ -299,7 +299,7 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 | mergeSortedArrays | 将两个已经排好序（同序）的数组合并一个有序数组 |
 |getCurrentOS()|获取当前系统名称|
 
-**11. `com.zhazhapan.util.ArraySort`类**
+**11. `com.zhazhapan.util.ArrayUtils`类**
 
 |方法名|简要说明|
 |------|---------------|
@@ -310,6 +310,7 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 |quickSort|快速排序|
 |insertSort|插入排序|
 |bubbleSort|冒泡排序|
+|unique|数组去重|
 
 **12. `com.zhazhapan.util.DateUtils`类**
 

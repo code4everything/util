@@ -16,7 +16,7 @@ public class ArraySortTest {
 	@Test
 	public void testSort() {
 		int[] arrays = { 12, 3, 56, 2, 1, 33, 55, 32 };
-		ArraySort.shellSort(arrays);
+		ArrayUtils.shellSort(arrays);
 		System.out.println(Arrays.toString(arrays));
 	}
 }
