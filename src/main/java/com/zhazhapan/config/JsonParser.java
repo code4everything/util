@@ -50,6 +50,15 @@ public class JsonParser {
     }
 
     /**
+     * 是否已经赋值
+     *
+     * @return {@link Boolean}
+     */
+    public boolean hasJsonObject() {
+        return Checker.isNotNull(jsonObject);
+    }
+
+    /**
      * 自动配置jsonObject
      *
      * @param jsonObject {@link JSONObject}

@@ -1,6 +1,6 @@
 封装一些常用的功能（JDK至少需要1.8），持续更新
 
-> [**API文档**](https://github.zhazhapan.com/util-docs/index.html)
+> [**API文档**](https://zhazhapan.com/docs/util/v1.0.5/index.html)
 
 **使用Maven**
 
