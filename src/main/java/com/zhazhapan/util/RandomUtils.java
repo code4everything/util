@@ -179,8 +179,13 @@ public class RandomUtils {
         int result = getRandomInteger(floor, ceil);
         for (int[] range : ranges) {
             if (range[0] <= result && result <= range[1]) {
-                result = result - 1 - (range[1] - range[0]);
-                break;
+                if (range[0] > floor) {
+                    result = getRandomIntegerIgnoreRange(floor, range[0], ranges);
+                } else if (range[1] < ceil) {
+                    result = getRandomIntegerIgnoreRange(range[1], ceil, ranges);
+                } else {
+                    return -1;
+                }
             }
         }
         return result;
