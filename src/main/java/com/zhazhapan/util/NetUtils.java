@@ -1,11 +1,11 @@
 package com.zhazhapan.util;
 
+import com.zhazhapan.config.JsonParser;
 import com.zhazhapan.modules.constant.ValueConsts;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
 import java.util.Random;
 
 /**
@@ -15,6 +15,76 @@ import java.util.Random;
 public class NetUtils {
 
     private NetUtils() {}
+
+    public static String getComputerName() {
+        return System.getenv().get("COMPUTERNAME");
+    }
+
+    /**
+     * 获取系统名称
+     *
+     * @return 系统名称
+     */
+    public static String getSystemName() {
+        return System.getProperty("os.name");
+    }
+
+    /**
+     * 获取系统架构
+     *
+     * @return 系统架构
+     */
+    public static String getSystemArch() {
+        return System.getProperty("os.arch");
+    }
+
+    /**
+     * 获取系统版本
+     *
+     * @return 系统版本
+     */
+    public static String getSystemVersion() {
+        return System.getProperty("os.version");
+    }
+
+    /**
+     * 获取Mac地址
+     *
+     * @return mac地址
+     *
+     * @throws UnknownHostException 异常
+     * @throws SocketException 异常
+     */
+    public static String getMacAddress() throws UnknownHostException, SocketException {
+        byte[] mac = NetworkInterface.getByInetAddress(Inet4Address.getLocalHost()).getHardwareAddress();
+        StringBuilder jointMac = new StringBuilder();
+        for (byte aMac : mac) {
+            String macPart = Integer.toHexString(aMac & 0xFF);
+            jointMac.append(macPart.length() == 1 ? "0" + macPart : macPart).append("-");
+        }
+        String macFormat = jointMac.toString();
+        return macFormat.substring(0, macFormat.length() - 1);
+    }
+
+    /**
+     * 获取公网IP
+     *
+     * @return 公网ip、address
+     */
+    public static JsonParser getPublicIpAndLocation() throws IOException {
+        return new JsonParser(new URL(ValueConsts.URL_OF_PUBLIC_IP_SEARCH));
+    }
+
+    /**
+     * 获取本地ip地址
+     *
+     * @return ip
+     *
+     * @throws UnknownHostException 异常
+     */
+    public static String getLocalIp() throws UnknownHostException {
+        return Inet4Address.getLocalHost().getHostAddress();
+    }
 
     /**
      * 将URL转换成String
