@@ -69,7 +69,7 @@ public class NetUtils {
     /**
      * 获取公网IP
      *
-     * @return 公网ip、address
+     * @return 公网ip、address，如：{"ip":"127.0.0.1","address":"you ip location"}
      */
     public static JsonParser getPublicIpAndLocation() throws IOException {
         return new JsonParser(new URL(ValueConsts.URL_OF_PUBLIC_IP_SEARCH));

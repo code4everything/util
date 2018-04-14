@@ -18,17 +18,12 @@ public class ThreadPool {
     private static int maximumPoolSize = 3;
     private static long keepAliveTime = 1000;
     private static TimeUnit timeUnit = TimeUnit.MILLISECONDS;
-    private static BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>(1);
-    private static ThreadFactory threadFactory = new ThreadFactory() {
-        @Override
-        public Thread newThread(Runnable r) {
-            return new Thread(r);
-        }
-    };
+    private static BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(1);
+    private static ThreadFactory threadFactory = Thread::new;
     /**
      * 新的线程池
      */
-    public ThreadPoolExecutor newExecutor = null;
+    public ThreadPoolExecutor newExecutor;
 
     /**
      * 新建线程池
@@ -39,13 +34,8 @@ public class ThreadPool {
      * @param unit 存活时长单位
      */
     public ThreadPool(int core, int maximum, int keep, TimeUnit unit) {
-        BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>(1);
-        ThreadFactory factory = new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable r) {
-                return new Thread(r);
-            }
-        };
+        BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(1);
+        ThreadFactory factory = Thread::new;
         newExecutor = new ThreadPoolExecutor(core, maximum, keep, unit, queue, factory);
     }
 
@@ -53,7 +43,8 @@ public class ThreadPool {
      * 初始化线程池
      */
     public static void init() {
-        executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, timeUnit, workQueue, threadFactory);
+        executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, timeUnit, workQueue,
+                threadFactory);
     }
 
     /**
