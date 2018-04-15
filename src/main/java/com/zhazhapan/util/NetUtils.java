@@ -2,11 +2,20 @@ package com.zhazhapan.util;
 
 import com.zhazhapan.config.JsonParser;
 import com.zhazhapan.modules.constant.ValueConsts;
+import org.htmlcleaner.CleanerProperties;
+import org.htmlcleaner.DomSerializer;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
+import org.jsoup.Jsoup;
+import org.w3c.dom.Document;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
-import java.util.Random;
 
 /**
  * @author pantao
@@ -16,6 +25,73 @@ public class NetUtils {
 
     private NetUtils() {}
 
+    /**
+     * 获取ip归属地
+     *
+     * @param ip ip地址
+     *
+     * @return 归属地
+     *
+     * @throws IOException 异常
+     * @throws XPathExpressionException 异常
+     * @throws ParserConfigurationException 异常
+     */
+    public static String getLocationByIp(String ip) throws IOException, XPathExpressionException,
+            ParserConfigurationException {
+        return evaluate(ValueConsts.IP_REGION_XPATH, getHtmlFromUrl("http://ip.chinaz.com/" + ip));
+    }
+
+    /**
+     * XPath解析HTML内容
+     *
+     * @param xpath xpath表达式
+     * @param html html内容
+     *
+     * @return 解析结果
+     *
+     * @throws XPathExpressionException 异常
+     * @throws ParserConfigurationException 异常
+     */
+    public static String evaluate(String xpath, String html) throws XPathExpressionException,
+            ParserConfigurationException {
+        HtmlCleaner hc = new HtmlCleaner();
+        TagNode tn = hc.clean(html);
+        Document document = new DomSerializer(new CleanerProperties()).createDOM(tn);
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        return xPath.evaluate(xpath, document);
+    }
+
+    /**
+     * 获取网页内容
+     *
+     * @param url 链接
+     *
+     * @return {@link String}
+     *
+     * @throws IOException 异常
+     */
+    public static String getHtmlFromUrl(String url) throws IOException {
+        return getDocumentFromUrl(url).html();
+    }
+
+    /**
+     * 获取HTML文档
+     *
+     * @param url 链接
+     *
+     * @return {@link org.jsoup.nodes.Document}
+     *
+     * @throws IOException 异常
+     */
+    public static org.jsoup.nodes.Document getDocumentFromUrl(String url) throws IOException {
+        return Jsoup.connect(url).get();
+    }
+
+    /**
+     * 获取计算机名
+     *
+     * @return 计算机名
+     */
     public static String getComputerName() {
         return System.getenv().get("COMPUTERNAME");
     }
@@ -67,7 +143,7 @@ public class NetUtils {
     }
 
     /**
-     * 获取公网IP
+     * 获取公网IP和归属地
      *
      * @return 公网ip、address，如：{"ip":"127.0.0.1","address":"you ip location"}
      */
@@ -162,8 +238,7 @@ public class NetUtils {
     public static InputStream getInputStreamOfConnection(HttpURLConnection connection) throws IOException {
         connection.setConnectTimeout(1000 * 6);
         connection.setRequestProperty("Charset", "UTF-8");
-        connection.setRequestProperty("User-Agent", ValueConsts.USER_AGENT[new Random().nextInt(ValueConsts
-                .USER_AGENT.length)]);
+        connection.setRequestProperty("User-Agent", ValueConsts.USER_AGENT[0]);
         connection.setRequestProperty("Connection", "Keep-Alive");
         connection.setRequestProperty("Accept", "*/*");
         return connection.getInputStream();

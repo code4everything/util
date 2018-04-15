@@ -275,6 +275,7 @@ String msg = Dialogs.showInputDialog("title", "header", "content", "default valu
 | dateToLocalDate        | 将java.util.Date转换为java.time.LocalDate |
 | listToJson        | 将List转换为JSON |
 | mapToJson        | 将Map转换为JSON |
+|getFileSuffix|获取文件后缀名|
 
 **10. `com.zhazhapan.util.Utils`类**
 
@@ -414,6 +415,17 @@ BeanUtils.jsonPutIn(jsonObject, bean);
 |getDataOfUrl|获取URL对应的网页内容|
 |getInputStreamOfUrl|获取URL对应的InputStream对象|
 |getInputStreamOfConnection|获取HttpURLConnection对应的InputStream对象|
+|evaluate|XPath解析HTML内容|
+|getHtmlFromUrl|获取网页内容|
+|getDocumentFromUrl|获取HTML文档|
+|getComputerName|获取计算机名|
+|getSystemName|获取系统名称|
+|getSystemArch|获取系统架构|
+|getSystemVersion|获取系统版本|
+|getMacAddress|获取Mac地址|
+|getPublicIpAndLocation|获取公网IP和归属地|
+|getLocalIp|获取本地ip地址|
+|getLocationByIp|获取ip归属地|
 
 **17. `com.zhazhapan.util.ReflectUtils`类**
 

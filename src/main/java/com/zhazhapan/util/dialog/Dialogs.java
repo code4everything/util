@@ -64,7 +64,7 @@ public class Dialogs {
      * @return {@link Dialog}
      */
     public static Dialog<String[]> getDialog(String title, ButtonType ok) {
-        Dialog<String[]> dialog = new Dialog<String[]>();
+        Dialog<String[]> dialog = new Dialog<>();
         dialog.setTitle(title);
         dialog.setHeaderText(null);
 
