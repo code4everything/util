@@ -25,6 +25,12 @@ public class NetUtils {
 
     private NetUtils() {}
 
+    public static String whois(String domain) throws IOException, XPathExpressionException,
+            ParserConfigurationException {
+        String whois = evaluate(ValueConsts.WHOIS_DOMAIN_XPATH, getHtmlFromUrl("http://whois.chinaz.com/" + domain));
+        return whois.replaceAll("\\[whois\\s?反查]", ValueConsts.EMPTY_STRING).replaceAll("\\s{2,}", "\r\n");
+    }
+
     /**
      * 获取ip归属地
      *

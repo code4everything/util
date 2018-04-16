@@ -66,4 +66,21 @@ public class NetUtilsTest {
     @Test
     public void getInputStreamOfConnection() {
     }
+
+    @Test
+    public void whois() throws ParserConfigurationException, XPathExpressionException, IOException {
+        System.out.println(NetUtils.whois("zhazhapan.com"));
+    }
+
+    @Test
+    public void getLocationByIp() {
+    }
+
+    @Test
+    public void getHtmlFromUrl() {
+    }
+
+    @Test
+    public void getDocumentFromUrl() {
+    }
 }
