@@ -23,8 +23,19 @@ import java.net.*;
  */
 public class NetUtils {
 
-    private NetUtils() {}
+    private NetUtils() {
+    }
 
+
+    /**
+     * whois查询
+     *
+     * @param domain 域名
+     * @return whois信息
+     * @throws IOException 异常
+     * @throws XPathExpressionException 异常
+     * @throws ParserConfigurationException 异常
+     */
     public static String whois(String domain) throws IOException, XPathExpressionException,
             ParserConfigurationException {
         String whois = evaluate(ValueConsts.WHOIS_DOMAIN_XPATH, getHtmlFromUrl("http://whois.chinaz.com/" + domain));
@@ -35,9 +46,7 @@ public class NetUtils {
      * 获取ip归属地
      *
      * @param ip ip地址
-     *
      * @return 归属地
-     *
      * @throws IOException 异常
      * @throws XPathExpressionException 异常
      * @throws ParserConfigurationException 异常
@@ -52,9 +61,7 @@ public class NetUtils {
      *
      * @param xpath xpath表达式
      * @param html html内容
-     *
      * @return 解析结果
-     *
      * @throws XPathExpressionException 异常
      * @throws ParserConfigurationException 异常
      */
@@ -71,9 +78,7 @@ public class NetUtils {
      * 获取网页内容
      *
      * @param url 链接
-     *
      * @return {@link String}
-     *
      * @throws IOException 异常
      */
     public static String getHtmlFromUrl(String url) throws IOException {
@@ -84,9 +89,7 @@ public class NetUtils {
      * 获取HTML文档
      *
      * @param url 链接
-     *
      * @return {@link org.jsoup.nodes.Document}
-     *
      * @throws IOException 异常
      */
     public static org.jsoup.nodes.Document getDocumentFromUrl(String url) throws IOException {
@@ -133,7 +136,6 @@ public class NetUtils {
      * 获取Mac地址
      *
      * @return mac地址
-     *
      * @throws UnknownHostException 异常
      * @throws SocketException 异常
      */
@@ -151,7 +153,7 @@ public class NetUtils {
     /**
      * 获取公网IP和归属地
      *
-     * @return 公网ip、address，如：{"ip":"127.0.0.1","address":"you ip location"}
+     * @return 公网ip、address，如：{"ip":"127.0.0.1","address":"your ip location"}
      */
     public static JsonParser getPublicIpAndLocation() throws IOException {
         return new JsonParser(new URL(ValueConsts.URL_OF_PUBLIC_IP_SEARCH));
@@ -161,7 +163,6 @@ public class NetUtils {
      * 获取本地ip地址
      *
      * @return ip
-     *
      * @throws UnknownHostException 异常
      */
     public static String getLocalIp() throws UnknownHostException {
@@ -172,7 +173,6 @@ public class NetUtils {
      * 将URL转换成String
      *
      * @param url {@link URL}
-     *
      * @return {@link String}
      */
     public static String urlToString(URL url) {
@@ -183,9 +183,7 @@ public class NetUtils {
      * 获取URL中的数据
      *
      * @param url 网络链接
-     *
      * @return {@link String}
-     *
      * @throws IOException 异常
      */
     public static String getDataOfUrl(String url) throws IOException {
@@ -196,9 +194,7 @@ public class NetUtils {
      * 获取URL中的数据
      *
      * @param url 网络链接
-     *
      * @return {@link String}
-     *
      * @throws IOException 异常
      */
     public static String getDataOfUrl(URL url) throws IOException {
@@ -209,9 +205,7 @@ public class NetUtils {
      * 获取URL的InputStream对象
      *
      * @param url 网络链接
-     *
      * @return {@link InputStream}
-     *
      * @throws IOException 异常
      */
     public static InputStream getInputStreamOfUrl(String url) throws IOException {
@@ -222,9 +216,7 @@ public class NetUtils {
      * 获取URL的InputStream对象
      *
      * @param url 网络链接
-     *
      * @return {@link InputStream}
-     *
      * @throws IOException 异常
      */
     public static InputStream getInputStreamOfUrl(URL url) throws IOException {
@@ -236,9 +228,7 @@ public class NetUtils {
      * 获取HttpURLConnection的InputStream对象
      *
      * @param connection 链接对象
-     *
      * @return {@link InputStream}
-     *
      * @throws IOException 异常
      */
     public static InputStream getInputStreamOfConnection(HttpURLConnection connection) throws IOException {

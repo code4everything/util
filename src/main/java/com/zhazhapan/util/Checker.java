@@ -1,7 +1,6 @@
-/**
- *
- */
 package com.zhazhapan.util;
+
+import com.zhazhapan.modules.constant.ValueConsts;
 
 import java.io.File;
 import java.util.Date;
@@ -47,13 +46,13 @@ public class Checker {
     public static final Pattern IMAGES_PATTERN = Pattern.compile(".*\\.(bmp|gif|jpe?g|png|tiff?|pcx|tga|svg|pic)$",
             Pattern.CASE_INSENSITIVE);
 
-    private Checker() {}
+    private Checker() {
+    }
 
     /**
      * 判断文件是否是图片
      *
      * @param file 文件
-     *
      * @return {@link Boolean}
      */
     public static boolean isImage(File file) {
@@ -64,7 +63,6 @@ public class Checker {
      * 判断文件是否是图片
      *
      * @param file 文件
-     *
      * @return {@link Boolean}
      */
     public static boolean isImage(String file) {
@@ -75,7 +73,6 @@ public class Checker {
      * 文件是否不存在
      *
      * @param file 文件
-     *
      * @return 是否不存在
      */
     public static boolean isNotExists(String file) {
@@ -86,7 +83,6 @@ public class Checker {
      * 文件是否存在
      *
      * @param file 文件
-     *
      * @return 是否存在
      */
     public static boolean isExists(String file) {
@@ -99,7 +95,6 @@ public class Checker {
      * @param string 字符串
      * @param min 最小长度
      * @param max 最大长度
-     *
      * @return {@link Boolean}
      */
     public static boolean isLimited(String string, int min, int max) {
@@ -137,7 +132,6 @@ public class Checker {
      * 检查数组是否已经排好序
      *
      * @param nums 数组
-     *
      * @return {@link Boolean}
      */
     public static boolean isSorted(int[] nums) {
@@ -157,7 +151,6 @@ public class Checker {
      * 是否为日期格式
      *
      * @param date 需要判断的日期
-     *
      * @return {@link Boolean}
      */
     public static boolean isDate(String date) {
@@ -170,7 +163,6 @@ public class Checker {
      * @param string 需要检测的字符串
      * @param oldChar 需要替换的字符
      * @param newChar 新的字符
-     *
      * @return {@link String}
      */
     public static String replace(String string, char oldChar, char newChar) {
@@ -183,7 +175,6 @@ public class Checker {
      * @param string 需要检测的字符串
      * @param oldString 需要替换的字符串
      * @param newString 新的字符串
-     *
      * @return {@link String}
      */
     public static String replace(String string, String oldString, String newString) {
@@ -194,7 +185,6 @@ public class Checker {
      * 是否为邮箱格式
      *
      * @param email 需要判断的邮箱地址
-     *
      * @return {@link Boolean}
      */
     public static boolean isEmail(String email) {
@@ -205,7 +195,6 @@ public class Checker {
      * 是否为数字（含小数）格式
      *
      * @param decimal 需要判断的数字
-     *
      * @return {@link Boolean}
      */
     public static boolean isDecimal(String decimal) {
@@ -216,7 +205,6 @@ public class Checker {
      * 是否为整数格式
      *
      * @param number 需要判断的整数
-     *
      * @return {@link Boolean}
      */
     public static boolean isNumber(String number) {
@@ -227,7 +215,6 @@ public class Checker {
      * 对象是否为NULL
      *
      * @param object 需要判断的对象
-     *
      * @return {@link Boolean}
      */
     public static boolean isNull(Object object) {
@@ -238,7 +225,6 @@ public class Checker {
      * 对象是否不为NULL
      *
      * @param object 需要判断的对象
-     *
      * @return {@link Boolean}
      */
     public static boolean isNotNull(Object object) {
@@ -249,9 +235,7 @@ public class Checker {
      * 字符串是否为NULL或空
      *
      * @param string 需要判断的字符串
-     *
      * @return {@link Boolean}
-     *
      * @deprecated 请使用isEmpty方法
      */
     public static boolean isNullOrEmpty(String string) {
@@ -262,7 +246,6 @@ public class Checker {
      * 字符串是否为NULL或空
      *
      * @param string 需要判断的字符串
-     *
      * @return {@link Boolean}
      */
     public static boolean isEmpty(String string) {
@@ -273,7 +256,6 @@ public class Checker {
      * 字符串是否不为空
      *
      * @param string 需要判断的字符串
-     *
      * @return {@link Boolean}
      */
     public static boolean isNotEmpty(String string) {
@@ -283,21 +265,50 @@ public class Checker {
     /**
      * 检测字符串是否为NULL
      *
-     * @param string 需要检测的字符串
-     *
+     * @param value 需要检测的字符串
      * @return {@link String}
      */
-    public static String checkNull(String string) {
-        return isNull(string) ? "" : string;
+    public static String checkNull(String value) {
+        return checkNull(value, ValueConsts.EMPTY_STRING);
+    }
+
+    /**
+     * 检测字符串是否为NULL
+     *
+     * @param value 需要检测的字符串
+     * @param elseValue string为null返回的字符串
+     * @return {@link String}
+     */
+    public static String checkNull(String value, String elseValue) {
+        return isNull(value) ? elseValue : value;
+    }
+
+    /**
+     * 检查double是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Double}
+     */
+    public static Double checkNull(Double value, Double elseValue) {
+        return isNull(value) ? elseValue : value;
+    }
+
+    /**
+     * 检查double是否为null
+     *
+     * @param value 值
+     * @return {@link Double}
+     */
+    public static Double checkNull(Double value) {
+        return checkNull(value, Double.valueOf(0));
     }
 
     /**
      * 检测整数是否为NULL
      *
      * @param longNum 需要检测的整数
-     *
      * @return {@link Long}
-     *
      * @deprecated 这个方法没有作用
      */
     public static long checkNull(long longNum) {
@@ -308,7 +319,6 @@ public class Checker {
      * 判断LIST是否不为空
      *
      * @param list 需要判断的LIST
-     *
      * @return {@link Boolean}
      */
     public static boolean isNotEmpty(List<?> list) {
@@ -319,7 +329,6 @@ public class Checker {
      * 判断LIST是否为空或NULL
      *
      * @param list 需要判断的LIST
-     *
      * @return {@link Boolean}
      */
     public static boolean isEmpty(List<?> list) {
@@ -330,7 +339,6 @@ public class Checker {
      * 判断MAP是否为不空
      *
      * @param map 需要判断的MAP
-     *
      * @return {@link Boolean}
      */
     public static boolean isNotEmpty(Map<?, ?> map) {
@@ -341,7 +349,6 @@ public class Checker {
      * 判断MAP是否为空或NULL
      *
      * @param map 需要判断的MAP
-     *
      * @return {@link Boolean}
      */
     public static boolean isEmpty(Map<?, ?> map) {
@@ -352,7 +359,6 @@ public class Checker {
      * 是否为超链接
      *
      * @param hyperLink 需要匹配超链接
-     *
      * @return {@link Boolean}
      */
     public static boolean isHyperLink(String hyperLink) {
@@ -363,7 +369,6 @@ public class Checker {
      * 检测日期是否为NULL
      *
      * @param date 需要检测的日期
-     *
      * @return {@link Date}
      */
     public static Date checkDate(Date date) {
