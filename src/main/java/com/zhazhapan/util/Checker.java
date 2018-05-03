@@ -284,7 +284,7 @@ public class Checker {
     }
 
     /**
-     * 检查double是否为null
+     * 检查Double是否为null
      *
      * @param value 值
      * @param elseValue 为null返回的值
@@ -295,13 +295,185 @@ public class Checker {
     }
 
     /**
-     * 检查double是否为null
+     * 检查Double是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Double}
+     */
+    public static Double checkNull(Double value, double elseValue) {
+        return checkNull(value, Double.valueOf(elseValue));
+    }
+
+    /**
+     * 检查Double是否为null
      *
      * @param value 值
      * @return {@link Double}
      */
     public static Double checkNull(Double value) {
-        return checkNull(value, Double.valueOf(0));
+        return checkNull(value, 0);
+    }
+
+    /**
+     * 检查Integer是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Integer}
+     */
+    public static Integer checkNull(Integer value, Integer elseValue) {
+        return isNull(value) ? elseValue : value;
+    }
+
+    /**
+     * 检查Integer是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Integer}
+     */
+    public static Integer checkNull(Integer value, int elseValue) {
+        return checkNull(value, Integer.valueOf(elseValue));
+    }
+
+    /**
+     * 检查Integer是否为null
+     *
+     * @param value 值
+     * @return {@link Integer}
+     */
+    public static Integer checkNull(Integer value) {
+        return checkNull(value, 0);
+    }
+
+    /**
+     * 检查Long是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Long}
+     */
+    public static Long checkNull(Long value, Long elseValue) {
+        return isNull(value) ? elseValue : value;
+    }
+
+    /**
+     * 检查Long是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Long}
+     */
+    public static Long checkNull(Long value, long elseValue) {
+        return checkNull(value, Long.valueOf(elseValue));
+    }
+
+    /**
+     * 检查Long是否为null
+     *
+     * @param value 值
+     * @return {@link Long}
+     */
+    public static Long checkNull(Long value) {
+        return checkNull(value, 0);
+    }
+
+    /**
+     * 检查Float是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Float}
+     */
+    public static Float checkNull(Float value, Float elseValue) {
+        return isNull(value) ? elseValue : value;
+    }
+
+    /**
+     * 检查Float是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Float}
+     */
+    public static Float checkNull(Float value, float elseValue) {
+        return checkNull(value, Float.valueOf(elseValue));
+    }
+
+    /**
+     * 检查Float是否为null
+     *
+     * @param value 值
+     * @return {@link Float}
+     */
+    public static Float checkNull(Float value) {
+        return checkNull(value, 0);
+    }
+
+    /**
+     * 检查Short是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Short}
+     */
+    public static Short checkNull(Short value, Short elseValue) {
+        return isNull(value) ? elseValue : value;
+    }
+
+    /**
+     * 检查Short是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Short}
+     */
+    public static Short checkNull(Short value, short elseValue) {
+        return checkNull(value, Short.valueOf(elseValue));
+    }
+
+    /**
+     * 检查Short是否为null
+     *
+     * @param value 值
+     * @return {@link Short}
+     */
+    public static Short checkNull(Short value) {
+        short s = 0;
+        return checkNull(value, s);
+    }
+
+    /**
+     * 检查Character是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Character}
+     */
+    public static Character checkNull(Character value, Character elseValue) {
+        return isNull(value) ? elseValue : value;
+    }
+
+    /**
+     * 检查Character是否为null
+     *
+     * @param value 值
+     * @param elseValue 为null返回的值
+     * @return {@link Character}
+     */
+    public static Character checkNull(Character value, char elseValue) {
+        return checkNull(value, Character.valueOf(elseValue));
+    }
+
+    /**
+     * 检查Character是否为null
+     *
+     * @param value 值
+     * @return {@link Character}
+     */
+    public static Character checkNull(Character value) {
+        return checkNull(value, '0');
     }
 
     /**
