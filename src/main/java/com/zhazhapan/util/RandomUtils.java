@@ -12,9 +12,10 @@ import java.util.Random;
 /**
  * @author pantao
  */
-public class RandomUtils {
+public class RandomUtils extends org.apache.commons.lang3.RandomUtils {
 
-    private RandomUtils() {}
+    private RandomUtils() {
+    }
 
     public static String getRandomEmail() {
         return getRandomStringOnlyLowerCase(getRandomInteger(3, 10)) + "@" + getRandomStringOnlyLowerCase
@@ -25,7 +26,6 @@ public class RandomUtils {
      * 获取随机整数
      *
      * @param length 长度
-     *
      * @return {@link Integer}
      */
     public static int getRandomInteger(int length) {
@@ -36,7 +36,6 @@ public class RandomUtils {
      * 获取随机字符串（包括大小写字母，数字和符号）
      *
      * @param length 长度
-     *
      * @return {@link String}
      */
     public static String getRandomString(int length) {
@@ -47,7 +46,6 @@ public class RandomUtils {
      * 获取没有符号的随机字符串（包括大小写字母和数字）
      *
      * @param length 长度
-     *
      * @return {@link String}
      */
     public static String getRandomStringWithoutSymbol(int length) {
@@ -58,7 +56,6 @@ public class RandomUtils {
      * 获取只有大小写字母的随机字符串
      *
      * @param length 长度
-     *
      * @return {@link String}
      */
     public static String getRandomStringOnlyLetter(int length) {
@@ -69,7 +66,6 @@ public class RandomUtils {
      * 获取只有小写字母的随机字符串
      *
      * @param length 长度
-     *
      * @return {@link String}
      */
     public static String getRandomStringOnlyLowerCase(int length) {
@@ -80,7 +76,6 @@ public class RandomUtils {
      * 获取只有大写字母的随机字符串
      *
      * @param length 长度
-     *
      * @return {@link String}
      */
     public static String getRandomStringOnlyUpperCase(int length) {
@@ -94,7 +89,6 @@ public class RandomUtils {
      * @param ceil ascii上限
      * @param length 长度
      * @param ranges 忽略区间（包含下限和上限长度为2的一维数组），可以有多个忽略区间
-     *
      * @return 字符串
      */
     public static String getRandomTextIgnoreRange(int floor, int ceil, int length, int[]... ranges) {
@@ -111,7 +105,6 @@ public class RandomUtils {
      * @param floor ascii下限
      * @param ceil ascii上限
      * @param length 长度
-     *
      * @return 字符串
      */
     public static String getRandomText(int floor, int ceil, int length) {
@@ -136,7 +129,6 @@ public class RandomUtils {
      *
      * @param floor 下限
      * @param ceil 上限
-     *
      * @return {@link Double}
      */
     public static double getRandomDouble(double floor, double ceil) {
@@ -149,7 +141,6 @@ public class RandomUtils {
      * @param floor 下限
      * @param ceil 上限
      * @param precision 精度（小数位数）
-     *
      * @return {@link Double}
      */
     public static double getRandomDouble(double floor, double ceil, int precision) {
@@ -172,7 +163,6 @@ public class RandomUtils {
      * @param floor 下限
      * @param ceil 上限
      * @param ranges 忽略区间（包含下限和上限长度为2的一维数组），可以有多个忽略区间
-     *
      * @return {@link Integer}
      */
     public static int getRandomIntegerIgnoreRange(int floor, int ceil, int[]... ranges) {
@@ -196,7 +186,6 @@ public class RandomUtils {
      *
      * @param floor 下限
      * @param ceil 上限
-     *
      * @return {@link Integer}
      */
     public static int getRandomInteger(int floor, int ceil) {
@@ -207,7 +196,6 @@ public class RandomUtils {
      * 获取随机颜色
      *
      * @param opacity 不透明度
-     *
      * @return {@link SimpleColor}
      */
     public static SimpleColor getRandomColor(double opacity) {

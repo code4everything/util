@@ -1,6 +1,7 @@
 package com.zhazhapan.util;
 
 import com.zhazhapan.modules.constant.ValueConsts;
+import com.zhazhapan.util.interfaces.IChecker;
 
 import java.io.File;
 import java.util.Date;
@@ -474,6 +475,32 @@ public class Checker {
      */
     public static Character checkNull(Character value) {
         return checkNull(value, '0');
+    }
+
+    /**
+     * 自定义检查
+     *
+     * @param value res为true返回的值
+     * @param elseValue res为false返回的值
+     * @param res {@link Boolean}
+     * @param <T> 值类型
+     * @return 结果
+     */
+    public static <T> T check(T value, T elseValue, boolean res) {
+        return res ? value : elseValue;
+    }
+
+    /**
+     * 自定义检查
+     *
+     * @param value 调用结果为true返回的值
+     * @param elseValue 调用结果为false返回的值
+     * @param checker 自定义检查方法
+     * @param <T> 值类型
+     * @return 结果
+     */
+    public static <T> T check(T value, T elseValue, IChecker checker) {
+        return check(value, elseValue, checker.check());
     }
 
     /**
