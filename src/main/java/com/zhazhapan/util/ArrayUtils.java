@@ -10,14 +10,14 @@ import java.util.List;
  */
 public class ArrayUtils {
 
-    private ArrayUtils() {}
+    private ArrayUtils() {
+    }
 
     /**
      * 合并多个Short数组
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static short[] concatArrays(short[] array, short[]... arrays) {
@@ -33,7 +33,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static long[] concatArrays(long[] array, long[]... arrays) {
@@ -49,7 +48,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static float[] concatArrays(float[] array, float[]... arrays) {
@@ -65,7 +63,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static double[] concatArrays(double[] array, double[]... arrays) {
@@ -81,7 +78,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static char[] concatArrays(char[] array, char[]... arrays) {
@@ -97,7 +93,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static byte[] concatArrays(byte[] array, byte[]... arrays) {
@@ -113,7 +108,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static boolean[] concatArrays(boolean[] array, boolean[]... arrays) {
@@ -129,7 +123,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static String[] concatArrays(String[] array, String[]... arrays) {
@@ -145,7 +138,6 @@ public class ArrayUtils {
      *
      * @param array 数组
      * @param arrays 数组
-     *
      * @return 数组
      */
     public static int[] concatArrays(int[] array, int[]... arrays) {
@@ -162,7 +154,6 @@ public class ArrayUtils {
      * @param array 数组
      * @param arrays 数组
      * @param <T> T类型
-     *
      * @return 数组
      */
     @SafeVarargs
@@ -180,7 +171,6 @@ public class ArrayUtils {
      *
      * @param nums1 数组
      * @param nums2 数组
-     *
      * @return 数组
      */
     public static int[] mergeSortedArrays(int[] nums1, int[] nums2) {
@@ -193,7 +183,6 @@ public class ArrayUtils {
      * @param nums1 数组
      * @param nums2 数组
      * @param desc 是否为降序
-     *
      * @return 数组
      */
     public static int[] mergeSortedArrays(int[] nums1, int[] nums2, boolean desc) {
@@ -216,7 +205,6 @@ public class ArrayUtils {
      * 去重
      *
      * @param arrays 数组
-     *
      * @return 去重后的数组
      */
     public static String[] unique(String[] arrays) {
@@ -238,7 +226,6 @@ public class ArrayUtils {
      * 去重
      *
      * @param arrays 数组
-     *
      * @return 去重后的数组
      */
     public static int[] unique(int[] arrays) {
@@ -251,7 +238,6 @@ public class ArrayUtils {
      * @param arrays 数组
      * @param min 最小值（小于该值的将被忽略）
      * @param max 最大值（大于该值的将被忽略）
-     *
      * @return 去重后的数组
      */
     public static int[] unique(int[] arrays, int min, int max) {
@@ -273,7 +259,6 @@ public class ArrayUtils {
      * 去重
      *
      * @param arrays 数组
-     *
      * @return 去重后的数组
      */
     public static long[] unique(long[] arrays) {
@@ -286,7 +271,6 @@ public class ArrayUtils {
      * @param arrays 数组
      * @param min 最小值（小于该值的将被忽略）
      * @param max 最大值（大于该值的将被忽略）
-     *
      * @return 去重后的数组
      */
     public static long[] unique(long[] arrays, long min, long max) {
