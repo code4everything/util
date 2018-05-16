@@ -569,8 +569,30 @@ public class Checker {
      *
      * @param date 需要检测的日期
      * @return {@link Date}
+     * @deprecated 请调用 {@link Checker#checkNull}
      */
     public static Date checkDate(Date date) {
-        return isNull(date) ? new Date() : date;
+        return checkNull(date);
+    }
+
+    /**
+     * 检测日期是否为NULL
+     *
+     * @param value 需要检测的日期
+     * @return {@link Date}
+     */
+    public static Date checkNull(Date value) {
+        return checkNull(value, new Date());
+    }
+
+    /**
+     * 检测日期是否为NULL
+     *
+     * @param value 需要检测的日期
+     * @param elseValue 为null染返回的值
+     * @return {@link Date}
+     */
+    public static Date checkNull(Date value, Date elseValue) {
+        return isNull(value) ? elseValue : value;
     }
 }

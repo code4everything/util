@@ -26,7 +26,44 @@ public class Utils {
      */
     private static Logger logger = Logger.getLogger(Utils.class);
 
-    private Utils() {}
+    private Utils() {
+    }
+
+
+    /**
+     * 裁剪字符串
+     *
+     * @param value 值
+     * @param trim 需要裁剪的值
+     * @return 裁剪后的字符串
+     */
+    public static String trim(String value, String trim) {
+        return ltrim(rtrim(value, trim), trim);
+    }
+
+    /**
+     * 裁剪字符串
+     *
+     * @param value 值
+     * @param ltrim 需要裁剪的值
+     * @return 裁剪后的字符串
+     */
+    public static String ltrim(String value, String ltrim) {
+        int idx = value.length() - ltrim.length();
+        return value.lastIndexOf(ltrim) == idx ? rtrim(value.substring(0, idx), ltrim) : value;
+    }
+
+    /**
+     * 裁剪字符串
+     *
+     * @param value 值
+     * @param rtrim 需要裁剪的值
+     * @return 裁剪后的字符串
+     */
+    public static String rtrim(String value, String rtrim) {
+        int idx = value.length() - rtrim.length();
+        return value.lastIndexOf(rtrim) == idx ? rtrim(value.substring(0, idx), rtrim) : value;
+    }
 
     /**
      * 获取当前系统名称
@@ -41,7 +78,6 @@ public class Utils {
      * 抽取字符串的数字，并转换为Double
      *
      * @param string {@link String}
-     *
      * @return {@link Double}
      */
     public static double extractDouble(String string) {
@@ -52,7 +88,6 @@ public class Utils {
      * 抽取字符串的数字，并转换为Float
      *
      * @param string {@link String}
-     *
      * @return {@link Float}
      */
     public static float extractFloat(String string) {
@@ -63,7 +98,6 @@ public class Utils {
      * 抽取字符串的数字，并转换为Short
      *
      * @param string {@link String}
-     *
      * @return {@link Short}
      */
     public static short extractShort(String string) {
@@ -74,7 +108,6 @@ public class Utils {
      * 抽取字符串的数字，并转换为Long
      *
      * @param string {@link String}
-     *
      * @return {@link Long}
      */
     public static long extractLong(String string) {
@@ -85,7 +118,6 @@ public class Utils {
      * 抽取字符串的数字，并转换为Integer
      *
      * @param string {@link String}
-     *
      * @return {@link Integer}
      */
     public static int extractInt(String string) {
@@ -96,7 +128,6 @@ public class Utils {
      * 抽取字符串的数字（包括最后一个点号）
      *
      * @param string {@link String}
-     *
      * @return {@link String}
      */
     public static String extractDigit(String string) {
@@ -124,7 +155,6 @@ public class Utils {
      * 返回多个字符串中长度最长的字符串
      *
      * @param strings 多个字符串
-     *
      * @return {@link String}
      */
     public static String maxLengthString(String... strings) {
@@ -153,7 +183,6 @@ public class Utils {
      * 使用系统默认的浏览器打开超链接
      *
      * @param url 超链接
-     *
      * @throws URISyntaxException 异常
      * @throws IOException 异常
      */
@@ -165,7 +194,6 @@ public class Utils {
      * 使用系统默认的方式打开文件
      *
      * @param path 路径
-     *
      * @throws IOException 异常
      */
     public static void openFile(String path) throws IOException {
@@ -176,7 +204,6 @@ public class Utils {
      * 使用系统默认的方式打开文件
      *
      * @param file 文件
-     *
      * @throws IOException 异常
      */
     public static void openFile(File file) throws IOException {
@@ -187,7 +214,6 @@ public class Utils {
      * 获取数组中最大值
      *
      * @param nums 数组
-     *
      * @return {@link Integer}
      */
     public static int getMaxValue(int... nums) {

@@ -31,7 +31,8 @@ public class Formatter {
     /**
      * 文件名匹配（不能包含非法字符）,忽略大小写
      */
-    public static final Pattern FILE_NAME_PATTERN = Pattern.compile("([^/\\\\:*\"<>|?]+\\.)*[^/\\\\:*\"<>|?]+(\\?.*)?$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern FILE_NAME_PATTERN = Pattern.compile("([^/\\\\:*\"<>|?]+\\.)*[^/\\\\:*\"<>|?]+(\\?.*)" +
+            "?$", Pattern.CASE_INSENSITIVE);
 
     /**
      * 单位KB
@@ -73,13 +74,13 @@ public class Formatter {
      */
     private static SimpleDateFormat SHORT_TIME = new SimpleDateFormat("HH:mm");
 
-    private Formatter() {}
+    private Formatter() {
+    }
 
     /**
      * 将字符串转换为INT型
      *
      * @param string 需要转换的字符串
-     *
      * @return {@link Integer}
      */
     public static int stringToInt(String string) {
@@ -90,7 +91,6 @@ public class Formatter {
      * 格式文件大小
      *
      * @param size 单位为B的文件大小
-     *
      * @return 格式化为KB、MB、GB、TB的{@link String}
      */
     public static String formatSize(long size) {
@@ -111,7 +111,6 @@ public class Formatter {
      * 将格式化后的大小转换成long型
      *
      * @param size 格式为 xx.xx B、xx.xx KB、xx.xx MB、xx.xx GB、xx.xx TB 的字符串
-     *
      * @return 单位为B的{@link Long}
      */
     public static long sizeToLong(String size) {
@@ -144,7 +143,6 @@ public class Formatter {
      * 将String转换成Double
      *
      * @param string 需要转换为字符串
-     *
      * @return 转换结果，如果数值非法，则返回-1
      */
     public static double stringToDouble(String string) {
@@ -159,7 +157,6 @@ public class Formatter {
      * 将String转换成Long
      *
      * @param string 需要转换的字符串
-     *
      * @return 转换结果，如果数值非法，则返回-1
      */
     public static long stringToLong(String string) {
@@ -175,7 +172,6 @@ public class Formatter {
      *
      * @param number 需要格式化的数值
      * @param format 格式，例如：#0.00
-     *
      * @return {@link String}
      */
     public static String customFormatDecimal(double number, String format) {
@@ -186,7 +182,6 @@ public class Formatter {
      * 使用默认方式格式化字符串，默认格式：#0.00
      *
      * @param number 需要格式化的数值
-     *
      * @return {@link String}
      */
     public static String formatDecimal(double number) {
@@ -198,7 +193,6 @@ public class Formatter {
      *
      * @param number 需要格式化的数值
      * @param format 格式，例如：#0.00
-     *
      * @return {@link String}
      */
     public static String formatDecimal(double number, String format) {
@@ -209,7 +203,6 @@ public class Formatter {
      * 将时间戳转换为字符串
      *
      * @param time 时间戳
-     *
      * @return {@link String}
      */
     public static synchronized String timeStampToString(long time) {
@@ -220,7 +213,6 @@ public class Formatter {
      * 将Map转换成JSON，调用对象的toString方法
      *
      * @param map {@link Map}
-     *
      * @return {@link String}
      */
     public static String mapToJson(Map<?, ?> map) {
@@ -240,7 +232,6 @@ public class Formatter {
      * 将List转换成JSON，需要类重写toString方法，并返回一个JSON字符串
      *
      * @param list {@link List}
-     *
      * @return {@link String}
      */
     public static String listToJson(List<?> list) {
@@ -255,7 +246,6 @@ public class Formatter {
      * 格式化JSON
      *
      * @param string JSON格式的字符串
-     *
      * @return {@link String}
      */
     public static String formatJson(String string) {
@@ -271,7 +261,6 @@ public class Formatter {
      * 转换为日期格式的字符串
      *
      * @param date 日期
-     *
      * @return 只有日期的{@link String}
      */
     public static synchronized String dateToString(Date date) {
@@ -282,7 +271,6 @@ public class Formatter {
      * 转换为日期和长时间格式的字符串
      *
      * @param date 日期
-     *
      * @return 日期+长时间的{@link String}
      */
     public static synchronized String datetimeToString(Date date) {
@@ -293,9 +281,7 @@ public class Formatter {
      * 从文件路径中获取文件名
      *
      * @param string 文件路径
-     *
      * @return {@link String}
-     *
      * @throws UnsupportedEncodingException 异常
      */
     public static String getFileName(String string) throws UnsupportedEncodingException {
@@ -316,7 +302,6 @@ public class Formatter {
      * 将String转换成FLOAT
      *
      * @param string 需要转换的字符串
-     *
      * @return 转换结果，如果数值非法，则返回-1
      */
     public static float stringToFloat(String string) {
@@ -331,7 +316,6 @@ public class Formatter {
      * 将String转换成Integer
      *
      * @param string 需要转换的字符串
-     *
      * @return 转换结果，如果数值非法，则返回-1
      */
     public static int stringToInteger(String string) {
@@ -343,12 +327,24 @@ public class Formatter {
     }
 
     /**
+     * 将String转换成Short
+     *
+     * @param string 需要转换的字符串
+     * @return 转换结果，如果数值非法，则返回-1
+     */
+    public static short stringToShort(String string) {
+        string = string.trim();
+        if (Checker.isNumber(string)) {
+            return Short.parseShort(string);
+        }
+        return -1;
+    }
+
+    /**
      * 将字符串转换成没有时间日期
      *
      * @param date 日期格式的字符串
-     *
      * @return 没有时间的日期
-     *
      * @throws ParseException 异常
      */
     public synchronized static Date stringToDate(String date) throws ParseException {
@@ -359,9 +355,7 @@ public class Formatter {
      * 将字符串转换成没有日期的长时间
      *
      * @param time 时间格式的字符串
-     *
      * @return 没有日期的长时间
-     *
      * @throws ParseException 异常
      */
     public synchronized static Date stringToLongTime(String time) throws ParseException {
@@ -372,9 +366,7 @@ public class Formatter {
      * 将字符串转换成没有日期的短时间
      *
      * @param time 时间格式的字符串
-     *
      * @return 没有日期的短时间
-     *
      * @throws ParseException 异常
      */
     public synchronized static Date stringToShortTime(String time) throws ParseException {
@@ -386,9 +378,7 @@ public class Formatter {
      *
      * @param datetime 日期格式的字符串
      * @param formatWay 自定义格式
-     *
      * @return 自定义格式的日期
-     *
      * @throws ParseException 异常
      */
     public static Date stringToCustomDateTime(String datetime, String formatWay) throws ParseException {
@@ -399,9 +389,7 @@ public class Formatter {
      * 将字符串转换成包含时间日期
      *
      * @param datetime 日期格式的字符串
-     *
      * @return 包含时间的日期
-     *
      * @throws ParseException 异常
      */
     public synchronized static Date stringToDatetime(String datetime) throws ParseException {
@@ -413,9 +401,7 @@ public class Formatter {
      *
      * @param datetime 日期格式的字符串
      * @param sdf 自定义的格式
-     *
      * @return 自定义格式的日期
-     *
      * @throws ParseException 异常
      */
     public static Date stringToCustomDateTime(SimpleDateFormat sdf, String datetime) throws ParseException {
@@ -426,7 +412,6 @@ public class Formatter {
      * 将日期转换成本地格式
      *
      * @param date 日期
-     *
      * @return “yyyy年MM月dd日”格式的字符串
      */
     public static String toLocalDate(Date date) {
@@ -437,7 +422,6 @@ public class Formatter {
      * 将日期转换成长时间格式的字符串
      *
      * @param time 日期
-     *
      * @return 长时间格式的字符串
      */
     public synchronized static String longTimeToString(Date time) {
@@ -448,7 +432,6 @@ public class Formatter {
      * 将日期转换成短时间格式的字符串
      *
      * @param time 日期
-     *
      * @return 短时间格式的字符串
      */
     public synchronized static String shortTimeToString(Date time) {
@@ -460,7 +443,6 @@ public class Formatter {
      *
      * @param datetime 日期
      * @param formatWay 自定义格式
-     *
      * @return 自定义格式的字符串
      */
     public static String datetimeToCustomString(Date datetime, String formatWay) {
@@ -472,7 +454,6 @@ public class Formatter {
      *
      * @param datetime 日期
      * @param sdf 自定义格式
-     *
      * @return 自定义格式的字符串
      */
     public static String datetimeToCustomString(SimpleDateFormat sdf, Date datetime) {
@@ -484,7 +465,6 @@ public class Formatter {
      *
      * @param data 整数
      * @param length 长度
-     *
      * @return {@link String}
      */
     public static String numberFormat(long data, int length) {
@@ -495,7 +475,6 @@ public class Formatter {
      * 将java.time.LocalDate转换为java.util.Date
      *
      * @param localDate java.time.LocalDate
-     *
      * @return java.util.Date
      */
     public static Date localDateToDate(LocalDate localDate) {
@@ -508,7 +487,6 @@ public class Formatter {
      * 将java.util.Date转换为java.time.LocalDate
      *
      * @param date java.util.Date
-     *
      * @return java.time.LocalDate
      */
     public static LocalDate dateToLocalDate(Date date) {
