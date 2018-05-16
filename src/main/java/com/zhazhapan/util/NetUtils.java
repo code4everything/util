@@ -16,6 +16,8 @@ import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author pantao
@@ -23,7 +25,68 @@ import java.net.*;
  */
 public class NetUtils {
 
+    /**
+     * 协议
+     */
+    public static final String PROTOCOL_KEY = "$protocol";
+
+    /**
+     * 主机
+     */
+    public static final String HOST_KEY = "$host";
+
+    /**
+     * 路径
+     */
+    public static final String PATH_KEY = "$path";
+
     private NetUtils() {
+    }
+
+    /**
+     * 解析URL
+     *
+     * @param url url
+     * @return {@link Map}
+     */
+    public static Map<String, String> parseUrl(String url) {
+        Map<String, String> result = new HashMap<>(8);
+        if (Checker.isNotEmpty(url)) {
+            String[] pros = url.split("://");
+            // 设置主机、协议、路径
+            result.put(PROTOCOL_KEY, pros[0]);
+            int lastIndex = pros[1].lastIndexOf("/");
+            if (pros[1].startsWith(ValueConsts.SPLASH_STRING)) {
+                // 文件协议
+                result.put(HOST_KEY, ValueConsts.EMPTY_STRING);
+                result.put(PATH_KEY, pros[1].substring(1));
+            } else if (pros[1].contains(ValueConsts.SPLASH_STRING)) {
+                int index = pros[1].indexOf("/");
+                // 设置主机
+                result.put(HOST_KEY, pros[1].substring(0, index));
+                // 设置参数
+                if (pros[1].contains(ValueConsts.QUESTION_MARK)) {
+                    lastIndex = pros[1].indexOf(ValueConsts.QUESTION_MARK);
+                    String[] params = pros[1].split("\\?")[1].split("&");
+                    for (String param : params) {
+                        String[] kv = param.split("=");
+                        result.put(kv[0], kv[1]);
+                    }
+                }
+                // 设置路径
+                if (lastIndex > index) {
+                    String path = pros[1].substring(index + 1, lastIndex);
+                    path = path.endsWith(ValueConsts.SPLASH_STRING) ? path.substring(0, path.length() - 1) : path;
+                    result.put(PATH_KEY, path);
+                } else {
+                    result.put(PATH_KEY, ValueConsts.EMPTY_STRING);
+                }
+            } else {
+                result.put(HOST_KEY, pros[1]);
+                result.put(PATH_KEY, ValueConsts.EMPTY_STRING);
+            }
+        }
+        return result;
     }
 
 

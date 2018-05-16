@@ -5,6 +5,7 @@ import org.junit.Test;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.util.Map;
 
 public class NetUtilsTest {
 
@@ -82,5 +83,16 @@ public class NetUtilsTest {
 
     @Test
     public void getDocumentFromUrl() {
+    }
+
+    @Test
+    public void parseUrl() {
+        String url = "http://127.0.0.1:8080/heart/api/date.html?love-you=forever&coding=everyday";
+        Map<String, String> map = NetUtils.parseUrl(url);
+        System.out.println(map.get(NetUtils.PROTOCOL_KEY));
+        System.out.println(map.get(NetUtils.HOST_KEY));
+        System.out.println(map.get(NetUtils.PATH_KEY));
+        System.out.println(map.get("love-you"));
+        System.out.println(map.get("coding"));
     }
 }

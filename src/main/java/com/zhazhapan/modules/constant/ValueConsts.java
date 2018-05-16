@@ -8,6 +8,14 @@ import java.io.File;
  */
 public class ValueConsts {
 
+    /**
+     * 英文问号
+     */
+    public static final String QUESTION_MARK = "?";
+
+    /**
+     * whois查询的xpath表达式
+     */
     public static final String WHOIS_DOMAIN_XPATH = "//ul[@class='WhoisLeft fl']";
 
     /**
@@ -250,5 +258,6 @@ public class ValueConsts {
      */
     public static final String USER_DESKTOP = USER_HOME + SEPARATOR + "Desktop";
 
-    private ValueConsts() {}
+    private ValueConsts() {
+    }
 }
