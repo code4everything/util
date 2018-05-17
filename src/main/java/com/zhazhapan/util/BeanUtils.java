@@ -2,6 +2,8 @@ package com.zhazhapan.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
+import com.sun.istack.internal.NotNull;
+import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.annotation.ToJsonString;
 import com.zhazhapan.util.enums.FieldModifier;
 import com.zhazhapan.util.enums.JsonMethod;
@@ -11,12 +13,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author pantao
  * @since 2018/1/18
  */
 public class BeanUtils {
+
+    private static final JsonMethod[] METHODS = new JsonMethod[]{JsonMethod.MANUAL, JsonMethod.HANDLE};
 
     private BeanUtils() {
     }
@@ -118,6 +125,7 @@ public class BeanUtils {
             IllegalAccessException {
         JSONObject jsonObject = new JSONObject();
         StringBuilder builder = new StringBuilder("{");
+        boolean isManual = false;
         if (Checker.isNotNull(object)) {
             Class<?> bean = object.getClass();
             Field[] fields = bean.getDeclaredFields();
@@ -127,11 +135,11 @@ public class BeanUtils {
                         .isPrivate(mod)) || (modifier == FieldModifier.PUBLIC && Modifier.isPublic(mod));
                 if (addable) {
                     field.setAccessible(true);
-                    if (method == JsonMethod.HANDLE) {
+                    isManual = Checker.objectIn(method, METHODS);
+                    if (isManual) {
                         Object f = field.get(object);
                         if (Checker.isNotNull(f)) {
-                            builder.append("\"").append(field.getName()).append("\":\"").append(field.get(object))
-                                    .append("\",");
+                            builder.append(converter(field.getName(), f));
                         }
                     } else {
                         jsonObject.put(field.getName(), field.get(object));
@@ -139,7 +147,7 @@ public class BeanUtils {
                 }
             }
         }
-        return JsonMethod.HANDLE == method ? builder.substring(0, builder.length() - 1) + "}" : jsonObject.toString();
+        return isManual ? builder.substring(0, builder.length() - 1) + "}" : jsonObject.toString();
     }
 
     /**
@@ -164,5 +172,35 @@ public class BeanUtils {
         }
         String json = toJsonString(object, modifier, method);
         return jsonType == JsonType.PRETTY ? Formatter.formatJson(json) : json;
+    }
+
+    /**
+     * 手动转换 {@link List} 和 {@link Map}
+     *
+     * @param fieldName 字段名
+     * @param object 对象
+     * @return json对象
+     */
+    private static String converter(@NotNull String fieldName, @NotNull Object object) {
+        StringBuilder builder = new StringBuilder();
+        if (Checker.isNotEmpty(fieldName)) {
+            builder.append("\"").append(fieldName).append("\"");
+        }
+        if (object instanceof Collection) {
+            List list = (List) object;
+            builder.append(":[");
+            list.forEach(obj -> builder.append(converter(ValueConsts.EMPTY_STRING, obj)));
+            return builder.substring(0, builder.length() - 1) + "],";
+        } else if (object instanceof Map) {
+            Map map = (Map) object;
+            builder.append(":{");
+            map.forEach((k, v) -> builder.append(converter(k.toString(), v)));
+            return builder.substring(0, builder.length() - 1) + "},";
+        } else if (Checker.isEmpty(fieldName)) {
+            builder.append("\"").append(object).append("\",");
+        } else {
+            builder.append(":\"").append(object).append("\",");
+        }
+        return builder.toString();
     }
 }

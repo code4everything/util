@@ -15,6 +15,13 @@ public enum JsonMethod {
 
     /**
      * 使用手动的方式
+     *
+     * @deprecated 推荐使用 {@link JsonMethod#MANUAL}
      */
-    HANDLE
+    HANDLE,
+
+    /**
+     * 手动的方式
+     */
+    MANUAL
 }

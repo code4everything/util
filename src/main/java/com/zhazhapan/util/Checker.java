@@ -51,6 +51,25 @@ public class Checker {
     }
 
     /**
+     * 检查对象是否在集合中
+     *
+     * @param o 对象
+     * @param ts 集合
+     * @param <T> 值类型
+     * @return 是否存在
+     */
+    public static <T> boolean objectIn(T o, T... ts) {
+        if (isNotNull(o) && isNotNull(ts)) {
+            for (T t : ts) {
+                if (o.equals(t)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * 判断文件是否是图片
      *
      * @param file 文件
