@@ -135,7 +135,7 @@ public class BeanUtils {
                         .isPrivate(mod)) || (modifier == FieldModifier.PUBLIC && Modifier.isPublic(mod));
                 if (addable) {
                     field.setAccessible(true);
-                    isManual = Checker.objectIn(method, METHODS);
+                    isManual = Checker.isIn(method, METHODS);
                     if (isManual) {
                         Object f = field.get(object);
                         if (Checker.isNotNull(f)) {
@@ -184,23 +184,23 @@ public class BeanUtils {
     private static String converter(@NotNull String fieldName, @NotNull Object object) {
         StringBuilder builder = new StringBuilder();
         if (Checker.isNotEmpty(fieldName)) {
-            builder.append("\"").append(fieldName).append("\"");
+            builder.append("\"").append(fieldName).append("\":");
         }
         if (object instanceof Collection) {
             List list = (List) object;
-            builder.append(":[");
+            builder.append("[");
             list.forEach(obj -> builder.append(converter(ValueConsts.EMPTY_STRING, obj)));
-            return builder.substring(0, builder.length() - 1) + "],";
+            return builder.substring(0, builder.length() - 1) + "]";
         } else if (object instanceof Map) {
             Map map = (Map) object;
-            builder.append(":{");
+            builder.append("{");
             map.forEach((k, v) -> builder.append(converter(k.toString(), v)));
-            return builder.substring(0, builder.length() - 1) + "},";
+            return builder.substring(0, builder.length() - 1) + "}";
         } else if (Checker.isEmpty(fieldName)) {
-            builder.append("\"").append(object).append("\",");
+            builder.append("\"").append(object).append("\"");
         } else {
-            builder.append(":\"").append(object).append("\",");
+            builder.append("\"").append(object).append("\"");
         }
-        return builder.toString();
+        return builder.append(",").toString();
     }
 }

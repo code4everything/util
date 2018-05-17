@@ -54,14 +54,24 @@ public class Checker {
      * 检查对象是否在集合中
      *
      * @param o 对象
-     * @param ts 集合
-     * @param <T> 值类型
+     * @param objects 集合
      * @return 是否存在
      */
-    public static <T> boolean objectIn(T o, T... ts) {
-        if (isNotNull(o) && isNotNull(ts)) {
-            for (T t : ts) {
-                if (o.equals(t)) {
+    public static boolean isIn(Object o, List<Object> objects) {
+        return isIn(o, objects.toArray());
+    }
+
+    /**
+     * 检查对象是否在集合中
+     *
+     * @param o 对象
+     * @param os 集合
+     * @return 是否存在
+     */
+    public static boolean isIn(Object o, Object... os) {
+        if (isNotNull(o) && isNotNull(os)) {
+            for (Object object : os) {
+                if (o.equals(object)) {
                     return true;
                 }
             }
