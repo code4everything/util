@@ -2,6 +2,7 @@ package com.zhazhapan.util;
 
 import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.interfaces.IChecker;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.Date;
@@ -19,35 +20,69 @@ public class Checker {
      */
     public static final Pattern HYPER_LINK_PATTERN = Pattern.compile("^(https*://)?([^\\s&;\"':<>]+\\.)+[a-z0-9]+" +
             "(/[^\\s]*)*$", Pattern.CASE_INSENSITIVE);
-
     /**
      * 日期匹配
      */
     public static final Pattern DATE_PATTERN = Pattern.compile("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$");
-
     /**
      * 整数匹配
      */
     public static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]+$");
-
     /**
      * 数字匹配
      */
     public static final Pattern DECIMAL_PATTERN = Pattern.compile("^[0-9]+(\\.[0-9]+)?$");
-
     /**
      * 邮箱匹配，忽略大小写
      */
     public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))" +
             "*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
-
     /**
      * 图片匹配
      */
     public static final Pattern IMAGES_PATTERN = Pattern.compile(".*\\.(bmp|gif|jpe?g|png|tiff?|pcx|tga|svg|pic)$",
             Pattern.CASE_INSENSITIVE);
 
+    private static Logger logger = Logger.getLogger(Checker.class);
+
     private Checker() {
+    }
+
+    /**
+     * 从集合中获取第一个不为Null的值（当集合中所有值都为null，方法仍然返回null）
+     *
+     * @param ts 集合
+     * @param <T> 值类型
+     * @return 值
+     */
+    public static <T> T getNotNull(T... ts) {
+        if (isNotNull(ts)) {
+            for (T t : ts) {
+                if (isNotNull(t)) {
+                    return t;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 从集合中获取第一个不为Null的值
+     *
+     * @param ts 集合
+     * @param <T> 值类型
+     * @return 值
+     * @throws Exception 当集合中所有值都为null，抛出异常
+     */
+    public static <T> T getNotNullWithException(T... ts) throws Exception {
+        if (isNotNull(ts)) {
+            for (T t : ts) {
+                if (isNotNull(t)) {
+                    return t;
+                }
+            }
+        }
+        throw new Exception("ops, no value found while value is not null.");
     }
 
     /**

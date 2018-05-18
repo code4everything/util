@@ -190,17 +190,17 @@ public class BeanUtils {
             List list = (List) object;
             builder.append("[");
             list.forEach(obj -> builder.append(converter(ValueConsts.EMPTY_STRING, obj)));
-            return builder.substring(0, builder.length() - 1) + "]";
+            return builder.substring(0, builder.length() - 1) + "],";
         } else if (object instanceof Map) {
             Map map = (Map) object;
             builder.append("{");
             map.forEach((k, v) -> builder.append(converter(k.toString(), v)));
-            return builder.substring(0, builder.length() - 1) + "}";
+            return builder.substring(0, builder.length() - 1) + "},";
         } else if (Checker.isEmpty(fieldName)) {
-            builder.append("\"").append(object).append("\"");
+            builder.append("\"").append(object).append("\",");
         } else {
-            builder.append("\"").append(object).append("\"");
+            builder.append("\"").append(object).append("\",");
         }
-        return builder.append(",").toString();
+        return builder.toString();
     }
 }
