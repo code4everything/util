@@ -45,15 +45,17 @@ public class Checker {
 
     private static Logger logger = Logger.getLogger(Checker.class);
 
-    private Checker() {
-    }
+    private Checker() {}
 
     /**
      * 从集合中获取第一个不为Null的值（当集合中所有值都为null，方法仍然返回null）
      *
      * @param ts 集合
      * @param <T> 值类型
+     *
      * @return 值
+     *
+     * @since 1.0.8
      */
     public static <T> T getNotNull(T... ts) {
         if (isNotNull(ts)) {
@@ -71,8 +73,11 @@ public class Checker {
      *
      * @param ts 集合
      * @param <T> 值类型
+     *
      * @return 值
+     *
      * @throws Exception 当集合中所有值都为null，抛出异常
+     * @since 1.0.8
      */
     public static <T> T getNotNullWithException(T... ts) throws Exception {
         if (isNotNull(ts)) {
@@ -90,7 +95,10 @@ public class Checker {
      *
      * @param o 对象
      * @param objects 集合
+     *
      * @return 是否存在
+     *
+     * @since 1.0.8
      */
     public static boolean isIn(Object o, List<Object> objects) {
         return isIn(o, objects.toArray());
@@ -101,7 +109,10 @@ public class Checker {
      *
      * @param o 对象
      * @param os 集合
+     *
      * @return 是否存在
+     *
+     * @since 1.0.8
      */
     public static boolean isIn(Object o, Object... os) {
         if (isNotNull(o) && isNotNull(os)) {
@@ -118,6 +129,7 @@ public class Checker {
      * 判断文件是否是图片
      *
      * @param file 文件
+     *
      * @return {@link Boolean}
      */
     public static boolean isImage(File file) {
@@ -128,6 +140,7 @@ public class Checker {
      * 判断文件是否是图片
      *
      * @param file 文件
+     *
      * @return {@link Boolean}
      */
     public static boolean isImage(String file) {
@@ -138,6 +151,7 @@ public class Checker {
      * 文件是否不存在
      *
      * @param file 文件
+     *
      * @return 是否不存在
      */
     public static boolean isNotExists(String file) {
@@ -148,6 +162,7 @@ public class Checker {
      * 文件是否存在
      *
      * @param file 文件
+     *
      * @return 是否存在
      */
     public static boolean isExists(String file) {
@@ -160,6 +175,7 @@ public class Checker {
      * @param string 字符串
      * @param min 最小长度
      * @param max 最大长度
+     *
      * @return {@link Boolean}
      */
     public static boolean isLimited(String string, int min, int max) {
@@ -197,6 +213,7 @@ public class Checker {
      * 检查数组是否已经排好序
      *
      * @param nums 数组
+     *
      * @return {@link Boolean}
      */
     public static boolean isSorted(int[] nums) {
@@ -216,6 +233,7 @@ public class Checker {
      * 是否为日期格式
      *
      * @param date 需要判断的日期
+     *
      * @return {@link Boolean}
      */
     public static boolean isDate(String date) {
@@ -228,6 +246,7 @@ public class Checker {
      * @param string 需要检测的字符串
      * @param oldChar 需要替换的字符
      * @param newChar 新的字符
+     *
      * @return {@link String}
      */
     public static String replace(String string, char oldChar, char newChar) {
@@ -240,6 +259,7 @@ public class Checker {
      * @param string 需要检测的字符串
      * @param oldString 需要替换的字符串
      * @param newString 新的字符串
+     *
      * @return {@link String}
      */
     public static String replace(String string, String oldString, String newString) {
@@ -250,6 +270,7 @@ public class Checker {
      * 是否为邮箱格式
      *
      * @param email 需要判断的邮箱地址
+     *
      * @return {@link Boolean}
      */
     public static boolean isEmail(String email) {
@@ -260,6 +281,7 @@ public class Checker {
      * 是否为数字（含小数）格式
      *
      * @param decimal 需要判断的数字
+     *
      * @return {@link Boolean}
      */
     public static boolean isDecimal(String decimal) {
@@ -270,6 +292,7 @@ public class Checker {
      * 是否为整数格式
      *
      * @param number 需要判断的整数
+     *
      * @return {@link Boolean}
      */
     public static boolean isNumber(String number) {
@@ -280,6 +303,7 @@ public class Checker {
      * 对象是否为NULL
      *
      * @param object 需要判断的对象
+     *
      * @return {@link Boolean}
      */
     public static boolean isNull(Object object) {
@@ -290,6 +314,7 @@ public class Checker {
      * 对象是否不为NULL
      *
      * @param object 需要判断的对象
+     *
      * @return {@link Boolean}
      */
     public static boolean isNotNull(Object object) {
@@ -300,7 +325,9 @@ public class Checker {
      * 字符串是否为NULL或空
      *
      * @param string 需要判断的字符串
+     *
      * @return {@link Boolean}
+     *
      * @deprecated 请使用isEmpty方法
      */
     public static boolean isNullOrEmpty(String string) {
@@ -311,6 +338,7 @@ public class Checker {
      * 字符串是否为NULL或空
      *
      * @param string 需要判断的字符串
+     *
      * @return {@link Boolean}
      */
     public static boolean isEmpty(String string) {
@@ -321,6 +349,7 @@ public class Checker {
      * 字符串是否不为空
      *
      * @param string 需要判断的字符串
+     *
      * @return {@link Boolean}
      */
     public static boolean isNotEmpty(String string) {
@@ -331,6 +360,7 @@ public class Checker {
      * 检测字符串是否为NULL
      *
      * @param value 需要检测的字符串
+     *
      * @return {@link String}
      */
     public static String checkNull(String value) {
@@ -342,7 +372,10 @@ public class Checker {
      *
      * @param value 需要检测的字符串
      * @param elseValue string为null返回的字符串
+     *
      * @return {@link String}
+     *
+     * @since 1.0.8
      */
     public static String checkNull(String value, String elseValue) {
         return isNull(value) ? elseValue : value;
@@ -353,7 +386,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Double}
+     *
+     * @since 1.0.8
      */
     public static Double checkNull(Double value, Double elseValue) {
         return isNull(value) ? elseValue : value;
@@ -364,7 +400,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Double}
+     *
+     * @since 1.0.8
      */
     public static Double checkNull(Double value, double elseValue) {
         return checkNull(value, Double.valueOf(elseValue));
@@ -374,7 +413,10 @@ public class Checker {
      * 检查Double是否为null
      *
      * @param value 值
+     *
      * @return {@link Double}
+     *
+     * @since 1.0.8
      */
     public static Double checkNull(Double value) {
         return checkNull(value, 0);
@@ -385,7 +427,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Integer}
+     *
+     * @since 1.0.8
      */
     public static Integer checkNull(Integer value, Integer elseValue) {
         return isNull(value) ? elseValue : value;
@@ -396,7 +441,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Integer}
+     *
+     * @since 1.0.8
      */
     public static Integer checkNull(Integer value, int elseValue) {
         return checkNull(value, Integer.valueOf(elseValue));
@@ -406,7 +454,10 @@ public class Checker {
      * 检查Integer是否为null
      *
      * @param value 值
+     *
      * @return {@link Integer}
+     *
+     * @since 1.0.8
      */
     public static Integer checkNull(Integer value) {
         return checkNull(value, 0);
@@ -417,7 +468,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Long}
+     *
+     * @since 1.0.8
      */
     public static Long checkNull(Long value, Long elseValue) {
         return isNull(value) ? elseValue : value;
@@ -428,7 +482,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Long}
+     *
+     * @since 1.0.8
      */
     public static Long checkNull(Long value, long elseValue) {
         return checkNull(value, Long.valueOf(elseValue));
@@ -438,7 +495,10 @@ public class Checker {
      * 检查Long是否为null
      *
      * @param value 值
+     *
      * @return {@link Long}
+     *
+     * @since 1.0.8
      */
     public static Long checkNull(Long value) {
         return checkNull(value, 0);
@@ -449,7 +509,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Float}
+     *
+     * @since 1.0.8
      */
     public static Float checkNull(Float value, Float elseValue) {
         return isNull(value) ? elseValue : value;
@@ -460,7 +523,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Float}
+     *
+     * @since 1.0.8
      */
     public static Float checkNull(Float value, float elseValue) {
         return checkNull(value, Float.valueOf(elseValue));
@@ -470,7 +536,10 @@ public class Checker {
      * 检查Float是否为null
      *
      * @param value 值
+     *
      * @return {@link Float}
+     *
+     * @since 1.0.8
      */
     public static Float checkNull(Float value) {
         return checkNull(value, 0);
@@ -481,7 +550,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Short}
+     *
+     * @since 1.0.8
      */
     public static Short checkNull(Short value, Short elseValue) {
         return isNull(value) ? elseValue : value;
@@ -492,7 +564,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Short}
+     *
+     * @since 1.0.8
      */
     public static Short checkNull(Short value, short elseValue) {
         return checkNull(value, Short.valueOf(elseValue));
@@ -502,7 +577,10 @@ public class Checker {
      * 检查Short是否为null
      *
      * @param value 值
+     *
      * @return {@link Short}
+     *
+     * @since 1.0.8
      */
     public static Short checkNull(Short value) {
         short s = 0;
@@ -514,7 +592,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Character}
+     *
+     * @since 1.0.8
      */
     public static Character checkNull(Character value, Character elseValue) {
         return isNull(value) ? elseValue : value;
@@ -525,7 +606,10 @@ public class Checker {
      *
      * @param value 值
      * @param elseValue 为null返回的值
+     *
      * @return {@link Character}
+     *
+     * @since 1.0.8
      */
     public static Character checkNull(Character value, char elseValue) {
         return checkNull(value, Character.valueOf(elseValue));
@@ -535,7 +619,10 @@ public class Checker {
      * 检查Character是否为null
      *
      * @param value 值
+     *
      * @return {@link Character}
+     *
+     * @since 1.0.8
      */
     public static Character checkNull(Character value) {
         return checkNull(value, '0');
@@ -548,7 +635,10 @@ public class Checker {
      * @param elseValue res为false返回的值
      * @param res {@link Boolean}
      * @param <T> 值类型
+     *
      * @return 结果
+     *
+     * @since 1.0.8
      */
     public static <T> T check(T value, T elseValue, boolean res) {
         return res ? value : elseValue;
@@ -561,7 +651,10 @@ public class Checker {
      * @param elseValue 调用结果为false返回的值
      * @param checker 自定义检查方法
      * @param <T> 值类型
+     *
      * @return 结果
+     *
+     * @since 1.0.8
      */
     public static <T> T check(T value, T elseValue, IChecker checker) {
         return check(value, elseValue, checker.check());
@@ -571,7 +664,9 @@ public class Checker {
      * 检测整数是否为NULL
      *
      * @param longNum 需要检测的整数
+     *
      * @return {@link Long}
+     *
      * @deprecated 这个方法没有作用
      */
     public static long checkNull(long longNum) {
@@ -582,6 +677,7 @@ public class Checker {
      * 判断LIST是否不为空
      *
      * @param list 需要判断的LIST
+     *
      * @return {@link Boolean}
      */
     public static boolean isNotEmpty(List<?> list) {
@@ -592,6 +688,7 @@ public class Checker {
      * 判断LIST是否为空或NULL
      *
      * @param list 需要判断的LIST
+     *
      * @return {@link Boolean}
      */
     public static boolean isEmpty(List<?> list) {
@@ -602,6 +699,7 @@ public class Checker {
      * 判断MAP是否为不空
      *
      * @param map 需要判断的MAP
+     *
      * @return {@link Boolean}
      */
     public static boolean isNotEmpty(Map<?, ?> map) {
@@ -612,6 +710,7 @@ public class Checker {
      * 判断MAP是否为空或NULL
      *
      * @param map 需要判断的MAP
+     *
      * @return {@link Boolean}
      */
     public static boolean isEmpty(Map<?, ?> map) {
@@ -622,6 +721,7 @@ public class Checker {
      * 是否为超链接
      *
      * @param hyperLink 需要匹配超链接
+     *
      * @return {@link Boolean}
      */
     public static boolean isHyperLink(String hyperLink) {
@@ -632,7 +732,9 @@ public class Checker {
      * 检测日期是否为NULL
      *
      * @param date 需要检测的日期
+     *
      * @return {@link Date}
+     *
      * @deprecated 请调用 {@link Checker#checkNull}
      */
     public static Date checkDate(Date date) {
@@ -643,7 +745,10 @@ public class Checker {
      * 检测日期是否为NULL
      *
      * @param value 需要检测的日期
+     *
      * @return {@link Date}
+     *
+     * @since 1.0.8
      */
     public static Date checkNull(Date value) {
         return checkNull(value, new Date());
@@ -654,7 +759,10 @@ public class Checker {
      *
      * @param value 需要检测的日期
      * @param elseValue 为null染返回的值
+     *
      * @return {@link Date}
+     *
+     * @since 1.0.8
      */
     public static Date checkNull(Date value, Date elseValue) {
         return isNull(value) ? elseValue : value;

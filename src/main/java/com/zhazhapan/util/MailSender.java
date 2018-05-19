@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util;
 
 import com.alibaba.fastjson.JSON;
@@ -24,14 +21,18 @@ public class MailSender {
      * 邮件服务器，默认使用QQ服务器
      */
     private static String host = "smtp.qq.com";
+
     /**
      * 个人名称
      */
     private static String personal = "personal";
+
     /**
      * 收件箱
      */
+
     private static String from = "";
+
     /**
      * 邮箱密码
      */
@@ -43,6 +44,8 @@ public class MailSender {
      * 邮件服务器端口
      */
     private static int port = 0;
+
+    private MailSender() {}
 
     /**
      * 通过JSON配置

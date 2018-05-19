@@ -25,14 +25,15 @@ public class BeanUtils {
 
     private static final JsonMethod[] METHODS = new JsonMethod[]{JsonMethod.MANUAL, JsonMethod.HANDLE};
 
-    private BeanUtils() {
-    }
+    private BeanUtils() {}
 
     /**
      * 将类属性装换成JSON（只能转换有get和is方法的）
      *
      * @param object 转换的对象
+     *
      * @return {@link JSONObject}
+     *
      * @throws IllegalAccessException 异常
      * @throws InvocationTargetException 异常
      */
@@ -56,6 +57,7 @@ public class BeanUtils {
      *
      * @param jsonObject {@link JSONObject}
      * @param object {@link Object}
+     *
      * @throws IllegalAccessException 异常
      */
     public static void jsonPutIn(JSONObject jsonObject, Object object) throws IllegalAccessException {
@@ -70,7 +72,9 @@ public class BeanUtils {
      * 将Bean类的全部属性转换成JSON字符串
      *
      * @param object Bean对象
+     *
      * @return 格式化的JSON字符串
+     *
      * @throws IllegalAccessException 异常
      */
     public static String toPrettyJson(Object object) throws IllegalAccessException {
@@ -82,7 +86,9 @@ public class BeanUtils {
      *
      * @param object Bean对象
      * @param modifier 属性的权限修饰符
+     *
      * @return 格式化的JSON字符串
+     *
      * @throws IllegalAccessException 异常
      */
     public static String toPrettyJson(Object object, FieldModifier modifier) throws IllegalAccessException {
@@ -93,7 +99,9 @@ public class BeanUtils {
      * 将Bean类的全部属性转换成JSON字符串
      *
      * @param object Bean对象
+     *
      * @return 没有格式化的JSON字符串
+     *
      * @throws IllegalAccessException 异常
      */
     public static String toJsonString(Object object) throws IllegalAccessException {
@@ -105,7 +113,9 @@ public class BeanUtils {
      *
      * @param object Bean对象
      * @param modifier 属性的权限修饰符
+     *
      * @return 没有格式化的JSON字符串
+     *
      * @throws IllegalAccessException 异常
      */
     public static String toJsonString(Object object, FieldModifier modifier) throws IllegalAccessException {
@@ -118,7 +128,9 @@ public class BeanUtils {
      * @param object Bean对象
      * @param modifier 属性的权限修饰符
      * @param method {@link JsonMethod}
+     *
      * @return 没有格式化的JSON字符串
+     *
      * @throws IllegalAccessException 异常
      */
     public static String toJsonString(Object object, FieldModifier modifier, JsonMethod method) throws
@@ -154,7 +166,9 @@ public class BeanUtils {
      * 通过注解将Bean转换为JSON
      *
      * @param object Bean对象
+     *
      * @return {@link String}
+     *
      * @throws IllegalAccessException 异常
      */
     public static String toJsonStringByAnnotation(Object object) throws IllegalAccessException {
@@ -179,6 +193,7 @@ public class BeanUtils {
      *
      * @param fieldName 字段名
      * @param object 对象
+     *
      * @return json对象
      */
     private static String converter(@NotNull String fieldName, @NotNull Object object) {

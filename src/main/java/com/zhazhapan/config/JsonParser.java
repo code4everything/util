@@ -39,24 +39,13 @@ public class JsonParser {
     /**
      * 用来存储已经解析过Json对象
      */
-    private volatile HashMap<String, JSONObject> jsonStore = new HashMap<>(16);
+    private volatile HashMap<String, JSONObject> jsonStore = new HashMap<>(ValueConsts.SIXTEEN_INT);
 
     /**
      * 默认构造函数，如果您需要配置jsonPath，请调用{@link JsonParser#setJsonPath(String)}； 或配置jsonObject，请调用{@link
      * JsonParser#setJsonObject(String)}或{@link JsonParser#setJsonObject(JSONObject)}
      */
-    public JsonParser() {
-
-    }
-
-    /**
-     * 是否已经赋值
-     *
-     * @return {@link Boolean}
-     */
-    public boolean hasJsonObject() {
-        return Checker.isNotNull(jsonObject);
-    }
+    public JsonParser() {}
 
     /**
      * 自动配置jsonObject
@@ -100,6 +89,15 @@ public class JsonParser {
             json = Formatter.formatJson(json);
         }
         setJsonObject(json);
+    }
+
+    /**
+     * 是否已经赋值
+     *
+     * @return {@link Boolean}
+     */
+    public boolean hasJsonObject() {
+        return Checker.isNotNull(jsonObject);
     }
 
     /**
@@ -432,18 +430,6 @@ public class JsonParser {
     }
 
     /**
-     * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
-     *
-     * @param jsonPath JSON文件的路径
-     *
-     * @throws IOException 异常
-     */
-    public void setJsonPath(String jsonPath) throws IOException {
-        this.jsonPath = jsonPath;
-        load();
-    }
-
-    /**
      * 设置JSON对应的URL
      *
      * @param url 网络链接
@@ -460,6 +446,18 @@ public class JsonParser {
     }
 
     /**
+     * 配置jsonPath，权限JSON文件路径读取json并转换为JSONObject
+     *
+     * @param jsonPath JSON文件的路径
+     *
+     * @throws IOException 异常
+     */
+    public void setJsonPath(String jsonPath) throws IOException {
+        this.jsonPath = jsonPath;
+        load();
+    }
+
+    /**
      * 获取当前解析的JsonObject
      *
      * @return {@link JSONObject}
@@ -471,20 +469,20 @@ public class JsonParser {
     /**
      * 配置JsonObject
      *
-     * @param jsonObject {@link JSONObject}
+     * @param json 传入json文本，自动转换为JsonObject
      */
-    public void setJsonObject(JSONObject jsonObject) {
-        jsonStore.put(".", jsonObject);
-        this.jsonObject = jsonObject;
+    public void setJsonObject(String json) {
+        setJsonObject(JSON.parseObject(json));
     }
 
     /**
      * 配置JsonObject
      *
-     * @param json 传入json文本，自动转换为JsonObject
+     * @param jsonObject {@link JSONObject}
      */
-    public void setJsonObject(String json) {
-        setJsonObject(JSON.parseObject(json));
+    public void setJsonObject(JSONObject jsonObject) {
+        jsonStore.put(".", jsonObject);
+        this.jsonObject = jsonObject;
     }
 
     /**

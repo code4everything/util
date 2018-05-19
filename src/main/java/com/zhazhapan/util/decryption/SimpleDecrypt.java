@@ -1,7 +1,7 @@
 package com.zhazhapan.util.decryption;
 
 import com.zhazhapan.util.CryptUtils;
-import com.zhazhapan.util.encryption.SimpleEncryt;
+import com.zhazhapan.util.encryption.SimpleEncrypt;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ public class SimpleDecrypt {
      * @return {@link String}
      */
     public static String xor(String code, int key) {
-        return SimpleEncryt.xor(code, key);
+        return SimpleEncrypt.xor(code, key);
     }
 
     /**

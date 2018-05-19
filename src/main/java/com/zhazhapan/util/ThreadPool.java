@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util;
 
 import java.util.concurrent.*;
@@ -14,12 +11,19 @@ public class ThreadPool {
      * executor
      */
     public static ThreadPoolExecutor executor = null;
+
     private static int corePoolSize = 1;
+
     private static int maximumPoolSize = 3;
+
     private static long keepAliveTime = 1000;
+
     private static TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+
     private static BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(1);
+
     private static ThreadFactory threadFactory = Thread::new;
+
     /**
      * 新的线程池
      */

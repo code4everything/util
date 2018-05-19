@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util;
 
 import javax.script.ScriptEngine;
@@ -17,14 +14,13 @@ import java.util.regex.Pattern;
  */
 public class Calculator {
 
-    // private static final Pattern CALCULATION_FORMULA_PATTERN = Pattern
-    // .compile("^((\\d+(\\.\\d+)?|\\d*\\(.+\\))(\\+|-|\\*|/))*(\\d+(\\.\\d+)?|\\d*\\(.+\\))=?$");
-
     private static final String CALCULATION_FORMULA_PATTERN_STRING = "\\((\\d+(\\.\\d+)?([+\\-*/]))*\\d+(\\.\\d+)?\\)";
 
     private static final Pattern FORMULA_REPLACE_PATTERN = Pattern.compile(CALCULATION_FORMULA_PATTERN_STRING);
 
-    private static final Pattern CALCULATION_FORMULA_PATTERN = Pattern.compile(CALCULATION_FORMULA_PATTERN_STRING.substring(2, CALCULATION_FORMULA_PATTERN_STRING.length() - 2) + "=?");
+    private static final Pattern CALCULATION_FORMULA_PATTERN = Pattern.compile(CALCULATION_FORMULA_PATTERN_STRING
+            .substring(2, CALCULATION_FORMULA_PATTERN_STRING.length() - 2) + "=?");
+
     /**
      * 默认精度
      */
@@ -85,7 +81,8 @@ public class Calculator {
             char c = formula.charAt(i);
             if (Character.isDigit(c)) {
                 BigDecimal num = new BigDecimal(c - '0');
-                number = isDecimal ? number.add(num.multiply(decimalSign)) : num.add(number.multiply(BigDecimal.valueOf(10)));
+                number = isDecimal ? number.add(num.multiply(decimalSign)) : num.add(number.multiply(BigDecimal
+                        .valueOf(10)));
                 decimalSign = decimalSign.multiply(BigDecimal.valueOf(0.1));
             } else if (c == '.') {
                 isDecimal = true;

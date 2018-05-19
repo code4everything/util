@@ -22,6 +22,8 @@ public enum JsonMethod {
 
     /**
      * 手动的方式
+     *
+     * @since 1.0.8
      */
     MANUAL
 }

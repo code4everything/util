@@ -5,6 +5,7 @@ import com.zhazhapan.modules.constant.ValueConsts;
 /**
  * @author pantao
  * @since 2018/1/30
+ * @deprecated 这个类将不再更新维护，请使用 {@link NetUtils}
  */
 public class WebUtils {
 

@@ -9,6 +9,7 @@ import org.htmlcleaner.TagNode;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 
+import javax.servlet.http.Cookie;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
@@ -27,27 +28,35 @@ public class NetUtils {
 
     /**
      * 协议
+     *
+     * @since 1.0.8
      */
     public static final String PROTOCOL_KEY = "$protocol";
 
     /**
      * 主机
+     *
+     * @since 1.0.8
      */
     public static final String HOST_KEY = "$host";
 
     /**
      * 路径
+     *
+     * @since 1.0.8
      */
     public static final String PATH_KEY = "$path";
 
-    private NetUtils() {
-    }
+    private NetUtils() {}
 
     /**
      * 解析URL
      *
      * @param url url
+     *
      * @return {@link Map}
+     *
+     * @since 1.0.8
      */
     public static Map<String, String> parseUrl(String url) {
         Map<String, String> result = new HashMap<>(8);
@@ -89,12 +98,43 @@ public class NetUtils {
         return result;
     }
 
+    /**
+     * 脚本过滤
+     *
+     * @param string {@link String}
+     *
+     * @return 过滤后的字符串
+     */
+    public static String scriptFilter(String string) {
+        return Checker.checkNull(string).replaceAll(ValueConsts.SCRIPT_FILTER_PATTERN, "");
+    }
+
+    /**
+     * 通过名称获取Cookie
+     *
+     * @param name Cookie名
+     * @param cookies cookie数组
+     *
+     * @return {@link Cookie}
+     */
+    public static Cookie getCookie(String name, Cookie[] cookies) {
+        if (Checker.isNotNull(cookies)) {
+            for (Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
+                    return cookie;
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * whois查询
      *
      * @param domain 域名
+     *
      * @return whois信息
+     *
      * @throws IOException 异常
      * @throws XPathExpressionException 异常
      * @throws ParserConfigurationException 异常
@@ -109,7 +149,9 @@ public class NetUtils {
      * 获取ip归属地
      *
      * @param ip ip地址
+     *
      * @return 归属地
+     *
      * @throws IOException 异常
      * @throws XPathExpressionException 异常
      * @throws ParserConfigurationException 异常
@@ -124,7 +166,9 @@ public class NetUtils {
      *
      * @param xpath xpath表达式
      * @param html html内容
+     *
      * @return 解析结果
+     *
      * @throws XPathExpressionException 异常
      * @throws ParserConfigurationException 异常
      */
@@ -141,7 +185,9 @@ public class NetUtils {
      * 获取网页内容
      *
      * @param url 链接
+     *
      * @return {@link String}
+     *
      * @throws IOException 异常
      */
     public static String getHtmlFromUrl(String url) throws IOException {
@@ -152,7 +198,9 @@ public class NetUtils {
      * 获取HTML文档
      *
      * @param url 链接
+     *
      * @return {@link org.jsoup.nodes.Document}
+     *
      * @throws IOException 异常
      */
     public static org.jsoup.nodes.Document getDocumentFromUrl(String url) throws IOException {
@@ -199,6 +247,7 @@ public class NetUtils {
      * 获取Mac地址
      *
      * @return mac地址
+     *
      * @throws UnknownHostException 异常
      * @throws SocketException 异常
      */
@@ -226,6 +275,7 @@ public class NetUtils {
      * 获取本地ip地址
      *
      * @return ip
+     *
      * @throws UnknownHostException 异常
      */
     public static String getLocalIp() throws UnknownHostException {
@@ -236,6 +286,7 @@ public class NetUtils {
      * 将URL转换成String
      *
      * @param url {@link URL}
+     *
      * @return {@link String}
      */
     public static String urlToString(URL url) {
@@ -246,7 +297,9 @@ public class NetUtils {
      * 获取URL中的数据
      *
      * @param url 网络链接
+     *
      * @return {@link String}
+     *
      * @throws IOException 异常
      */
     public static String getDataOfUrl(String url) throws IOException {
@@ -257,7 +310,9 @@ public class NetUtils {
      * 获取URL中的数据
      *
      * @param url 网络链接
+     *
      * @return {@link String}
+     *
      * @throws IOException 异常
      */
     public static String getDataOfUrl(URL url) throws IOException {
@@ -268,7 +323,9 @@ public class NetUtils {
      * 获取URL的InputStream对象
      *
      * @param url 网络链接
+     *
      * @return {@link InputStream}
+     *
      * @throws IOException 异常
      */
     public static InputStream getInputStreamOfUrl(String url) throws IOException {
@@ -279,7 +336,9 @@ public class NetUtils {
      * 获取URL的InputStream对象
      *
      * @param url 网络链接
+     *
      * @return {@link InputStream}
+     *
      * @throws IOException 异常
      */
     public static InputStream getInputStreamOfUrl(URL url) throws IOException {
@@ -291,7 +350,9 @@ public class NetUtils {
      * 获取HttpURLConnection的InputStream对象
      *
      * @param connection 链接对象
+     *
      * @return {@link InputStream}
+     *
      * @throws IOException 异常
      */
     public static InputStream getInputStreamOfConnection(HttpURLConnection connection) throws IOException {

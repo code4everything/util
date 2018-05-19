@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util.fx;
 
 import javafx.fxml.FXMLLoader;

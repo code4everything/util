@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util.decryption;
 
 import com.zhazhapan.util.encryption.JavaEncrypt;
@@ -31,9 +28,7 @@ public class JavaDecrypt {
      * @throws IOException 异常
      */
     public static String base64(String code) throws IOException {
-        String string = "";
-        string = new String(new BASE64Decoder().decodeBuffer(code));
-        return string;
+        return new String(new BASE64Decoder().decodeBuffer(code));
     }
 
     /**
@@ -50,7 +45,8 @@ public class JavaDecrypt {
      * @throws IllegalBlockSizeException 异常
      * @throws BadPaddingException 异常
      */
-    public static String des(String code) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String des(String code) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return JavaEncrypt.decryptDES(code, "DES");
     }
 
@@ -68,7 +64,8 @@ public class JavaDecrypt {
      * @throws IllegalBlockSizeException 异常
      * @throws BadPaddingException 异常
      */
-    public static String des3(String code) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String des3(String code) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return JavaEncrypt.decryptDES(code, "DESede");
     }
 
@@ -86,7 +83,8 @@ public class JavaDecrypt {
      * @throws IllegalBlockSizeException 异常
      * @throws BadPaddingException 异常
      */
-    public static String aes(String code) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String aes(String code) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return JavaEncrypt.decryptDES(code, "AES");
     }
 
@@ -104,7 +102,8 @@ public class JavaDecrypt {
      * @throws IllegalBlockSizeException 异常
      * @throws BadPaddingException 异常
      */
-    public static String rsa(String code) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+    public static String rsa(String code) throws InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
         return JavaEncrypt.decryptDES(code, "RSA");
     }
 }

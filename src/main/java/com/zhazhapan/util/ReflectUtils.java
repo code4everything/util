@@ -22,7 +22,7 @@ public class ReflectUtils {
 
     private static Logger logger = Logger.getLogger(ReflectUtils.class);
 
-    private ReflectUtils() { }
+    private ReflectUtils() {}
 
     /**
      * 调用方法

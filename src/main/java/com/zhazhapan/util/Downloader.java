@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util;
 
 import com.zhazhapan.modules.constant.ValueConsts;

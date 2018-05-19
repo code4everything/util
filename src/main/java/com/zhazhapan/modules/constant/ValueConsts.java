@@ -258,6 +258,5 @@ public class ValueConsts {
      */
     public static final String USER_DESKTOP = USER_HOME + SEPARATOR + "Desktop";
 
-    private ValueConsts() {
-    }
+    private ValueConsts() {}
 }

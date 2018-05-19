@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util.encryption;
 
 import org.apache.commons.codec.binary.Hex;
@@ -26,19 +23,27 @@ public class JavaEncrypt {
     private static final String AES_CRYPT_WAY = "AES";
 
     private static short DES = 0;
+
     private static SecretKey secretKey;
+
     private static Cipher cipher;
 
     private static short DES3 = 0;
+
     private static SecretKey secretKey3;
+
     private static Cipher cipher3;
 
     private static short AES = 0;
+
     private static SecretKey aesKey;
+
     private static Cipher aes;
 
     private static short RSA = 0;
+
     private static KeyPair rsaKey;
+
     private static Cipher rsa;
 
     private JavaEncrypt() {}
@@ -75,7 +80,6 @@ public class JavaEncrypt {
      */
     private static boolean initDES(String key) throws NoSuchAlgorithmException, NoSuchPaddingException {
         Security.addProvider(new com.sun.crypto.provider.SunJCE());
-        boolean b = false;
         // DES、DESede、AES为对称加密，RSA为非对称加密
         if (DES_CRYPT_WAY.equals(key)) {
             KeyGenerator keygen = KeyGenerator.getInstance(key);
@@ -100,8 +104,7 @@ public class JavaEncrypt {
             rsa = Cipher.getInstance(key);
             RSA = 1;
         }
-        b = true;
-        return b;
+        return true;
     }
 
     /**

@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util.dialog;
 
 import javafx.geometry.Insets;

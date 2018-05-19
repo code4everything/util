@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.zhazhapan.util.dialog;
 
 import javafx.scene.control.Alert;
@@ -250,7 +247,8 @@ public class Alerts {
      *
      * @return {@link ButtonType}
      */
-    public static Optional<ButtonType> alert(String title, String header, String content, AlertType alertType, Modality modality, Window window, StageStyle style) {
+    public static Optional<ButtonType> alert(String title, String header, String content, AlertType alertType,
+                                             Modality modality, Window window, StageStyle style) {
         return getAlert(title, header, content, alertType, modality, window, style).showAndWait();
     }
 
@@ -282,7 +280,8 @@ public class Alerts {
      *
      * @return {@link Alert}
      */
-    public static Alert getAlert(String title, String header, String content, AlertType alertType, Modality modality, Window window, StageStyle style) {
+    public static Alert getAlert(String title, String header, String content, AlertType alertType, Modality modality,
+                                 Window window, StageStyle style) {
         Alert alert = new Alert(alertType);
 
         alert.setTitle(title);
