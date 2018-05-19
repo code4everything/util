@@ -1,5 +1,10 @@
 package com.zhazhapan.util;
 
+import org.apache.commons.jexl3.JexlContext;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlExpression;
+import org.apache.commons.jexl3.MapContext;
+import org.apache.commons.jexl3.internal.Engine;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -11,6 +16,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -22,7 +28,30 @@ public class ReflectUtils {
 
     private static Logger logger = Logger.getLogger(ReflectUtils.class);
 
+    private static JexlEngine jexlEngine = new Engine();
+
     private ReflectUtils() {}
+
+    /**
+     * 将字符串转成代码，并执行
+     * <p>
+     * <br/><a href="https://blog.csdn.net/qq_26954773/article/details/80379015#3-%E6%B5%8B%E8%AF%95">怎么使用</a>
+     *
+     * @param jexlExpression 代码表达式
+     * @param map 参数映射
+     *
+     * @return 执行结果
+     *
+     * @since 1.0.8
+     */
+    public static Object executeExpression(String jexlExpression, Map<String, Object> map) {
+        JexlExpression expression = jexlEngine.createExpression(jexlExpression);
+        JexlContext context = new MapContext();
+        if (Checker.isNotEmpty(map)) {
+            map.forEach(context::set);
+        }
+        return expression.evaluate(context);
+    }
 
     /**
      * 调用方法
