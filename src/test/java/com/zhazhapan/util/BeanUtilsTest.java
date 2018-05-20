@@ -1,14 +1,13 @@
 package com.zhazhapan.util;
 
+import com.zhazhapan.util.annotation.ToJsonString;
+import com.zhazhapan.util.common.interceptor.ToStringMethodInterceptor;
 import com.zhazhapan.util.enums.FieldModifier;
 import com.zhazhapan.util.enums.JsonMethod;
 import com.zhazhapan.util.enums.JsonType;
-import com.zhazhapan.util.annotation.ToJsonString;
-import com.zhazhapan.util.common.interceptor.ToStringMethodInterceptor;
 import net.sf.cglib.proxy.Enhancer;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -18,7 +17,7 @@ import java.util.Date;
 public class BeanUtilsTest {
 
     @Test
-    public void testToJsonString() throws IllegalAccessException, IOException, ClassNotFoundException {
+    public void testToJsonString() throws IllegalAccessException {
         User user = new User(1, "test", new Date());
         System.out.println(user.toString());
         System.out.println(new User().toString());
@@ -33,7 +32,7 @@ public class BeanUtilsTest {
     }
 }
 
-@ToJsonString(type = JsonType.PRETTY, modifier = FieldModifier.PRIVATE, method = JsonMethod.HANDLE)
+@ToJsonString(type = JsonType.PRETTY, modifier = FieldModifier.PRIVATE, method = JsonMethod.MANUAL)
 class User {
     public int id;
     private String name;

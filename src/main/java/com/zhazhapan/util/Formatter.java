@@ -276,7 +276,7 @@ public class Formatter {
      * @return 只有日期的{@link String}
      */
     public static synchronized String dateToString(Date date) {
-        return DATE_WITHOUT_TIME.format(Checker.checkDate(date));
+        return DATE_WITHOUT_TIME.format(Checker.checkNull(date));
     }
 
     /**
@@ -287,7 +287,7 @@ public class Formatter {
      * @return 日期+长时间的{@link String}
      */
     public static synchronized String datetimeToString(Date date) {
-        return DATE_WITH_LONG_TIME.format(Checker.checkDate(date));
+        return DATE_WITH_LONG_TIME.format(Checker.checkNull(date));
     }
 
     /**

@@ -20,23 +20,28 @@ public class Checker {
      */
     public static final Pattern HYPER_LINK_PATTERN = Pattern.compile("^(https*://)?([^\\s&;\"':<>]+\\.)+[a-z0-9]+" +
             "(/[^\\s]*)*$", Pattern.CASE_INSENSITIVE);
+
     /**
      * 日期匹配
      */
     public static final Pattern DATE_PATTERN = Pattern.compile("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$");
+
     /**
      * 整数匹配
      */
     public static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]+$");
+
     /**
      * 数字匹配
      */
     public static final Pattern DECIMAL_PATTERN = Pattern.compile("^[0-9]+(\\.[0-9]+)?$");
+
     /**
      * 邮箱匹配，忽略大小写
      */
     public static final Pattern EMAIL_PATTERN = Pattern.compile("^[0-9a-z\\-]+([0-9a-z\\-]|(\\.[0-9a-z\\-]+))" +
             "*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
+
     /**
      * 图片匹配
      */
@@ -93,31 +98,31 @@ public class Checker {
     /**
      * 检查对象是否在集合中
      *
-     * @param o 对象
-     * @param objects 集合
+     * @param t 对象
+     * @param ts 集合
      *
      * @return 是否存在
      *
      * @since 1.0.8
      */
-    public static boolean isIn(Object o, List<Object> objects) {
-        return isIn(o, objects.toArray());
+    public static <T> boolean isIn(T t, List<T> ts) {
+        return isIn(t, ts.toArray());
     }
 
     /**
      * 检查对象是否在集合中
      *
-     * @param o 对象
-     * @param os 集合
+     * @param t 对象
+     * @param ts 集合
      *
      * @return 是否存在
      *
      * @since 1.0.8
      */
-    public static boolean isIn(Object o, Object... os) {
-        if (isNotNull(o) && isNotNull(os)) {
-            for (Object object : os) {
-                if (o.equals(object)) {
+    public static <T> boolean isIn(T t, T... ts) {
+        if (isNotNull(t) && isNotNull(ts)) {
+            for (Object object : ts) {
+                if (t.equals(object)) {
                     return true;
                 }
             }
