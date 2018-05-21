@@ -49,8 +49,7 @@ public class Utils {
      * @return 裁剪后的字符串
      */
     public static String leftTrim(String value, String leftTrim) {
-        int idx = value.length() - leftTrim.length();
-        return value.lastIndexOf(leftTrim) == idx ? rightTrim(value.substring(0, idx), leftTrim) : value;
+        return value.indexOf(leftTrim) == 0 ? leftTrim(value.substring(leftTrim.length()), leftTrim) : value;
     }
 
     /**
