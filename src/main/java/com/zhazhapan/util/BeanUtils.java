@@ -2,7 +2,6 @@ package com.zhazhapan.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
-import com.sun.istack.internal.NotNull;
 import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.annotation.ToJsonString;
 import com.zhazhapan.util.enums.FieldModifier;
@@ -196,7 +195,7 @@ public class BeanUtils {
      *
      * @return json对象
      */
-    private static String converter(@NotNull String fieldName, @NotNull Object object) {
+    private static String converter(String fieldName, Object object) {
         StringBuilder builder = new StringBuilder();
         if (Checker.isNotEmpty(fieldName)) {
             builder.append("\"").append(fieldName).append("\":");

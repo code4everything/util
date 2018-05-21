@@ -61,4 +61,77 @@ public class UtilsTest {
         assertTrue(Checker.isSorted(ArrayUtils.mergeSortedArrays(test1, test2, true)));
         assertTrue(Checker.isSorted(ArrayUtils.mergeSortedArrays(test4, test3)));
     }
+
+    @Test
+    public void trim() {
+    }
+
+    @Test
+    public void leftTrim() {
+    }
+
+    @Test
+    public void rightTrim() {
+    }
+
+    @Test
+    public void getCurrentOS() {
+    }
+
+    @Test
+    public void extractDouble() {
+    }
+
+    @Test
+    public void extractFloat() {
+    }
+
+    @Test
+    public void extractShort() {
+    }
+
+    @Test
+    public void extractLong() {
+    }
+
+    @Test
+    public void extractInt() {
+    }
+
+    @Test
+    public void extractDigit() {
+    }
+
+    @Test
+    public void maxLengthString() {
+    }
+
+    @Test
+    public void copyToClipboard() {
+    }
+
+    @Test
+    public void openLink() {
+    }
+
+    @Test
+    public void openFile() {
+    }
+
+    @Test
+    public void openFile1() {
+    }
+
+    @Test
+    public void run() {
+    }
+
+    @Test
+    public void getCurrentWorkDir() {
+        System.out.println(Utils.getCurrentWorkDir());
+    }
+
+    @Test
+    public void getMaxValue() {
+    }
 }

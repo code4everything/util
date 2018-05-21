@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.regex.Pattern;
 
 /**
@@ -35,6 +36,8 @@ public class Utils {
      * @param trim 需要裁剪的值
      *
      * @return 裁剪后的字符串
+     *
+     * @since 1.0.8
      */
     public static String trim(String value, String trim) {
         return leftTrim(rightTrim(value, trim), trim);
@@ -47,10 +50,11 @@ public class Utils {
      * @param leftTrim 需要裁剪的值
      *
      * @return 裁剪后的字符串
+     *
+     * @since 1.0.8
      */
     public static String leftTrim(String value, String leftTrim) {
-        int idx = value.length() - leftTrim.length();
-        return value.lastIndexOf(leftTrim) == idx ? rightTrim(value.substring(0, idx), leftTrim) : value;
+        return value.indexOf(leftTrim) == 0 ? leftTrim(value.substring(leftTrim.length()), leftTrim) : value;
     }
 
     /**
@@ -60,6 +64,8 @@ public class Utils {
      * @param rightTrim 需要裁剪的值
      *
      * @return 裁剪后的字符串
+     *
+     * @since 1.0.8
      */
     public static String rightTrim(String value, String rightTrim) {
         int idx = value.length() - rightTrim.length();
@@ -219,6 +225,29 @@ public class Utils {
      */
     public static void openFile(File file) throws IOException {
         Desktop.getDesktop().open(file);
+    }
+
+    /**
+     * 执行命令
+     *
+     * @param command 命令
+     *
+     * @throws IOException 异常
+     * @since 1.0.8
+     */
+    public static void run(String command) throws IOException {
+        Runtime.getRuntime().exec(command);
+    }
+
+    /**
+     * 获取当前工作路径
+     *
+     * @return 路径
+     *
+     * @since 1.0.8
+     */
+    public static String getCurrentWorkDir() {
+        return Paths.get(ValueConsts.DOT_SIGN).toAbsolutePath().normalize().toString();
     }
 
     /**
