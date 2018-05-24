@@ -1,5 +1,6 @@
 package com.zhazhapan.util;
 
+import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.annotation.ToJsonString;
 import com.zhazhapan.util.common.interceptor.ToStringMethodInterceptor;
 import com.zhazhapan.util.enums.FieldModifier;
@@ -8,6 +9,9 @@ import com.zhazhapan.util.enums.JsonType;
 import net.sf.cglib.proxy.Enhancer;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,6 +19,8 @@ import java.util.Date;
  * @since 2018/1/18
  */
 public class BeanUtilsTest {
+
+    private String file = ValueConsts.USER_DESKTOP + File.separator + "user.obj";
 
     @Test
     public void testToJsonString() throws IllegalAccessException {
@@ -30,10 +36,54 @@ public class BeanUtilsTest {
         User hello = (User) enhancer.create();
         System.out.println(hello.hashCode());
     }
+
+    @Test
+    public void deserialize() throws IOException, ClassNotFoundException {
+        User user = BeanUtils.deserialize(file, User.class);
+        System.out.println(user);
+    }
+
+    @Test
+    public void serialize() throws Exception {
+        User user = new User(2, "serializable", new Date());
+        BeanUtils.serialize(user, file);
+    }
+
+    @Test
+    public void beanToJson() {
+    }
+
+    @Test
+    public void jsonPutIn() {
+    }
+
+    @Test
+    public void toPrettyJson() {
+    }
+
+    @Test
+    public void toPrettyJson1() {
+    }
+
+    @Test
+    public void toJsonString() {
+    }
+
+    @Test
+    public void toJsonString1() {
+    }
+
+    @Test
+    public void toJsonString2() {
+    }
+
+    @Test
+    public void toJsonStringByAnnotation() {
+    }
 }
 
 @ToJsonString(type = JsonType.PRETTY, modifier = FieldModifier.PRIVATE, method = JsonMethod.MANUAL)
-class User {
+class User implements Serializable {
     public int id;
     private String name;
     private Date birth;

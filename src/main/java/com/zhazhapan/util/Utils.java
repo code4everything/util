@@ -23,13 +23,14 @@ public class Utils {
      * 匹配字符串是否有数字
      */
     private static final Pattern HAS_DIGIT_PATTERN = Pattern.compile(".*[0-9]+.*");
+
     /**
      * 日志输出
      */
     private static Logger logger = Logger.getLogger(Utils.class);
 
     private Utils() {}
-    
+
     /**
      * 加载JSON配置文件，使用系统默认编码
      *

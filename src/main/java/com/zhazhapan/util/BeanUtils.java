@@ -9,6 +9,7 @@ import com.zhazhapan.util.enums.FieldModifier;
 import com.zhazhapan.util.enums.JsonMethod;
 import com.zhazhapan.util.enums.JsonType;
 
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,6 +27,64 @@ public class BeanUtils {
     private static final JsonMethod[] METHODS = new JsonMethod[]{JsonMethod.MANUAL, JsonMethod.HANDLE};
 
     private BeanUtils() {}
+
+    /**
+     * 反序列化对象
+     *
+     * @param file 对象文件
+     * @param clazz 类
+     * @param <T> 类型
+     *
+     * @return 反序列化后的对象
+     *
+     * @throws IOException 异常
+     * @throws ClassNotFoundException 异常
+     * @since 1.0.8
+     */
+    public static <T> T deserialize(String file, Class<T> clazz) throws IOException, ClassNotFoundException {
+        return TypeUtils.castToJavaBean(deserialize(file), clazz);
+    }
+
+    /**
+     * 反序列化对象
+     *
+     * @param file 对象文件
+     *
+     * @return 反序列化后的对象
+     *
+     * @throws IOException 异常
+     * @throws ClassNotFoundException 异常
+     * @since 1.0.8
+     */
+    public static Object deserialize(String file) throws IOException, ClassNotFoundException {
+        FileInputStream fileIn = new FileInputStream(file);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        Object object = in.readObject();
+        in.close();
+        fileIn.close();
+        return object;
+    }
+
+    /**
+     * 序列化对象
+     *
+     * @param object 实现了 {@link Serializable} 接口的对象
+     * @param file 保存到指定文件
+     *
+     * @throws Exception 异常
+     * @since 1.0.8
+     */
+    public static void serialize(Object object, String file) throws Exception {
+        if (object instanceof Serializable) {
+            FileOutputStream fileOut = new FileOutputStream(file);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(object);
+            out.close();
+            fileOut.close();
+        } else {
+            throw new Exception(object.getClass().getName() + " doesn't implements serializable interface");
+        }
+    }
 
     /**
      * 将类属性装换成JSON（只能转换有get和is方法的）
