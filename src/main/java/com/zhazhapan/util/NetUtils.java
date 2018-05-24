@@ -266,6 +266,8 @@ public class NetUtils {
      * 获取公网IP和归属地
      *
      * @return 公网ip、address，如：{"ip":"127.0.0.1","address":"your ip location"}
+     *
+     * @throws IOException 异常
      */
     public static JsonParser getPublicIpAndLocation() throws IOException {
         return new JsonParser(new URL(ValueConsts.URL_OF_PUBLIC_IP_SEARCH));
