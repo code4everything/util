@@ -1,5 +1,6 @@
 package com.zhazhapan.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.zhazhapan.modules.constant.ValueConsts;
@@ -58,6 +59,7 @@ public class BeanUtils {
      * @param object {@link Object}
      *
      * @throws IllegalAccessException 异常
+     * @deprecated 请使用 {@link JSONObject#toJavaObject(JSON, Class)}
      */
     public static void jsonPutIn(JSONObject jsonObject, Object object) throws IllegalAccessException {
         Field[] fields = object.getClass().getDeclaredFields();

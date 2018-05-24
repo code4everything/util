@@ -1,5 +1,6 @@
 package com.zhazhapan.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.modules.constant.ValueConsts;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -28,6 +29,40 @@ public class Utils {
     private static Logger logger = Logger.getLogger(Utils.class);
 
     private Utils() {}
+    
+    /**
+     * 加载JSON配置文件，使用系统默认编码
+     *
+     * @param jsonPath JSON文件路径
+     * @param clazz 类
+     * @param <T> 类型值
+     *
+     * @return Bean
+     *
+     * @throws IOException 异常
+     * @since 1.0.8
+     */
+    public static <T> T loadJsonToBean(String jsonPath, Class<T> clazz) throws IOException {
+        return loadJsonToBean(jsonPath, ValueConsts.NULL_STRING, clazz);
+    }
+
+    /**
+     * 加载JSON配置文件
+     *
+     * @param jsonPath JSON文件路径
+     * @param encoding 编码格式，为null时使用系统默认编码
+     * @param clazz 类
+     * @param <T> 类型值
+     *
+     * @return Bean
+     *
+     * @throws IOException 异常
+     * @since 1.0.8
+     */
+    public static <T> T loadJsonToBean(String jsonPath, String encoding, Class<T> clazz) throws IOException {
+        JSONObject jsonObject = JSONObject.parseObject(FileExecutor.readFileToString(new File(jsonPath), encoding));
+        return JSONObject.toJavaObject(jsonObject, clazz);
+    }
 
     /**
      * 裁剪字符串
