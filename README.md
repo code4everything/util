@@ -1,6 +1,6 @@
 封装一些常用的功能（JDK至少需要1.8），持续更新
 
-> [**API文档**](https://zhazhapan.com/docs/util/v1.0.6/index.html)
+> [**API文档**](https://zhazhapan.com/docs/util/v1.0.8/index.html)
 
 **使用Maven**
 
@@ -8,11 +8,11 @@
 <dependency>
     <groupId>com.zhazhapan</groupId>
     <artifactId>util</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
 </dependency>
 ```
 
-**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.7.jar)
+**或手动导入：**	[点我下载](http://oq3iwfipo.bkt.clouddn.com/tools/zhazhapan/util-1.0.8.jar)
 
 > [**GitHub地址**](https://github.com/zhazhapan/util)
 > [**Gitee地址**](https://gitee.com/zhazhapan_admin/util)
