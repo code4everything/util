@@ -61,7 +61,13 @@ public class NetUtils {
     public static Map<String, String> parseUrl(String url) {
         Map<String, String> result = new HashMap<>(8);
         if (Checker.isNotEmpty(url)) {
-            String[] pros = url.split("://");
+            String[] pros;
+            final String protocolSplit = "://";
+            if (url.contains(protocolSplit)) {
+                pros = url.split(protocolSplit);
+            } else {
+                pros = new String[]{"", url};
+            }
             // 设置主机、协议、路径
             result.put(PROTOCOL_KEY, pros[0]);
             int lastIndex = pros[1].lastIndexOf("/");
