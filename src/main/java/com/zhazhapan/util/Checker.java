@@ -53,6 +53,48 @@ public class Checker {
     private Checker() {}
 
     /**
+     * 检测数组是否不为空
+     *
+     * @param ts 数组
+     * @param <T> 类型
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static <T> boolean isNotEmpty(T[] ts) {
+        return isNotNull(ts) && ts.length > 0;
+    }
+
+    /**
+     * 数组是否为Null或空
+     *
+     * @param ts 数组
+     * @param <T> 类型
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static <T> boolean isNullOrEmpty(T[] ts) {
+        return isNull(ts) || isNotNullButEmpty(ts);
+    }
+
+    /**
+     * 数组是否不是Null，但是为空
+     *
+     * @param ts 数组
+     * @param <T> 类型
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static <T> boolean isNotNullButEmpty(T[] ts) {
+        return isNotNull(ts) && ts.length < 1;
+    }
+
+    /**
      * 从集合中获取第一个不为Null的值（当集合中所有值都为null，方法仍然返回null）
      *
      * @param ts 集合
@@ -63,7 +105,7 @@ public class Checker {
      * @since 1.0.8
      */
     public static <T> T getNotNull(T... ts) {
-        if (isNotNull(ts)) {
+        if (isNotEmpty(ts)) {
             for (T t : ts) {
                 if (isNotNull(t)) {
                     return t;
