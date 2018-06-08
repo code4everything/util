@@ -2,8 +2,10 @@ package com.zhazhapan.util;
 
 import com.zhazhapan.modules.constant.ValueConsts;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author pantao
@@ -11,6 +13,54 @@ import java.util.List;
 public class ArrayUtils {
 
     private ArrayUtils() {}
+
+    /**
+     * {@link Map}值转数组
+     *
+     * @param <T> 类型
+     * @param map {@link Map}
+     * @param clazz 类
+     *
+     * @return 数组
+     *
+     * @since 1.0.8
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] mapToArray(Map<String, T> map, Class<T> clazz) {
+        if (Checker.isNotEmpty(map)) {
+            T[] array = (T[]) Array.newInstance(clazz, map.size());
+            int i = 0;
+            for (T t : map.values()) {
+                array[i++] = t;
+            }
+            return array;
+        }
+        return null;
+    }
+
+    /**
+     * {@link Map}键转数组
+     *
+     * @param map {@link Map}
+     * @param <T> 类型
+     * @param clazz 类
+     *
+     * @return 数组
+     *
+     * @since 1.0.8
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] mapKeyToArray(Map<T, Object> map, Class<T> clazz) {
+        if (Checker.isNotEmpty(map)) {
+            T[] array = (T[]) Array.newInstance(clazz, map.size());
+            int i = 0;
+            for (T t : map.keySet()) {
+                array[i++] = t;
+            }
+            return array;
+        }
+        return null;
+    }
 
     /**
      * 合并多个Short数组

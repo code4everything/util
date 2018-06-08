@@ -6,11 +6,23 @@ package com.zhazhapan.util;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author pantao
  */
 public class ArraySortTest {
+
+    @Test
+    public void mapToArray() {
+        Map<String, Integer> test = new HashMap<>();
+        test.put("1", 1);
+        test.put("2", 2);
+        for (Integer i : ArrayUtils.mapToArray(test, Integer.class)) {
+            System.out.println(i);
+        }
+    }
 
     @Test
     public void testSort() {
