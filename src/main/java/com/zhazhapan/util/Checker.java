@@ -76,7 +76,7 @@ public class Checker {
      *
      * @since 1.0.8
      */
-    public static <T> boolean isNullOrEmpty(T[] ts) {
+    public static <T> boolean isEmpty(T[] ts) {
         return isNull(ts) || isNotNullButEmpty(ts);
     }
 
@@ -375,7 +375,7 @@ public class Checker {
      *
      * @return {@link Boolean}
      *
-     * @deprecated 请使用isEmpty方法
+     * @deprecated 请使用 {@link Checker#isEmpty(String)}方法
      */
     public static boolean isNullOrEmpty(String string) {
         return isEmpty(string);

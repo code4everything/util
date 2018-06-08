@@ -10,6 +10,8 @@ import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
@@ -112,7 +114,167 @@ public class NetUtils {
      * @return 过滤后的字符串
      */
     public static String scriptFilter(String string) {
-        return Checker.checkNull(string).replaceAll(ValueConsts.SCRIPT_FILTER_PATTERN, "");
+        return Checker.checkNull(string).replaceAll(ValueConsts.SCRIPT_FILTER_PATTERN, ValueConsts.EMPTY_STRING);
+    }
+
+    /**
+     * 清除所有Cookie
+     *
+     * @param request {@link HttpServletRequest}
+     * @param response {@link HttpServletResponse}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean clearCookie(HttpServletRequest request, HttpServletResponse response) {
+        return clearCookie(request.getCookies(), response);
+    }
+
+    /**
+     * 清除所有Cookie
+     *
+     * @param cookies {@link Cookie}
+     * @param response {@link HttpServletResponse}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean clearCookie(Cookie[] cookies, HttpServletResponse response) {
+        if (Checker.isNotEmpty(cookies)) {
+            for (Cookie cookie : cookies) {
+                removeCookie(cookie, response);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 删除指定Cookie
+     *
+     * @param name Cookie名
+     * @param request {@link HttpServletRequest}
+     * @param response {@link HttpServletResponse}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean removeCookie(String name, HttpServletRequest request, HttpServletResponse response) {
+        return removeCookie(name, request.getCookies(), response);
+    }
+
+    /**
+     * 删除指定Cookie
+     *
+     * @param name Cookie名
+     * @param cookies {@link Cookie}
+     * @param response {@link HttpServletResponse}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean removeCookie(String name, Cookie[] cookies, HttpServletResponse response) {
+        if (Checker.isNotEmpty(name) && Checker.isNotEmpty(cookies)) {
+            for (Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
+                    return removeCookie(cookie, response);
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 删除指定Cookie
+     *
+     * @param cookie {@link Cookie}
+     * @param response {@link HttpServletResponse}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean removeCookie(Cookie cookie, HttpServletResponse response) {
+        if (Checker.isNotNull(cookie)) {
+            cookie.setMaxAge(0);
+            return addCookie(cookie, response);
+        }
+        return false;
+    }
+
+    /**
+     * 添加Cookie
+     *
+     * @param cookie {@link Cookie}
+     * @param response {@link HttpServletResponse}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean addCookie(Cookie cookie, HttpServletResponse response) {
+        if (Checker.isNotNull(cookie) && Checker.isNotNull(response)) {
+            response.addCookie(cookie);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 添加Cookie
+     *
+     * @param response {@link HttpServletResponse}
+     * @param name Cookie名
+     * @param value Cookie值
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean addCookie(HttpServletResponse response, String name, String value) {
+        return addCookie(new Cookie(name, value), response);
+    }
+
+    /**
+     * 添加Cookie
+     *
+     * @param response {@link HttpServletResponse}
+     * @param name Cookie名
+     * @param value Cookie值
+     * @param expiry 有效期
+     * @param uri 路径
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.8
+     */
+    public static boolean addCookie(HttpServletResponse response, String name, String value, int expiry, String uri) {
+        Cookie cookie = new Cookie(name, value);
+        if (expiry > 0) {
+            cookie.setMaxAge(expiry);
+        }
+        if (Checker.isNotEmpty(uri)) {
+            cookie.setPath(uri);
+        }
+        return addCookie(cookie, response);
+    }
+
+    /**
+     * 通过名称获取Cookie
+     *
+     * @param name Cookie名
+     * @param request {@link HttpServletRequest}
+     *
+     * @return {@link Cookie}
+     *
+     * @since 1.0.8
+     */
+    public static Cookie getCookie(String name, HttpServletRequest request) {
+        return getCookie(name, request.getCookies());
     }
 
     /**
@@ -124,7 +286,7 @@ public class NetUtils {
      * @return {@link Cookie}
      */
     public static Cookie getCookie(String name, Cookie[] cookies) {
-        if (Checker.isNotNull(cookies)) {
+        if (Checker.isNotEmpty(cookies)) {
             for (Cookie cookie : cookies) {
                 if (name.equals(cookie.getName())) {
                     return cookie;
