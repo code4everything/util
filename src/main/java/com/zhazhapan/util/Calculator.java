@@ -47,7 +47,7 @@ public class Calculator {
     }
 
     /**
-     * 验证第计算式是否合法
+     * 验证计算式是否合法
      *
      * @param formula 计算式
      *
@@ -70,7 +70,7 @@ public class Calculator {
      * @throws Exception 异常
      */
     private static BigDecimal doCalculate(String formula) throws Exception {
-        Stack<BigDecimal> stack = new Stack<BigDecimal>();
+        Stack<BigDecimal> stack = new Stack<>();
         BigDecimal result = BigDecimal.valueOf(0);
         BigDecimal number = BigDecimal.valueOf(0);
         char sign = '+';
@@ -120,7 +120,7 @@ public class Calculator {
      * @param start 开始位置
      * @param formula 表达式
      *
-     * @return 长度为2的{@link BigDecimal}数组，位置0表示计算结果，位置1表示结束位置
+     * @return 长度为2的 {@link BigDecimal}数组，位置0表示计算结果，位置1表示结束位置
      *
      * @throws Exception 异常
      */
