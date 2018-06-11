@@ -140,6 +140,7 @@ public class Checker {
     /**
      * 检查对象是否在集合中
      *
+     * @param <T> 类型
      * @param t 对象
      * @param ts 集合
      *
@@ -154,6 +155,7 @@ public class Checker {
     /**
      * 检查对象是否在集合中
      *
+     * @param <T> 类型
      * @param t 对象
      * @param ts 集合
      *
