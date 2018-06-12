@@ -4,6 +4,7 @@ import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.interfaces.IChecker;
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,19 @@ public class Checker {
     private static Logger logger = Logger.getLogger(Checker.class);
 
     private Checker() {}
+
+    /**
+     * 是否是 ajax请求
+     *
+     * @param request {@link HttpServletRequest}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isAjax(HttpServletRequest request) {
+        return NetUtils.isAjax(request);
+    }
 
     /**
      * 检测数组是否不为空
@@ -172,6 +186,36 @@ public class Checker {
             }
         }
         return false;
+    }
+
+    /**
+     * 检查对象是否不存在某个集合
+     *
+     * @param t 对象
+     * @param ts 集合
+     * @param <T> 类型
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static <T> boolean isNotIn(T t, T... ts) {
+        return !isIn(t, ts);
+    }
+
+    /**
+     * 检查对象是否不存在某个集合
+     *
+     * @param t 对象
+     * @param ts 集合
+     * @param <T> 类型
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static <T> boolean isNotIn(T t, List<T> ts) {
+        return isNotIn(t, ts.toArray());
     }
 
     /**

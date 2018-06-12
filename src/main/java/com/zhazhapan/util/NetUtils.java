@@ -1,6 +1,7 @@
 package com.zhazhapan.util;
 
 import com.zhazhapan.config.JsonParser;
+import com.zhazhapan.modules.constant.HttpHeaders;
 import com.zhazhapan.modules.constant.ValueConsts;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
@@ -50,6 +51,19 @@ public class NetUtils {
     public static final String PATH_KEY = "$path";
 
     private NetUtils() {}
+
+    /**
+     * 是否是 ajax请求
+     *
+     * @param request {@link HttpServletRequest}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isAjax(HttpServletRequest request) {
+        return "XMLHttpRequest".equalsIgnoreCase(request.getHeader(HttpHeaders.X_REQUESTED_WITH));
+    }
 
     /**
      * 解析URL
