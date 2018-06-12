@@ -5,7 +5,6 @@ import org.junit.Test;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
-import java.util.Map;
 
 public class NetUtilsTest {
 
@@ -87,12 +86,55 @@ public class NetUtilsTest {
 
     @Test
     public void parseUrl() {
-        String url = "http://127.0.0.1:8080/heart/api/date.html?love-you=forever&coding=everyday";
-        Map<String, String> map = NetUtils.parseUrl(url);
-        System.out.println(map.get(NetUtils.PROTOCOL_KEY));
-        System.out.println(map.get(NetUtils.HOST_KEY));
-        System.out.println(map.get(NetUtils.PATH_KEY));
-        System.out.println(map.get("love-you"));
-        System.out.println(map.get("coding"));
+        System.out.println(NetUtils.parseUrl("http://127.0.0.1:8080/heart/api/date" +
+                ".html?love-you=forever&coding=everyday"));
+        System.out.println(NetUtils.parseUrl("http://"));
+        System.out.println(NetUtils.parseUrl("http"));
+        System.out.println(NetUtils.parseUrl("https://zhazhapan.com"));
+        System.out.println(NetUtils.parseUrl("https://github.zhazhapan.com/"));
+    }
+
+    @Test
+    public void scriptFilter() {
+    }
+
+    @Test
+    public void clearCookie() {
+    }
+
+    @Test
+    public void clearCookie1() {
+    }
+
+    @Test
+    public void removeCookie() {
+    }
+
+    @Test
+    public void removeCookie1() {
+    }
+
+    @Test
+    public void removeCookie2() {
+    }
+
+    @Test
+    public void addCookie() {
+    }
+
+    @Test
+    public void addCookie1() {
+    }
+
+    @Test
+    public void addCookie2() {
+    }
+
+    @Test
+    public void getCookie() {
+    }
+
+    @Test
+    public void getCookie1() {
     }
 }

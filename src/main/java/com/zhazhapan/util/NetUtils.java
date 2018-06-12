@@ -62,6 +62,9 @@ public class NetUtils {
      */
     public static Map<String, String> parseUrl(String url) {
         Map<String, String> result = new HashMap<>(8);
+        result.put(PROTOCOL_KEY, ValueConsts.EMPTY_STRING);
+        result.put(HOST_KEY, ValueConsts.EMPTY_STRING);
+        result.put(PATH_KEY, ValueConsts.EMPTY_STRING);
         if (Checker.isNotEmpty(url)) {
             String[] pros;
             final String protocolSplit = "://";
@@ -72,35 +75,38 @@ public class NetUtils {
             }
             // 设置主机、协议、路径
             result.put(PROTOCOL_KEY, pros[0]);
-            int lastIndex = pros[1].lastIndexOf("/");
-            if (pros[1].startsWith(ValueConsts.SPLASH_STRING)) {
-                // 文件协议
-                result.put(HOST_KEY, ValueConsts.EMPTY_STRING);
-                result.put(PATH_KEY, pros[1].substring(1));
-            } else if (pros[1].contains(ValueConsts.SPLASH_STRING)) {
-                int index = pros[1].indexOf("/");
-                // 设置主机
-                result.put(HOST_KEY, pros[1].substring(0, index));
-                // 设置参数
-                if (pros[1].contains(ValueConsts.QUESTION_MARK)) {
-                    lastIndex = pros[1].indexOf(ValueConsts.QUESTION_MARK);
-                    String[] params = pros[1].split("\\?")[1].split("&");
-                    for (String param : params) {
-                        String[] kv = param.split("=");
-                        result.put(kv[0], kv[1]);
+            if (pros.length < ValueConsts.TWO_INT) {
+                pros = new String[]{pros[0], ValueConsts.EMPTY_STRING};
+            }
+            if (pros[1].contains(ValueConsts.SPLASH_STRING)) {
+                int lastIndex = pros[1].lastIndexOf(ValueConsts.SPLASH_STRING);
+                if (pros[1].startsWith(ValueConsts.SPLASH_STRING)) {
+                    // 文件协议
+                    result.put(PATH_KEY, pros[1].substring(1));
+                } else if (pros[1].contains(ValueConsts.SPLASH_STRING)) {
+                    int index = pros[1].indexOf("/");
+                    // 设置主机
+                    result.put(HOST_KEY, pros[1].substring(0, index));
+                    // 设置参数
+                    if (pros[1].contains(ValueConsts.QUESTION_MARK)) {
+                        lastIndex = pros[1].indexOf(ValueConsts.QUESTION_MARK);
+                        String[] params = pros[1].split("\\?")[1].split("&");
+                        for (String param : params) {
+                            String[] kv = param.split("=");
+                            result.put(kv[0], kv[1]);
+                        }
                     }
-                }
-                // 设置路径
-                if (lastIndex > index) {
-                    String path = pros[1].substring(index + 1, lastIndex);
-                    path = path.endsWith(ValueConsts.SPLASH_STRING) ? path.substring(0, path.length() - 1) : path;
-                    result.put(PATH_KEY, path);
+                    // 设置路径
+                    if (lastIndex > index) {
+                        String path = pros[1].substring(index + 1, lastIndex);
+                        path = path.endsWith(ValueConsts.SPLASH_STRING) ? path.substring(0, path.length() - 1) : path;
+                        result.put(PATH_KEY, path);
+                    }
                 } else {
-                    result.put(PATH_KEY, ValueConsts.EMPTY_STRING);
+                    result.put(HOST_KEY, pros[1]);
                 }
             } else {
                 result.put(HOST_KEY, pros[1]);
-                result.put(PATH_KEY, ValueConsts.EMPTY_STRING);
             }
         }
         return result;
