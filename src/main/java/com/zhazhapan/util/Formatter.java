@@ -11,6 +11,7 @@ import com.zhazhapan.modules.constant.ValueConsts;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +35,14 @@ public class Formatter {
      */
     public static final Pattern FILE_NAME_PATTERN = Pattern.compile("([^/\\\\:*\"<>|?]+\\.)*[^/\\\\:*\"<>|?]+(\\?.*)" +
             "?$", Pattern.CASE_INSENSITIVE);
+
+    private static final char[] RMB_CHARACTERS = "零壹贰叁肆伍陆柒捌玖".toCharArray();
+
+    private static final String[] INTEGER_UNIT = {"元", "万", "亿", "兆"};
+
+    private static final String[] DECIMAL_UNIT = {"角", "分"};
+
+    private static final String[] RMB_UNIT = {"", "拾", "佰", "仟"};
 
     /**
      * 单位KB
@@ -62,19 +72,123 @@ public class Formatter {
     /**
      * yyyy-MM-dd格式
      */
-    private static SimpleDateFormat DATE_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat DATE_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * HH:mm:ss格式
      */
-    private static SimpleDateFormat LONG_TIME = new SimpleDateFormat("HH:mm:ss");
+    private static final SimpleDateFormat LONG_TIME = new SimpleDateFormat("HH:mm:ss");
 
     /**
      * HH:mm格式
      */
-    private static SimpleDateFormat SHORT_TIME = new SimpleDateFormat("HH:mm");
+    private static final SimpleDateFormat SHORT_TIME = new SimpleDateFormat("HH:mm");
+
+    private static final String STANDARD_FORMAT = "#0.00";
 
     private Formatter() {}
+
+    /**
+     * 货币金额大写
+     *
+     * @param number 金额
+     *
+     * @return 大写字符串
+     *
+     * @throws Exception 金额超出范围异常
+     * @since 1.0.9
+     */
+    public static String toFinancialCharacter(double number) throws Exception {
+        String[] array = formatDecimal(number).split("\\.");
+        String left = array[0];
+        String right = "";
+        if (array.length == ValueConsts.TWO_INT) {
+            right = array[1];
+        }
+        left = left.replaceAll("^0+", ValueConsts.EMPTY_STRING);
+        if (left.length() > ValueConsts.SIXTEEN_INT) {
+            throw new Exception("doesn't support, number is too big, length must less than 16.");
+        }
+        StringBuilder leftUpper = new StringBuilder();
+        String rightUpper = "";
+        if (Checker.isNotEmpty(left)) {
+            int len = left.length();
+            int j = 0;
+            int k = 0;
+            boolean flag = true;
+            for (int i = len - 1; i >= 0; i--) {
+                if (j == 0) {
+                    leftUpper.insert(0, INTEGER_UNIT[k]);
+                }
+                if (left.charAt(i) == 48) {
+                    if (!flag) {
+                        leftUpper.insert(0, RMB_CHARACTERS[left.charAt(i) - 48]);
+                        flag = true;
+                    }
+                } else {
+                    leftUpper.insert(0, RMB_CHARACTERS[left.charAt(i) - 48] + RMB_UNIT[j]);
+                    flag = false;
+                }
+                if (j == 3) {
+                    j = 0;
+                    k++;
+                    flag = true;
+                } else {
+                    j++;
+                }
+            }
+        }
+        if (Checker.isNotEmpty(right)) {
+            boolean flag = false;
+            if (right.length() == ValueConsts.TWO_INT) {
+                if (right.charAt(1) > ValueConsts.FORTY_EIGHT) {
+                    rightUpper = RMB_CHARACTERS[right.charAt(1) - 48] + DECIMAL_UNIT[1] + rightUpper;
+                    flag = true;
+                }
+            }
+            if (right.charAt(0) == ValueConsts.FORTY_EIGHT) {
+                if (flag) {
+                    rightUpper = RMB_CHARACTERS[right.charAt(0) - 48] + rightUpper;
+                }
+            } else {
+                rightUpper = RMB_CHARACTERS[right.charAt(0) - 48] + DECIMAL_UNIT[0] + rightUpper;
+            }
+        }
+        if (Checker.isEmpty(leftUpper.toString()) && Checker.isEmpty(rightUpper)) {
+            return "零元";
+        }
+        if (Checker.isEmpty(rightUpper)) {
+            rightUpper = "整";
+        }
+        return Utils.leftTrim(leftUpper + rightUpper, String.valueOf(RMB_CHARACTERS[0]));
+    }
+
+    /**
+     * 格式化为货币字符串
+     *
+     * @param locale {@link Locale}，比如：{@link Locale#CHINA}
+     * @param number 数字
+     *
+     * @return 货币字符串
+     *
+     * @since 1.0.9
+     */
+    public static String toCurrency(Locale locale, double number) {
+        return NumberFormat.getCurrencyInstance(locale).format(number);
+    }
+
+    /**
+     * 格式化为货币字符串，默认 {@link Locale}为 {@link Locale#CHINA}
+     *
+     * @param number 数字
+     *
+     * @return 货币字符串
+     *
+     * @since 1.0.9
+     */
+    public static String toCurrency(double number) {
+        return toCurrency(Locale.CHINA, number);
+    }
 
     /**
      * 将字符串转换为INT型
@@ -191,7 +305,7 @@ public class Formatter {
      * @return {@link String}
      */
     public static String formatDecimal(double number) {
-        return formatDecimal(number, "#0.00");
+        return formatDecimal(number, STANDARD_FORMAT);
     }
 
     /**

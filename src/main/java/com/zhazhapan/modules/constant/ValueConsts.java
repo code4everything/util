@@ -8,6 +8,8 @@ import java.io.File;
  */
 public class ValueConsts {
 
+    public static final int FORTY_EIGHT = 48;
+
     /**
      * 英文问号
      */
