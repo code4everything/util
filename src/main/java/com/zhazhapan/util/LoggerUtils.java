@@ -1,5 +1,6 @@
 package com.zhazhapan.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.zhazhapan.modules.constant.ValueConsts;
 import org.apache.log4j.Logger;
 
@@ -273,7 +274,7 @@ public class LoggerUtils {
     private static String formatString(String message, Object[] values) {
         if (Checker.isNotEmpty(message)) {
             if (Checker.isNotEmpty(values)) {
-                return String.format(message, values);
+                return StrUtil.format(String.format(message, values), values);
             }
             return message;
         }
