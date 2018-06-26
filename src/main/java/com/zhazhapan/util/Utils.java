@@ -90,6 +90,9 @@ public class Utils {
      * @since 1.0.8
      */
     public static String leftTrim(String value, String leftTrim) {
+        if (Checker.isEmpty(value) || Checker.isEmpty(leftTrim)) {
+            return value;
+        }
         return value.indexOf(leftTrim) == 0 ? leftTrim(value.substring(leftTrim.length()), leftTrim) : value;
     }
 
@@ -104,6 +107,9 @@ public class Utils {
      * @since 1.0.8
      */
     public static String rightTrim(String value, String rightTrim) {
+        if (Checker.isEmpty(value) || Checker.isEmpty(rightTrim)) {
+            return value;
+        }
         int idx = value.length() - rightTrim.length();
         return value.lastIndexOf(rightTrim) == idx ? rightTrim(value.substring(0, idx), rightTrim) : value;
     }

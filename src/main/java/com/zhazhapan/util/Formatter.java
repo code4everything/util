@@ -38,9 +38,9 @@ public class Formatter {
 
     private static final char[] RMB_CHARACTERS = "零壹贰叁肆伍陆柒捌玖".toCharArray();
 
-    private static final String[] INTEGER_UNIT = {"元", "万", "亿", "兆"};
+    private static final String[] RMB_INTEGER_UNIT = {"元", "万", "亿", "兆"};
 
-    private static final String[] DECIMAL_UNIT = {"角", "分"};
+    private static final String[] RMB_DECIMAL_UNIT = {"角", "分"};
 
     private static final String[] RMB_UNIT = {"", "拾", "佰", "仟"};
 
@@ -95,72 +95,52 @@ public class Formatter {
      *
      * @return 大写字符串
      *
-     * @throws Exception 金额超出范围异常
      * @since 1.0.9
      */
-    public static String toFinancialCharacter(double number) throws Exception {
+    public static String toFinancialCharacter(double number) {
+        final String zero = String.valueOf(ValueConsts.ZERO_INT);
         String[] array = formatDecimal(number).split("\\.");
-        String left = array[0];
-        String right = "";
-        if (array.length == ValueConsts.TWO_INT) {
-            right = array[1];
-        }
-        left = left.replaceAll("^0+", ValueConsts.EMPTY_STRING);
-        if (left.length() > ValueConsts.SIXTEEN_INT) {
-            throw new Exception("doesn't support, number is too big, length must less than 16.");
-        }
+        final int len = Math.min(array[0].length(), 16);
         StringBuilder leftUpper = new StringBuilder();
-        String rightUpper = "";
-        if (Checker.isNotEmpty(left)) {
-            int len = left.length();
-            int j = 0;
-            int k = 0;
-            boolean flag = true;
-            for (int i = len - 1; i >= 0; i--) {
-                if (j == 0) {
-                    leftUpper.insert(0, INTEGER_UNIT[k]);
-                }
-                if (left.charAt(i) == 48) {
-                    if (!flag) {
-                        leftUpper.insert(0, RMB_CHARACTERS[left.charAt(i) - 48]);
-                        flag = true;
-                    }
+        StringBuilder rightUpper = new StringBuilder();
+        int reverseIndex;
+        for (int i = len - 1; i >= 0; i--) {
+            reverseIndex = len - i - 1;
+            int idx = array[0].charAt(i) - ValueConsts.FORTY_EIGHT;
+            int remainder = reverseIndex % 4;
+            int res = reverseIndex / 4;
+            if (remainder == 0 && res > 0) {
+                leftUpper.insert(ValueConsts.ZERO_INT, RMB_INTEGER_UNIT[res]);
+            }
+            leftUpper.insert(ValueConsts.ZERO_INT, idx > 0 ? RMB_CHARACTERS[idx] + RMB_UNIT[remainder] : idx);
+        }
+        array[1] = Utils.rightTrim(array[1], zero);
+        String left = Utils.rightTrim(leftUpper.toString(), zero);
+        if (Checker.isEmpty(array[1])) {
+            rightUpper.append("整");
+        } else {
+            for (int i = 0; i < array[1].length(); i++) {
+                int idx = array[1].charAt(i) - ValueConsts.FORTY_EIGHT;
+                if (i == 0) {
+                    rightUpper.append(idx > 0 ? RMB_CHARACTERS[idx] + RMB_DECIMAL_UNIT[i] : zero);
                 } else {
-                    leftUpper.insert(0, RMB_CHARACTERS[left.charAt(i) - 48] + RMB_UNIT[j]);
-                    flag = false;
-                }
-                if (j == 3) {
-                    j = 0;
-                    k++;
-                    flag = true;
-                } else {
-                    j++;
+                    rightUpper.append(RMB_CHARACTERS[idx]).append(RMB_DECIMAL_UNIT[i]);
                 }
             }
         }
-        if (Checker.isNotEmpty(right)) {
-            boolean flag = false;
-            if (right.length() == ValueConsts.TWO_INT) {
-                if (right.charAt(1) > ValueConsts.FORTY_EIGHT) {
-                    rightUpper = RMB_CHARACTERS[right.charAt(1) - 48] + DECIMAL_UNIT[1] + rightUpper;
-                    flag = true;
-                }
+        String upper = Utils.leftTrim((Checker.isEmpty(left) ? (Checker.isEmpty(rightUpper.toString()) ? zero +
+                RMB_INTEGER_UNIT[0] : "") : left + RMB_INTEGER_UNIT[0]) + rightUpper, zero).replaceAll("0+", "零");
+        int unitLen = (len / RMB_INTEGER_UNIT.length) + 1;
+        for (int i = 1; i < unitLen; i++) {
+            for (int j = i + 1; j < unitLen; j++) {
+                upper = upper.replace(RMB_INTEGER_UNIT[j] + RMB_CHARACTERS[0] + RMB_INTEGER_UNIT[i],
+                        RMB_INTEGER_UNIT[j]);
             }
-            if (right.charAt(0) == ValueConsts.FORTY_EIGHT) {
-                if (flag) {
-                    rightUpper = RMB_CHARACTERS[right.charAt(0) - 48] + rightUpper;
-                }
-            } else {
-                rightUpper = RMB_CHARACTERS[right.charAt(0) - 48] + DECIMAL_UNIT[0] + rightUpper;
-            }
+            upper = upper.replace(RMB_CHARACTERS[0] + RMB_INTEGER_UNIT[i], RMB_INTEGER_UNIT[i] + RMB_CHARACTERS[0]);
+            upper = upper.replace(RMB_INTEGER_UNIT[i] + RMB_CHARACTERS[0] + RMB_INTEGER_UNIT[0], RMB_INTEGER_UNIT[i]
+                    + RMB_INTEGER_UNIT[0]);
         }
-        if (Checker.isEmpty(leftUpper.toString()) && Checker.isEmpty(rightUpper)) {
-            return "零元";
-        }
-        if (Checker.isEmpty(rightUpper)) {
-            rightUpper = "整";
-        }
-        return Utils.leftTrim(leftUpper + rightUpper, String.valueOf(RMB_CHARACTERS[0]));
+        return upper.replaceAll("零零", "零");
     }
 
     /**
