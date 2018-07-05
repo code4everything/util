@@ -2,6 +2,7 @@ package com.zhazhapan.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.zhazhapan.modules.constant.ValueConsts;
+import com.zhazhapan.util.enums.LogLevel;
 import org.apache.log4j.Logger;
 
 /**
@@ -59,7 +60,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void info(String message, Object... values) {
+    public static void info(String message, String... values) {
         info(LOCAL_CLASS, message, values);
     }
 
@@ -72,7 +73,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void info(Object object, String message, Object... values) {
+    public static void info(Object object, String message, String... values) {
         if (Checker.isNull(object)) {
             info(message, values);
         } else {
@@ -89,7 +90,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void info(Class<?> clazz, String message, Object... values) {
+    public static void info(Class<?> clazz, String message, String... values) {
         getLogger(clazz).info(formatString(message, values));
     }
 
@@ -101,7 +102,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void warn(String message, Object... values) {
+    public static void warn(String message, String... values) {
         warn(LOCAL_CLASS, message, values);
     }
 
@@ -114,7 +115,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void warn(Object object, String message, Object... values) {
+    public static void warn(Object object, String message, String... values) {
         if (Checker.isNull(object)) {
             warn(message, values);
         } else {
@@ -131,7 +132,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void warn(Class<?> clazz, String message, Object... values) {
+    public static void warn(Class<?> clazz, String message, String... values) {
         getLogger(clazz).warn(formatString(message, values));
     }
 
@@ -143,7 +144,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void error(String message, Object... values) {
+    public static void error(String message, String... values) {
         error(LOCAL_CLASS, message, values);
     }
 
@@ -156,7 +157,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void error(Object object, String message, Object... values) {
+    public static void error(Object object, String message, String... values) {
         if (Checker.isNull(object)) {
             error(message, values);
         } else {
@@ -173,7 +174,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void error(Class<?> clazz, String message, Object... values) {
+    public static void error(Class<?> clazz, String message, String... values) {
         getLogger(clazz).error(formatString(message, values));
     }
 
@@ -185,7 +186,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void debug(String message, Object... values) {
+    public static void debug(String message, String... values) {
         debug(LOCAL_CLASS, message, values);
     }
 
@@ -198,7 +199,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void debug(Object object, String message, Object... values) {
+    public static void debug(Object object, String message, String... values) {
         if (Checker.isNull(object)) {
             debug(message, values);
         } else {
@@ -215,7 +216,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void debug(Class<?> clazz, String message, Object... values) {
+    public static void debug(Class<?> clazz, String message, String... values) {
         getLogger(clazz).debug(formatString(message, values));
     }
 
@@ -227,7 +228,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void fatal(String message, Object... values) {
+    public static void fatal(String message, String... values) {
         fatal(LOCAL_CLASS, message, values);
     }
 
@@ -240,7 +241,7 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void fatal(Object object, String message, Object... values) {
+    public static void fatal(Object object, String message, String... values) {
         if (Checker.isNull(object)) {
             fatal(message, values);
         } else {
@@ -257,8 +258,78 @@ public class LoggerUtils {
      *
      * @since 1.0.8
      */
-    public static void fatal(Class<?> clazz, String message, Object... values) {
+    public static void fatal(Class<?> clazz, String message, String... values) {
         getLogger(clazz).fatal(formatString(message, values));
+    }
+
+    /**
+     * 打印日志
+     *
+     * @param message 消息
+     * @param values 格式化参数
+     *
+     * @since 1.0.9
+     */
+    public static void log(String message, String... values) {
+        log(LogLevel.INFO, message, values);
+    }
+
+    /**
+     * 打印日志
+     *
+     * @param logLevel 日志级别
+     * @param message 消息
+     * @param values 格式化参数
+     *
+     * @since 1.0.9
+     */
+    public static void log(LogLevel logLevel, String message, String... values) {
+        log(logLevel, LOCAL_CLASS, message, values);
+    }
+
+    /**
+     * 打印日志
+     *
+     * @param logLevel 日志级别
+     * @param object 指定对象
+     * @param message 消息
+     * @param values 格式化参数
+     *
+     * @since 1.0.9
+     */
+    public static void log(LogLevel logLevel, Object object, String message, String... values) {
+        if (Checker.isNull(object)) {
+            log(logLevel, message, values);
+        } else {
+            log(logLevel, object.getClass(), message, values);
+        }
+    }
+
+    /**
+     * 打印日志
+     *
+     * @param logLevel 日志级别
+     * @param clazz 指定类
+     * @param message 消息
+     * @param values 格式化参数
+     *
+     * @since 1.0.9
+     */
+    public static void log(LogLevel logLevel, Class<?> clazz, String message, String... values) {
+        switch (logLevel) {
+            case WARN:
+                warn(clazz, message, values);
+                break;
+            case ERROR:
+                error(clazz, message, values);
+                break;
+            case FATAL:
+                fatal(clazz, message, values);
+                break;
+            default:
+                info(clazz, message, values);
+                break;
+        }
     }
 
     /**
