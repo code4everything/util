@@ -415,6 +415,214 @@ public class Checker {
     }
 
     /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(int[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(int[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(byte[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(byte[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(short[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(short[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(long[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(long[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(float[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(float[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(double[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(double[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(boolean[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(boolean[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
+     * 检查数组是否为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEmpty(char[] array) {
+        return isNull(array) || array.length == 0;
+    }
+
+    /**
+     * 检查数组是否不为空
+     *
+     * @param array 数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNotEmpty(char[] array) {
+        return !isEmpty(array);
+    }
+
+    /**
      * 字符串是否为NULL或空
      *
      * @param string 需要判断的字符串
