@@ -2,7 +2,6 @@ package com.zhazhapan.util;
 
 import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.interfaces.IChecker;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -49,9 +48,178 @@ public class Checker {
     public static final Pattern IMAGES_PATTERN = Pattern.compile(".*\\.(bmp|gif|jpe?g|png|tiff?|pcx|tga|svg|pic)$",
             Pattern.CASE_INSENSITIVE);
 
-    private static Logger logger = Logger.getLogger(Checker.class);
-
     private Checker() {}
+
+    /**
+     * 检测字符串是否是字母和数字的混写（字母和数字单独出现也可）
+     *
+     * @param string 字符串
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isLetterAndNumber(String string) {
+        boolean result = isNotEmpty(string);
+        int idx = 0;
+        int len = string.length();
+        while (result) {
+            if (idx >= len) {
+                break;
+            }
+            char c = string.charAt(idx);
+            result = isLetter(c) || isNumber(c);
+            idx++;
+        }
+        return result;
+    }
+
+    /**
+     * 检测字符是否是数字
+     *
+     * @param c 字符
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isNumber(char c) {
+        return isNotNull(c) && c >= '0' && c <= '9';
+    }
+
+    /**
+     * 字符串所有字符是否全部是字母
+     *
+     * @param string 字符串
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isLetter(String string) {
+        boolean result = isNotEmpty(string);
+        int idx = 0;
+        int len = string.length();
+        while (result) {
+            if (idx >= len) {
+                break;
+            }
+            result = isLetter(string.charAt(idx));
+            idx++;
+        }
+        return result;
+    }
+
+    /**
+     * 字符是否是字母
+     *
+     * @param c 字符
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isLetter(char c) {
+        return isLowerCase(c) || isUpperCase(c);
+    }
+
+    /**
+     * 检测字符串所有字母是否全部是小写
+     *
+     * @param string 字符串
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isLowerCase(String string) {
+        return isNotEmpty(string) && string.equals(string.toLowerCase());
+    }
+
+    /**
+     * 检测字符串是否全部是小写字母
+     *
+     * @param string 字符串
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isOnlyLowerCase(String string) {
+        boolean result = isNotEmpty(string);
+        int idx = 0;
+        int len = string.length();
+        while (result) {
+            if (idx >= len) {
+                break;
+            }
+            result = isLowerCase(string.charAt(idx));
+            idx++;
+        }
+        return result;
+    }
+
+    /**
+     * 检测字符是否是大写字母
+     *
+     * @param c 字符
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isLowerCase(char c) {
+        return isNotNull(c) && c >= 'a' && c <= 'z';
+    }
+
+    /**
+     * 检测字符串所有字母是否全部是大写
+     *
+     * @param string 字符串
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isUpperCase(String string) {
+        return isNotEmpty(string) && string.equals(string.toUpperCase());
+    }
+
+    /**
+     * 检测字符串是否全部是大写字母
+     *
+     * @param string 字符串
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isOnlyUpperCase(String string) {
+        boolean result = isNotEmpty(string);
+        int idx = 0;
+        int len = string.length();
+        while (result) {
+            if (idx >= len) {
+                break;
+            }
+            result = isUpperCase(string.charAt(idx));
+            idx++;
+        }
+        return result;
+    }
+
+    /**
+     * 检测字符是否是大写字母
+     *
+     * @param c 字符
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isUpperCase(char c) {
+        return isNotNull(c) && c >= 'A' && c <= 'Z';
+    }
 
     /**
      * 是否是 ajax请求

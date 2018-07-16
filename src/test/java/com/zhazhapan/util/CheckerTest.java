@@ -254,4 +254,50 @@ public class CheckerTest {
     @Test
     public void checkNull22() {
     }
+
+    @Test
+    public void isUpperCase() {
+        assert Checker.isUpperCase("KSSLAL78A--=A");
+        assert !Checker.isUpperCase("KLKLAFA-=AAls");
+    }
+
+    @Test
+    public void isOnlyUpperCase() {
+        for (int i = 0; i < ValueConsts.ONE_HUNDRED_INT; i++) {
+            assert Checker.isOnlyUpperCase(RandomUtils.getRandomStringOnlyUpperCase(ValueConsts.NINE_INT));
+        }
+        assert !Checker.isOnlyUpperCase(RandomUtils.getRandomStringOnlyLowerCase(ValueConsts.NINE_INT));
+    }
+
+    @Test
+    public void isAjax() {
+    }
+
+    @Test
+    public void isNotNullButEmpty() {
+    }
+
+    @Test
+    public void getNotNull() {
+    }
+
+    @Test
+    public void getNotNullWithException() {
+    }
+
+    @Test
+    public void isIn() {
+    }
+
+    @Test
+    public void isIn1() {
+    }
+
+    @Test
+    public void isNotIn() {
+    }
+
+    @Test
+    public void isNotIn1() {
+    }
 }

@@ -1,7 +1,7 @@
 package com.zhazhapan.util;
 
+import com.google.common.net.HttpHeaders;
 import com.zhazhapan.config.JsonParser;
-import com.zhazhapan.modules.constant.HttpHeaders;
 import com.zhazhapan.modules.constant.ValueConsts;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
