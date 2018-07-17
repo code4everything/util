@@ -8,6 +8,8 @@ import java.io.File;
  */
 public class ValueConsts {
 
+    public static final String COLON = ":";
+
     public static final String SUCCESS = "success";
 
     public static final String FAILED = "failed";

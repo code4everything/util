@@ -35,7 +35,7 @@ public @interface FieldChecking {
     String status() default ValueConsts.ERROR_EN;
 
     /**
-     * 自定义验证表达式（用val代替字段值），验证返回true时isPassed返回true，验证返回false时isPassed返回false
+     * 自定义验证表达式（用val代替字段值），支持正则匹配（使用英文冒号:开头），验证返回true时isPassed返回true，验证返回false时isPassed返回false
      *
      * @return {@link String}
      */

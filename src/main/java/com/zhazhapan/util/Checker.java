@@ -85,8 +85,13 @@ public class Checker {
                     break;
                 }
                 if (isEmpty(expression)) {
+                    // 默认进行不为空验证
                     result.passed = isNotEmpty(value.toString());
+                } else if (expression.startsWith(ValueConsts.COLON)) {
+                    // 正则匹配
+                    result.passed = Pattern.compile(expression.substring(1)).matcher(value.toString()).matches();
                 } else {
+                    // 自定义表达式验证
                     Map<String, Object> map = new HashMap<>(ValueConsts.TWO_INT);
                     map.put("val", value);
                     Object res = ReflectUtils.executeExpression(checking.expression(), map);
