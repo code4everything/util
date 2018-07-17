@@ -1,6 +1,9 @@
 package com.zhazhapan.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.modules.constant.ValueConsts;
+import com.zhazhapan.util.model.CheckResult;
+import com.zhazhapan.util.model.TestBean;
 import org.junit.Test;
 
 /**
@@ -299,5 +302,73 @@ public class CheckerTest {
 
     @Test
     public void isNotIn1() {
+    }
+
+    @Test
+    public void checkBean() {
+        TestBean bean = new TestBean();
+        bean.none = false;
+
+        // 测试空对象
+        CheckResult result = Checker.checkBean(bean);
+        System.out.println(JSONObject.toJSON(result.resultObject));
+        assert !result.passed;
+
+        // 测试默认检查
+        bean.id = 7;
+        result = Checker.checkBean(bean);
+        System.out.println(JSONObject.toJSON(result.resultObject));
+        assert !result.passed;
+
+        // 测试用户名
+        bean.defaultChecking = "god";
+        bean.username = "pan";
+        result = Checker.checkBean(bean);
+        System.out.println(JSONObject.toJSON(result.resultObject));
+        assert !result.passed;
+
+        // 测试邮箱
+        bean.username = "code4everything";
+        bean.email = "invalid@email";
+        result = Checker.checkBean(bean);
+        System.out.println(JSONObject.toJSON(result.resultObject));
+        assert !result.passed;
+
+        // 测试年龄
+        bean.email = "tao@util.org";
+        bean.age = 156;
+        result = Checker.checkBean(bean);
+        System.out.println(JSONObject.toJSON(result.resultObject));
+        assert !result.passed;
+
+        // 测试通过
+        bean.age = 118;
+        result = Checker.checkBean(bean);
+        System.out.println(JSONObject.toJSON(result.resultObject));
+        assert result.passed;
+    }
+
+    @Test
+    public void isLetterAndNumber() {
+    }
+
+    @Test
+    public void isLetter() {
+    }
+
+    @Test
+    public void isLetter1() {
+    }
+
+    @Test
+    public void isLowerCase() {
+    }
+
+    @Test
+    public void isOnlyLowerCase() {
+    }
+
+    @Test
+    public void isLowerCase1() {
     }
 }

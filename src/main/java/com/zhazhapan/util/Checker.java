@@ -86,7 +86,7 @@ public class Checker {
                 }
                 if (isEmpty(expression)) {
                     // 默认进行不为空验证
-                    result.passed = isNotEmpty(value.toString());
+                    result.passed = isNotNull(value) && isNotEmpty(value.toString());
                 } else if (expression.startsWith(ValueConsts.COLON)) {
                     // 正则匹配
                     result.passed = Pattern.compile(expression.substring(1)).matcher(value.toString()).matches();
