@@ -8,6 +8,12 @@ import java.io.File;
  */
 public class ValueConsts {
 
+    public static final String SUCCESS = "success";
+
+    public static final String FAILED = "failed";
+
+    public static final String ERROR_EN = "error";
+
     public static final int FORTY_EIGHT = 48;
 
     /**

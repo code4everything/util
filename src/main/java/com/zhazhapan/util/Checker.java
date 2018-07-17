@@ -1,11 +1,17 @@
 package com.zhazhapan.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.zhazhapan.modules.constant.ValueConsts;
+import com.zhazhapan.util.annotation.FieldChecking;
 import com.zhazhapan.util.interfaces.IChecker;
+import com.zhazhapan.util.model.CheckResult;
+import com.zhazhapan.util.model.ResultObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -49,6 +55,62 @@ public class Checker {
             Pattern.CASE_INSENSITIVE);
 
     private Checker() {}
+
+    /**
+     * 验证JavaBean带有 {@link FieldChecking}注解的字段
+     *
+     * @param bean JavaBean
+     *
+     * @return {@link CheckResult}
+     *
+     * @since 1.0.9
+     */
+    public static CheckResult checkBean(Object bean) {
+        Field[] fields = bean.getClass().getDeclaredFields();
+        CheckResult result = new CheckResult();
+        ResultObject object = new ResultObject();
+        for (Field field : fields) {
+            FieldChecking checking = field.getAnnotation(FieldChecking.class);
+            if (isNotNull(checking)) {
+                String expression = checking.expression();
+                Object value;
+                try {
+                    value = field.get(bean);
+                } catch (IllegalAccessException e) {
+                    LoggerUtils.error("{}表达式异常", checking.expression());
+                    object.status = ValueConsts.ERROR_EN;
+                    object.message = "表达式异常";
+                    object.code = 501;
+                    result.passed = false;
+                    break;
+                }
+                if (isEmpty(expression)) {
+                    result.passed = isNotEmpty(value.toString());
+                } else {
+                    Map<String, Object> map = new HashMap<>(ValueConsts.TWO_INT);
+                    map.put("val", value);
+                    Object res = ReflectUtils.executeExpression(checking.expression(), map);
+                    result.passed = res instanceof Boolean && (boolean) res;
+                }
+                if (!result.passed) {
+                    object.code = checking.code();
+                    object.message = StrUtil.format(checking.message(), field.getName());
+                    object.status = checking.status();
+                    break;
+                }
+            }
+        }
+        if (result.passed) {
+            FieldChecking checking = bean.getClass().getAnnotation(FieldChecking.class);
+            if (isNotNull(checking)) {
+                object.code = checking.code();
+                object.message = checking.message();
+                object.status = checking.status();
+            }
+        }
+        result.resultObject = object;
+        return result;
+    }
 
     /**
      * 检测字符串是否是字母和数字的混写（字母和数字单独出现也可）
