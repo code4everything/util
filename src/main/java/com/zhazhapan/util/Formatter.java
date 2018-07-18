@@ -290,6 +290,13 @@ public class Formatter {
 
     /**
      * 自定义格式化数值
+     * <br><br>主要格式参数说明：
+     * <p>
+     * <code>0</code> 数字前面补0
+     * <br><code>-</code> 左对齐
+     * <br><code>(</code> 将负数括在括号内
+     * <br><code>,</code> 添加分组 分隔符
+     * </p>
      *
      * @param number 需要格式化的数值
      * @param format 格式，例如：#0.00
@@ -317,8 +324,22 @@ public class Formatter {
      * @param map {@link Map}
      *
      * @return {@link String}
+     *
+     * @since 1.0.9
      */
     public static String mapToJson(Map<?, ?> map) {
+        return formatJson(JSONObject.toJSON(map).toString());
+    }
+
+
+    /**
+     * 将Map转换成JSON，调用对象的toString方法
+     *
+     * @param map {@link Map}
+     *
+     * @return {@link String}
+     */
+    public static String mapToJsonArray(Map<?, ?> map) {
         JSONArray array = new JSONArray();
         if (Checker.isNotEmpty(map)) {
             map.forEach((key, value) -> {

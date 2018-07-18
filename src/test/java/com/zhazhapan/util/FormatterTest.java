@@ -2,7 +2,9 @@ package com.zhazhapan.util;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class FormatterTest {
 
@@ -77,6 +79,10 @@ public class FormatterTest {
 
     @Test
     public void mapToJson() {
+        Map<String, String> map = new HashMap<>();
+        map.put("key", "value");
+        map.put("map", "json");
+        System.out.println(Formatter.mapToJson(map));
     }
 
     @Test
@@ -165,5 +171,9 @@ public class FormatterTest {
 
     @Test
     public void dateToLocalDate() {
+    }
+
+    @Test
+    public void mapToJsonArray() {
     }
 }
