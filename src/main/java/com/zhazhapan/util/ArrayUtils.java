@@ -15,6 +15,27 @@ public class ArrayUtils {
     private ArrayUtils() {}
 
     /**
+     * 复制数组，可实现数组扩容
+     *
+     * @param array 数组
+     * @param length 返回新数组的长度
+     *
+     * @return 复制后的数组
+     *
+     * @since 1.0.9
+     */
+    public static Object copyOf(Object array, int length) {
+        Class clazz = array.getClass();
+        Object newArray = null;
+        if (clazz.isArray()) {
+            int arrLen = Array.getLength(array);
+            newArray = Array.newInstance(clazz.getComponentType(), length);
+            System.arraycopy(array, 0, newArray, 0, Math.min(length, arrLen));
+        }
+        return newArray;
+    }
+
+    /**
      * {@link Map}值转数组
      *
      * @param <T> 类型
