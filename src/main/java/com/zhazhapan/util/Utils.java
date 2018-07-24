@@ -25,11 +25,60 @@ public class Utils {
     private static final Pattern HAS_DIGIT_PATTERN = Pattern.compile(".*[0-9]+.*");
 
     /**
+     * UID字符集
+     */
+    private static final char[] UID = "0123456789abcdefghijklmnopqrstuvwxyz".toCharArray();
+
+    private static final int UID_LENGTH = UID.length;
+
+    /**
      * 日志输出
      */
     private static Logger logger = Logger.getLogger(Utils.class);
 
     private Utils() {}
+
+    /**
+     * 分割long型
+     *
+     * @param value {@link Long}
+     * @param splitPoints 分割点
+     *
+     * @return int数组
+     *
+     * @since 1.0.9
+     */
+    public static int[] split(long value, int... splitPoints) {
+        int[] vars = null;
+        if (Checker.isNotNull(splitPoints)) {
+            String val = String.valueOf(value);
+            int len = splitPoints.length;
+            vars = new int[len + 1];
+            for (int i = 0; i < len; i++) {
+                vars[i] = Integer.parseInt(val.substring(i, splitPoints[i]));
+            }
+            vars[len] = Integer.parseInt(val.substring(splitPoints[len - 1]));
+        }
+        return vars;
+    }
+
+    /**
+     * 数字转uid字符集
+     *
+     * @param number 数字集
+     *
+     * @return {@link String}
+     *
+     * @since 1.0.9
+     */
+    public static String toUidString(int number) {
+        StringBuilder builder = new StringBuilder();
+        while (number > 0) {
+            builder.append(UID[number % UID_LENGTH]);
+            number /= UID_LENGTH;
+        }
+        return builder.toString();
+    }
 
     /**
      * 加载JSON配置文件，使用系统默认编码

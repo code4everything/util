@@ -28,7 +28,7 @@ public class ListUtils {
      */
     @SafeVarargs
     public static <T> ArrayList<T> getArrayList(int capacity, T... values) {
-        return new ArrayList<T>(capacity) {{this.addAll(Arrays.asList(values));}};
+        return new ArrayList<T>(capacity) {{addAll(Arrays.asList(values));}};
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.zhazhapan.util;
 
+import cn.hutool.core.util.RandomUtil;
+import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.model.SimpleColor;
 
 import java.math.BigDecimal;
@@ -13,6 +15,23 @@ public class RandomUtils extends org.apache.commons.lang3.RandomUtils {
 
     private RandomUtils() {}
 
+    /**
+     * 获取一个Uid（简化版UUID）
+     *
+     * @return {@link String}
+     *
+     * @since 1.0.9
+     */
+    public static String getRandomUid() {
+        int[] val = Utils.split(System.currentTimeMillis(), ValueConsts.NINE_INT);
+        return Utils.toUidString(val[0]) + Utils.toUidString(val[1]) + RandomUtil.simpleUUID().substring(0, 7);
+    }
+
+    /**
+     * 随机Email
+     *
+     * @return 随机Email
+     */
     public static String getRandomEmail() {
         return getRandomStringOnlyLowerCase(getRandomInteger(3, 10)) + "@" + getRandomStringOnlyLowerCase
                 (getRandomInteger(3, 5)) + "." + getRandomStringOnlyLowerCase(getRandomInteger(1, 5));
