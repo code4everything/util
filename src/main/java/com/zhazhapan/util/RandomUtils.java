@@ -24,7 +24,8 @@ public class RandomUtils extends org.apache.commons.lang3.RandomUtils {
      */
     public static String getRandomUid() {
         int[] val = Utils.split(System.currentTimeMillis(), ValueConsts.NINE_INT);
-        return Utils.toUidString(val[0]) + Utils.toUidString(val[1]) + RandomUtil.simpleUUID().substring(0, 7);
+        String uid = Utils.toUidString(val[0]) + Utils.toUidString(val[1]);
+        return uid + RandomUtil.simpleUUID().substring(0, ValueConsts.SIXTEEN_INT - uid.length());
     }
 
     /**

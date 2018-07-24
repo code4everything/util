@@ -11,9 +11,10 @@ public class RandomUtilsTest {
     }
 
     @Test
-    public void getRandomUid() {
+    public void getRandomUid() throws InterruptedException {
         for (int i = 0; i < 100; i++) {
             System.out.println(RandomUtils.getRandomUid());
+            Thread.sleep(1000);
         }
     }
 
