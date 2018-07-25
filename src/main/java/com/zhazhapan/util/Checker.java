@@ -57,6 +57,58 @@ public class Checker {
     private Checker() {}
 
     /**
+     * 日期是否过期
+     *
+     * @param date {@link Date}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEnded(Date date) {
+        return date.before(new Date());
+    }
+
+    /**
+     * 日期是否过期
+     *
+     * @param timestamp 时间戳
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isEnded(long timestamp) {
+        return timestamp < System.currentTimeMillis();
+    }
+
+    /**
+     * 日期是否已经开始
+     *
+     * @param date {@link Date}
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isStarted(Date date) {
+        return date.after(new Date());
+    }
+
+    /**
+     * 日期是否已经开始
+     *
+     * @param timestamp 时间戳
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.0.9
+     */
+    public static boolean isStarted(long timestamp) {
+        return timestamp > System.currentTimeMillis();
+    }
+
+    /**
      * 验证JavaBean带有 {@link FieldChecking}注解的字段
      *
      * @param bean JavaBean
