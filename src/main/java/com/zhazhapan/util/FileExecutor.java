@@ -177,7 +177,7 @@ public class FileExecutor extends FileUtils {
     }
 
     /**
-     * 读取输入流
+     * 读取输入流，需手动关闭流
      *
      * @param is 输入流
      * @param off 偏移
@@ -190,12 +190,11 @@ public class FileExecutor extends FileUtils {
     public static String read(InputStream is, int off, int len) throws IOException {
         byte[] bs = new byte[len];
         is.read(bs, off, len);
-        is.close();
         return new String(bs);
     }
 
     /**
-     * 读取输入流
+     * 读取输入流，需手动关闭流
      *
      * @param is 输入流
      *
@@ -759,11 +758,11 @@ public class FileExecutor extends FileUtils {
     public static String readFile(File file) throws IOException {
         StringBuilder content = new StringBuilder();
         String line;
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        while ((line = reader.readLine()) != null) {
-            content.append(line).append("\r\n");
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\r\n");
+            }
         }
-        reader.close();
         return content.toString();
     }
 
@@ -779,11 +778,11 @@ public class FileExecutor extends FileUtils {
      * @throws IOException 异常
      */
     public static String readFile(File file, long start, int length) throws IOException {
-        FileInputStream fis = new FileInputStream(file);
-        fis.skip(start);
         byte[] bs = new byte[length];
-        fis.read(bs);
-        fis.close();
+        try (FileInputStream fis = new FileInputStream(file)) {
+            fis.skip(start);
+            fis.read(bs);
+        }
         return new String(bs);
     }
 
@@ -817,9 +816,9 @@ public class FileExecutor extends FileUtils {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            BufferedWriter out = new BufferedWriter(new FileWriter(file, append));
-            out.write(content);
-            out.close();
+            try (BufferedWriter out = new BufferedWriter(new FileWriter(file, append))) {
+                out.write(content);
+            }
             logger.info("save file '" + file.getAbsolutePath() + "' success");
         }
     }
