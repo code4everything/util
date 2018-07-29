@@ -64,6 +64,7 @@ public class ListUtils {
      * 生成一个 {@link Vector}
      *
      * @param values 值数组
+     * @param capacity 初始化长度
      * @param <T> 值类型
      *
      * @return {@link Vector}

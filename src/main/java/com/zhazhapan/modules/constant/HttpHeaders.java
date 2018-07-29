@@ -205,7 +205,7 @@ public class HttpHeaders {
     public static final String X_HTTP_METHOD_OVERRIDE = "X-Http-Method-Override";
 
     /**
-     * 使服务器更容易解读AT&T设备User-Agent字段中常见的设备型号、固件信息
+     * 使服务器更容易解读设备User-Agent字段中常见的设备型号、固件信息
      */
     public static final String X_ATT_DEVICEID = "X-ATT-DeviceId";
 
