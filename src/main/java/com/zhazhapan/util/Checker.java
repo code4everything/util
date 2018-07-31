@@ -117,7 +117,22 @@ public class Checker {
      *
      * @since 1.0.9
      */
+
     public static CheckResult checkBean(Object bean) {
+        return checkBean(bean, new HashMap<>(ValueConsts.TWO_INT));
+    }
+
+    /**
+     * 验证JavaBean带有 {@link FieldChecking}注解的字段
+     *
+     * @param bean JavaBean
+     * @param map 对象映射
+     *
+     * @return {@link CheckResult}
+     *
+     * @since 1.1.0
+     */
+    public static CheckResult checkBean(Object bean, Map<String, Object> map) {
         Field[] fields = bean.getClass().getDeclaredFields();
         CheckResult result = new CheckResult();
         ResultObject object = new ResultObject();
@@ -138,16 +153,31 @@ public class Checker {
                 }
                 if (isEmpty(expression)) {
                     // 默认进行不为空验证
-                    result.passed = isNotNull(value) && isNotEmpty(value.toString());
+                    result.passed = isNotNull(value);
+                    if (result.passed) {
+                        if (field.getType() == Number.class) {
+                            result.passed = (Double) value >= 0;
+                        } else {
+                            result.passed = isNotEmpty(value.toString());
+                        }
+                    }
                 } else if (expression.startsWith(ValueConsts.COLON)) {
                     // 正则匹配
-                    result.passed = Pattern.compile(expression.substring(1)).matcher(value.toString()).matches();
+                    result.passed = isNotNull(value);
+                    if (result.passed) {
+                        result.passed = Pattern.compile(expression.substring(1)).matcher(value.toString()).matches();
+                    }
                 } else {
                     // 自定义表达式验证
-                    Map<String, Object> map = new HashMap<>(ValueConsts.TWO_INT);
-                    map.put("val", value);
-                    Object res = ReflectUtils.executeExpression(checking.expression(), map);
-                    result.passed = res instanceof Boolean && (boolean) res;
+                    result.passed = true;
+                    if (!expression.contains("null")) {
+                        result.passed = isNotNull(value);
+                    }
+                    if (result.passed) {
+                        map.put("val", value);
+                        Object res = ReflectUtils.executeExpression(expression, map);
+                        result.passed = res instanceof Boolean && (boolean) res;
+                    }
                 }
                 if (!result.passed) {
                     object.code = checking.code();
