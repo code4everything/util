@@ -27,4 +27,52 @@ public class ResultObject {
      * 自定义Data
      */
     public Object data = null;
+
+    public ResultObject() {}
+
+    public ResultObject(int code) {
+        this.code = code;
+    }
+
+    public ResultObject(String message) {
+        this.message = message;
+    }
+
+    public ResultObject(Object data) {
+        this.data = data;
+    }
+
+    public ResultObject(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public ResultObject(int code, Object data) {
+        this.code = code;
+        this.data = data;
+    }
+
+    public ResultObject(String message, Object data) {
+        this.message = message;
+        this.data = data;
+    }
+
+    public ResultObject(int code, String message, String status) {
+        this.message = message;
+        this.code = code;
+        this.status = status;
+    }
+
+    public ResultObject(int code, String message, Object data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    public ResultObject(int code, String message, String status, Object data) {
+        this.data = data;
+        this.code = code;
+        this.message = message;
+        this.status = status;
+    }
 }
