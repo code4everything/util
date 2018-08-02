@@ -133,8 +133,13 @@ public class Checker {
      * @since 1.1.0
      */
     public static CheckResult checkBean(Object bean, Map<String, Object> map) {
-        Field[] fields = bean.getClass().getDeclaredFields();
         CheckResult result = new CheckResult();
+        if (isNull(bean)) {
+            result.passed = false;
+            result.resultObject = CheckResult.getErrorResult();
+            return result;
+        }
+        Field[] fields = bean.getClass().getDeclaredFields();
         ResultObject object = new ResultObject();
         for (Field field : fields) {
             FieldChecking checking = field.getAnnotation(FieldChecking.class);
@@ -144,7 +149,7 @@ public class Checker {
                 try {
                     value = field.get(bean);
                 } catch (IllegalAccessException e) {
-                    LoggerUtils.error("{}表达式异常", checking.expression());
+                    LoggerUtils.error("{} expression error", checking.expression());
                     object.status = ValueConsts.ERROR_EN;
                     object.message = "表达式异常";
                     object.code = 501;

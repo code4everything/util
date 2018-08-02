@@ -1,5 +1,7 @@
 package com.zhazhapan.util.encryption;
 
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
 import org.apache.commons.codec.binary.Hex;
 import sun.misc.BASE64Encoder;
 
@@ -47,6 +49,13 @@ public class JavaEncrypt {
     private static Cipher rsa;
 
     private JavaEncrypt() {}
+
+    /**
+     * MD5加密
+     *
+     * @since 1.1.0
+     */
+    public static final Digester MD5 = new Digester(DigestAlgorithm.MD5);
 
     /**
      * HMAC加密，单向
