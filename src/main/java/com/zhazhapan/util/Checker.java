@@ -149,9 +149,9 @@ public class Checker {
                 try {
                     value = field.get(bean);
                 } catch (IllegalAccessException e) {
-                    LoggerUtils.error("{} expression error", checking.expression());
+                    LoggerUtils.error("get value from field[{}] error", field.getName());
                     object.status = ValueConsts.ERROR_EN;
-                    object.message = "表达式异常";
+                    object.message = "获取参数值失败";
                     object.code = 501;
                     result.passed = false;
                     break;
