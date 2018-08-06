@@ -57,6 +57,87 @@ public class Checker {
     private Checker() {}
 
     /**
+     * 是否包含空格
+     *
+     * @param string 字符串
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean hasSpace(String string) {
+        return string.contains(" ");
+    }
+
+    /**
+     * 是否有不为空的字符串
+     *
+     * @param strings 字符串数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean isNotEmptyOr(String... strings) {
+        return !isEmptyAnd(strings);
+    }
+
+    /**
+     * 是否全不为空
+     *
+     * @param strings 字符串数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean isNotEmptyAnd(String... strings) {
+        return !isEmptyOr(strings);
+    }
+
+    /**
+     * 是否包含为空的字符串
+     *
+     * @param strings 字符串数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean isEmptyOr(String... strings) {
+        if (isNotNull(strings)) {
+            for (String string : strings) {
+                if (isEmpty(string)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+
+    }
+
+    /**
+     * 是否全部为空
+     *
+     * @param strings 字符串数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean isEmptyAnd(String... strings) {
+        if (isNotNull(strings)) {
+            for (String string : strings) {
+                if (isNotEmpty(string)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * 日期是否过期
      *
      * @param date {@link Date}

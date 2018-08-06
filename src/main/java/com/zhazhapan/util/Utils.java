@@ -39,6 +39,19 @@ public class Utils {
     private Utils() {}
 
     /**
+     * 清除空格
+     *
+     * @param string 字符串
+     *
+     * @return 清除空格后的字符串
+     *
+     * @since 1.1.0
+     */
+    public static String replaceSpace(String string) {
+        return string.replace(" ", "");
+    }
+
+    /**
      * 分割long型
      *
      * @param value {@link Long}
