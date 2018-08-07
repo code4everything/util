@@ -75,7 +75,33 @@ public class FileExecutor extends FileUtils {
     }
 
     /**
-     * 获取文件后缀名
+     * 获取文件后缀（包括点号）
+     *
+     * @param fileName 文件名
+     *
+     * @return 后缀
+     *
+     * @since 1.1.0
+     */
+    public static String getSuffix(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(ValueConsts.DOT_SIGN));
+    }
+
+    /**
+     * 获取文件后缀（包括点号）
+     *
+     * @param file 文件
+     *
+     * @return 后缀
+     *
+     * @since 1.1.0
+     */
+    public static String getSuffix(File file) {
+        return getSuffix(file.getName());
+    }
+
+    /**
+     * 获取文件后缀名（没有点号）
      *
      * @param fileName 文件名
      *
@@ -86,7 +112,7 @@ public class FileExecutor extends FileUtils {
     }
 
     /**
-     * 获取文件后缀名
+     * 获取文件后缀名（没有点号）
      *
      * @param file 文件
      *
