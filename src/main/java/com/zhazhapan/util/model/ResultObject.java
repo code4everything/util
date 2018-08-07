@@ -1,5 +1,6 @@
 package com.zhazhapan.util.model;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.modules.constant.ValueConsts;
 
 /**
@@ -74,5 +75,10 @@ public class ResultObject {
         this.code = code;
         this.message = message;
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }
