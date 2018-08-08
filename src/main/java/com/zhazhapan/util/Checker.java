@@ -225,12 +225,13 @@ public class Checker {
         for (Field field : fields) {
             FieldChecking checking = field.getAnnotation(FieldChecking.class);
             if (isNotNull(checking)) {
+                field.setAccessible(true);
                 String expression = checking.expression();
                 Object value;
                 try {
                     value = field.get(bean);
                 } catch (IllegalAccessException e) {
-                    LoggerUtils.error("get value from field[{}] error", field.getName());
+                    LoggerUtils.error("get value from field[{}] error: " + e.getMessage(), field.getName());
                     object.status = ValueConsts.ERROR_EN;
                     object.message = "获取参数值失败";
                     object.code = 501;

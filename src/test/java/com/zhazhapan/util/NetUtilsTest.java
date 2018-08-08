@@ -141,10 +141,11 @@ public class NetUtilsTest {
     }
 
     @Test
-    public void post() throws IOException {
+    public void post() {
         Map<String, String> map = new HashMap<>();
-        map.put("userId", "69e4b4a5fc0f49b5a59486c40f2f1e01");
-        System.out.println(NetUtils.post("http://usercenter.yunshilife.cn/usercenter/UserList/getValidate", map));
+        map.put("email", "tao@zhazhapan.com");
+        map.put("method", "1");
+        System.out.println(NetUtils.post("http://localhost:49986/common/code", map));
     }
 
     @Test

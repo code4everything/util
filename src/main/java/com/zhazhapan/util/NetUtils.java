@@ -1,5 +1,8 @@
 package com.zhazhapan.util;
 
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.net.HttpHeaders;
 import com.zhazhapan.config.JsonParser;
 import com.zhazhapan.modules.constant.ValueConsts;
@@ -7,7 +10,6 @@ import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 
@@ -53,16 +55,215 @@ public class NetUtils {
 
     private NetUtils() {}
 
-    public static String post(String url, Map<String, String> entity) throws IOException {
-        Connection connection = Jsoup.connect(url);
-        connection.ignoreContentType(true);
-        if (Checker.isNotNull(entity)) {
-            for (Map.Entry<String, String> entry : entity.entrySet()) {
-                connection.data(entry.getKey(), entry.getValue());
-            }
-        }
-        org.jsoup.nodes.Document document = connection.post();
-        return Checker.isNull(document) ? "" : document.toString();
+    /**
+     * DELETE请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String delete(String url, String body) {
+        return request(HttpRequest.delete(replaceLocalHost(url)), body).body();
+    }
+
+    /**
+     * DELETE请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String delete(String url, Map<String, String> body) {
+        return delete(url, JSONObject.toJSONString(body));
+    }
+
+    /**
+     * DELETE请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String delete(String url, JSONObject body) {
+        return delete(url, body.toJSONString());
+    }
+
+    /**
+     * PUT请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String put(String url, String body) {
+        return request(HttpRequest.put(replaceLocalHost(url)), body).body();
+    }
+
+    /**
+     * PUT请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String put(String url, Map<String, String> body) {
+        return put(url, JSONObject.toJSONString(body));
+    }
+
+    /**
+     * PUT请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String put(String url, JSONObject body) {
+        return put(url, body.toJSONString());
+    }
+
+    /**
+     * GET请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String get(String url, String body) {
+        return request(HttpRequest.get(replaceLocalHost(url)), body).body();
+    }
+
+    /**
+     * GET请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String get(String url, Map<String, String> body) {
+        return get(url, JSONObject.toJSONString(body));
+    }
+
+    /**
+     * GET请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String get(String url, JSONObject body) {
+        return get(url, body.toJSONString());
+    }
+
+    /**
+     * POST请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String post(String url, String body) {
+        return request(HttpRequest.post(replaceLocalHost(url)), body).body();
+    }
+
+    /**
+     * POST请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String post(String url, Map<String, String> body) {
+        return post(url, JSONObject.toJSONString(body));
+    }
+
+    /**
+     * POST请求
+     *
+     * @param url 请求的URL
+     * @param body 内容正文
+     *
+     * @return 响应内容
+     *
+     * @since 1.1.0
+     */
+    public static String post(String url, JSONObject body) {
+        return post(url, body.toJSONString());
+    }
+
+    /**
+     * 发出网络请求
+     *
+     * @param request {@link HttpRequest}
+     * @param body 请求正文
+     *
+     * @return {@link HttpResponse}
+     *
+     * @since 1.1.0
+     */
+
+    public static HttpResponse request(HttpRequest request, String body) {
+        return request(request, body, "application/json");
+    }
+
+    /**
+     * 发出网络请求
+     *
+     * @param request {@link HttpRequest}
+     * @param body 请求正文
+     * @param contentType 内容类型
+     *
+     * @return {@link HttpResponse}
+     *
+     * @since 1.1.0
+     */
+    public static HttpResponse request(HttpRequest request, String body, String contentType) {
+        return request.contentType(contentType).body(body).contentLength(body.length()).execute();
+    }
+
+    /**
+     * 替换localhost为127.0.0.1
+     *
+     * @param domain 域名
+     *
+     * @return 替换后的域名
+     *
+     * @since 1.1.0
+     */
+    public static String replaceLocalHost(String domain) {
+        return domain.replaceAll("localhost", "127.0.0.1");
     }
 
     /**
@@ -559,11 +760,15 @@ public class NetUtils {
      * @throws IOException 异常
      */
     public static InputStream getInputStreamOfConnection(HttpURLConnection connection) throws IOException {
+        return setDefaultValue(connection).getInputStream();
+    }
+
+    private static HttpURLConnection setDefaultValue(HttpURLConnection connection) {
         connection.setConnectTimeout(1000 * 6);
         connection.setRequestProperty("Charset", "UTF-8");
         connection.setRequestProperty("User-Agent", ValueConsts.USER_AGENT[0]);
         connection.setRequestProperty("Connection", "Keep-Alive");
         connection.setRequestProperty("Accept", "*/*");
-        return connection.getInputStream();
+        return connection;
     }
 }
