@@ -7,6 +7,7 @@ import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 
@@ -51,6 +52,18 @@ public class NetUtils {
     public static final String PATH_KEY = "$path";
 
     private NetUtils() {}
+
+    public static String post(String url, Map<String, String> entity) throws IOException {
+        Connection connection = Jsoup.connect(url);
+        connection.ignoreContentType(true);
+        if (Checker.isNotNull(entity)) {
+            for (Map.Entry<String, String> entry : entity.entrySet()) {
+                connection.data(entry.getKey(), entry.getValue());
+            }
+        }
+        org.jsoup.nodes.Document document = connection.post();
+        return Checker.isNull(document) ? "" : document.toString();
+    }
 
     /**
      * 是否是 ajax请求

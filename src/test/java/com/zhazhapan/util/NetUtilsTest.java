@@ -5,6 +5,8 @@ import org.junit.Test;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NetUtilsTest {
 
@@ -136,5 +138,16 @@ public class NetUtilsTest {
 
     @Test
     public void getCookie1() {
+    }
+
+    @Test
+    public void post() throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", "69e4b4a5fc0f49b5a59486c40f2f1e01");
+        System.out.println(NetUtils.post("http://usercenter.yunshilife.cn/usercenter/UserList/getValidate", map));
+    }
+
+    @Test
+    public void isAjax() {
     }
 }
