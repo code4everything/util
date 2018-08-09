@@ -40,4 +40,11 @@ public @interface FieldChecking {
      * @return {@link String}
      */
     String expression() default "";
+
+    /**
+     * 默认值（仅针对字段值为NULL时）
+     *
+     * @return {@link String}
+     */
+    String defaultValue() default "";
 }

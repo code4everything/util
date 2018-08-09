@@ -238,6 +238,15 @@ public class Checker {
                     result.passed = false;
                     break;
                 }
+                // 设置默认值
+                if (isNull(value) && isNotEmpty(checking.defaultValue())) {
+                    try {
+                        field.set(bean, checking.defaultValue());
+                        continue;
+                    } catch (IllegalAccessException e) {
+                        LoggerUtils.error("set default to field[{}] error: " + e.getMessage(), field.getName());
+                    }
+                }
                 if (isEmpty(expression)) {
                     // 默认进行不为空验证
                     result.passed = isNotNull(value);
