@@ -25,7 +25,7 @@ public @interface FieldChecking {
      *
      * @return {@link String}
      */
-    String message() default "{} is required";
+    String message() default "{} is required or incorrect format";
 
     /**
      * 验证状态
