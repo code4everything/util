@@ -57,6 +57,48 @@ public class Checker {
     private Checker() {}
 
     /**
+     * 检查字符串是否以某个后缀开头
+     *
+     * @param value 字符串
+     * @param suffixes 后缀
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean endsWith(String value, String... suffixes) {
+        if (isNotEmpty(value) && isNotEmpty(suffixes)) {
+            for (String suffix : suffixes) {
+                if (value.endsWith(suffix)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 检查字符串是否以某个前缀开头
+     *
+     * @param value 字符串
+     * @param prefixes 前缀
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean startsWith(String value, String... prefixes) {
+        if (isNotEmpty(value) && isNotEmpty(prefixes)) {
+            for (String prefix : prefixes) {
+                if (value.startsWith(prefix)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * 是否包含空格
      *
      * @param string 字符串
