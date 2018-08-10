@@ -87,6 +87,19 @@ public class BeanUtils {
     }
 
     /**
+     * 将 Java Bean 类转换成 {@link JSONObject}
+     *
+     * @param object 类对象
+     *
+     * @return {@link JSONObject}
+     *
+     * @since 1.1.0
+     */
+    public static JSONObject toJsonObject(Object object) {
+        return JSONObject.parseObject(JSONObject.toJSONString(object));
+    }
+
+    /**
      * 将类属性装换成JSON（只能转换有get和is方法的）
      *
      * @param object 转换的对象
