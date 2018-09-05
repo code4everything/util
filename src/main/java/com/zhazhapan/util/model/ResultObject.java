@@ -77,6 +77,26 @@ public class ResultObject {
         this.status = status;
     }
 
+    public ResultObject setCode(int code) {
+        this.code = code;
+        return this;
+    }
+
+    public ResultObject setMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public ResultObject setStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public ResultObject setData(Object data) {
+        this.data = data;
+        return this;
+    }
+
     @Override
     public String toString() {
         return JSONObject.toJSONString(this);
