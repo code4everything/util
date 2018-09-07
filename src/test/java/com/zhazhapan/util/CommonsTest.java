@@ -1,9 +1,9 @@
 package com.zhazhapan.util;
 
-import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.util.annotation.ToJsonString;
 import com.zhazhapan.util.enums.JsonType;
+import com.zhazhapan.util.model.ResultObject;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,6 +17,12 @@ import java.util.Map;
  * @since 2018/5/22
  */
 public class CommonsTest {
+
+    @Test
+    public void testResultObject() {
+        ResultObject resultObject = new ResultObject();
+        System.out.println(resultObject.setCode(200).setMessage("ok").setData("everything is ok"));
+    }
 
     @Test
     public void testCastToBean() throws InvocationTargetException, IllegalAccessException {
