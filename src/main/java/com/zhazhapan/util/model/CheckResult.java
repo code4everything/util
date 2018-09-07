@@ -37,7 +37,6 @@ public class CheckResult {
      *
      * @since 1.1.0
      */
-
     public static ResultObject getErrorResult() {
         return getErrorResult(DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE);
     }
@@ -51,7 +50,6 @@ public class CheckResult {
      *
      * @since 1.1.0
      */
-
     public static ResultObject getErrorResult(int code) {
         return getErrorResult(code, DEFAULT_ERROR_MESSAGE);
     }
