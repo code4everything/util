@@ -233,7 +233,6 @@ public class NetUtils {
      *
      * @since 1.1.0
      */
-
     public static HttpResponse request(HttpRequest request, String body) {
         return request(request, body, "application/json");
     }

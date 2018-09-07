@@ -7,7 +7,7 @@ import com.zhazhapan.modules.constant.ValueConsts;
  * @author pantao
  * @since 2018/7/17
  */
-public class ResultObject {
+public class ResultObject<T> {
 
     /**
      * 校验码
@@ -27,7 +27,7 @@ public class ResultObject {
     /**
      * 自定义Data
      */
-    public Object data = null;
+    public T data = null;
 
     public ResultObject() {}
 
@@ -39,7 +39,7 @@ public class ResultObject {
         this.message = message;
     }
 
-    public ResultObject(Object data) {
+    public ResultObject(T data) {
         this.data = data;
     }
 
@@ -48,12 +48,12 @@ public class ResultObject {
         this.message = message;
     }
 
-    public ResultObject(int code, Object data) {
+    public ResultObject(int code, T data) {
         this.code = code;
         this.data = data;
     }
 
-    public ResultObject(String message, Object data) {
+    public ResultObject(String message, T data) {
         this.message = message;
         this.data = data;
     }
@@ -64,35 +64,35 @@ public class ResultObject {
         this.status = status;
     }
 
-    public ResultObject(int code, String message, Object data) {
+    public ResultObject(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public ResultObject(int code, String message, String status, Object data) {
+    public ResultObject(int code, String message, String status, T data) {
         this.data = data;
         this.code = code;
         this.message = message;
         this.status = status;
     }
 
-    public ResultObject setCode(int code) {
+    public ResultObject<T> setCode(int code) {
         this.code = code;
         return this;
     }
 
-    public ResultObject setMessage(String message) {
+    public ResultObject<T> setMessage(String message) {
         this.message = message;
         return this;
     }
 
-    public ResultObject setStatus(String status) {
+    public ResultObject<T> setStatus(String status) {
         this.status = status;
         return this;
     }
 
-    public ResultObject setData(Object data) {
+    public ResultObject<T> setData(T data) {
         this.data = data;
         return this;
     }
