@@ -15,6 +15,8 @@ public interface MultipartFileService<T> {
      * @param simpleMultipartFile {@link SimpleMultipartFile}
      *
      * @return 是否存在
+     *
+     * @since 1.1.0
      */
     default Boolean existsMultipartFile(SimpleMultipartFile simpleMultipartFile) { return null;}
 
@@ -24,6 +26,8 @@ public interface MultipartFileService<T> {
      * @param simpleMultipartFile {@link SimpleMultipartFile}
      *
      * @return T 一个实体类
+     *
+     * @since 1.1.0
      */
     default T getBySimpleMultipartFile(SimpleMultipartFile simpleMultipartFile) { return null;}
 
@@ -33,6 +37,8 @@ public interface MultipartFileService<T> {
      * @param simpleMultipartFile {@link SimpleMultipartFile}
      *
      * @return T 实体类
+     *
+     * @since 1.1.0
      */
     default T saveEntity(SimpleMultipartFile simpleMultipartFile) {return null;}
 }

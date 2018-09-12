@@ -71,6 +71,8 @@ public class NetUtils {
      * @param <T> 原型类
      *
      * @return {@link ResultObject}
+     *
+     * @since 1.1.0
      */
     public static <T> ResultObject<T> upload(byte[] bytes, SimpleMultipartFile simpleMultipartFile,
                                              MultipartFileService<T> multipartFileService) {
