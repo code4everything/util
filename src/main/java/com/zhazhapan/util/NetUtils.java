@@ -6,6 +6,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.net.HttpHeaders;
 import com.zhazhapan.config.JsonParser;
 import com.zhazhapan.modules.constant.ValueConsts;
+import com.zhazhapan.util.encryption.JavaEncrypt;
+import com.zhazhapan.util.interfaces.MultipartFileService;
+import com.zhazhapan.util.model.CheckResult;
+import com.zhazhapan.util.model.ResultObject;
+import com.zhazhapan.util.model.SimpleMultipartFile;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
@@ -20,6 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
@@ -54,6 +60,52 @@ public class NetUtils {
     public static final String PATH_KEY = "$path";
 
     private NetUtils() {}
+
+    /**
+     * 上传文件，简化业务代码
+     *
+     * @param bytes MultipartFile#getBytes
+     * @param simpleMultipartFile 请设置一下值：{@link SimpleMultipartFile#setOriginalFilename(String)}, {@link
+     *         SimpleMultipartFile#setSize(Long)}, {@link SimpleMultipartFile#setStoragePath(String)}
+     * @param multipartFileService 请至少实现 {@link MultipartFileService} 接口中的一个方法
+     * @param <T> 原型类
+     *
+     * @return {@link ResultObject}
+     */
+    public static <T> ResultObject<T> upload(byte[] bytes, SimpleMultipartFile simpleMultipartFile,
+                                             MultipartFileService<T> multipartFileService) {
+        ResultObject<T> resultObject = new ResultObject<>();
+        String md5 = JavaEncrypt.MD5.digestHex(bytes);
+        String filename = md5 + FileExecutor.getSuffix(simpleMultipartFile.getOriginalFilename());
+        // 文件本地路径
+        String localPath = simpleMultipartFile.getStoragePath() + filename;
+        simpleMultipartFile.setFilename(filename).setMd5(md5);
+        Boolean exists = multipartFileService.existsMultipartFile(simpleMultipartFile);
+        boolean shouldWrite = false;
+        T t = null;
+        if (Checker.isNull(exists)) {
+            t = multipartFileService.getBySimpleMultipartFile(simpleMultipartFile);
+            if (Checker.isNull(t)) {
+                // 不存在时则可以写入磁盘
+                shouldWrite = true;
+            }
+        } else if (!exists) {
+            // 不存在时则可以写入磁盘
+            shouldWrite = true;
+        }
+        if (shouldWrite) {
+            try {
+                // 写入磁盘
+                FileExecutor.writeByteArrayToFile(new File(localPath), bytes);
+                // 写入数据库（需要重写方法）
+                t = multipartFileService.saveEntity(simpleMultipartFile);
+            } catch (IOException e) {
+                LoggerUtils.error(e.getMessage());
+                return resultObject.copyFrom(CheckResult.getErrorResult("内部错误：文件写入失败"));
+            }
+        }
+        return resultObject.setData(t);
+    }
 
     /**
      * DELETE请求
