@@ -99,12 +99,12 @@ public class NetUtils {
             try {
                 // 写入磁盘
                 FileExecutor.writeByteArrayToFile(new File(localPath), bytes);
-                // 写入数据库（需要重写方法）
-                t = multipartFileService.saveEntity(simpleMultipartFile);
             } catch (IOException e) {
                 LoggerUtils.error(e.getMessage());
                 return resultObject.copyFrom(CheckResult.getErrorResult("内部错误：文件写入失败"));
             }
+            // 写入数据库（需要重写方法）
+            t = multipartFileService.saveEntity(simpleMultipartFile);
         }
         return resultObject.setData(t);
     }
