@@ -10,6 +10,18 @@ import java.lang.reflect.Method;
  **/
 public class AopLogUtils {
 
+    /**
+     * 获取 {@link AopLog}注解中的描述
+     *
+     * @param className 类名：joinPoint#getTarget#getClass#getName
+     * @param methodName 方法名：joinPoint#getSignature#getName
+     * @param args 参数数组：joinPoint#getArgs
+     *
+     * @return 描述
+     *
+     * @throws ClassNotFoundException 异常
+     * @since 1.1.0
+     */
     public static String getDescription(String className, String methodName, Object[] args) throws ClassNotFoundException {
         Class targetClass = Class.forName(className);
         Method[] methods = targetClass.getMethods();
@@ -24,6 +36,17 @@ public class AopLogUtils {
         return "";
     }
 
+    /**
+     * 获取 {@link AopLog}注解中的描述
+     *
+     * @param className 类名：joinPoint#getTarget#getClass#getName
+     * @param methodName 方法名：joinPoint#getSignature#getName
+     * @param args 参数数组：joinPoint#getArgs
+     *
+     * @return 描述
+     *
+     * @since 1.1.0
+     */
     public static String getDescriptionNoThrow(String className, String methodName, Object[] args) {
         try {
             return getDescription(className, methodName, args);
