@@ -96,7 +96,7 @@ public class BeanUtils {
      * @since 1.1.0
      */
     public static JSONObject toJsonObject(Object object) {
-        return JSONObject.parseObject(JSONObject.toJSONString(object));
+        return (JSONObject) JSONObject.toJSON(object);
     }
 
     /**
@@ -206,8 +206,7 @@ public class BeanUtils {
      *
      * @throws IllegalAccessException 异常
      */
-    public static String toJsonString(Object object, FieldModifier modifier, JsonMethod method) throws
-            IllegalAccessException {
+    public static String toJsonString(Object object, FieldModifier modifier, JsonMethod method) throws IllegalAccessException {
         JSONObject jsonObject = new JSONObject();
         StringBuilder builder = new StringBuilder("{");
         boolean isManual = false;
@@ -216,8 +215,8 @@ public class BeanUtils {
             Field[] fields = bean.getDeclaredFields();
             for (Field field : fields) {
                 int mod = field.getModifiers();
-                boolean addable = modifier == FieldModifier.ALL || (modifier == FieldModifier.PRIVATE && Modifier
-                        .isPrivate(mod)) || (modifier == FieldModifier.PUBLIC && Modifier.isPublic(mod));
+                boolean addable =
+                        modifier == FieldModifier.ALL || (modifier == FieldModifier.PRIVATE && Modifier.isPrivate(mod)) || (modifier == FieldModifier.PUBLIC && Modifier.isPublic(mod));
                 if (addable) {
                     field.setAccessible(true);
                     isManual = Checker.isIn(method, METHODS);
@@ -269,6 +268,7 @@ public class BeanUtils {
      *
      * @return json对象
      */
+    @SuppressWarnings("unchecked")
     private static String converter(String fieldName, Object object) {
         StringBuilder builder = new StringBuilder();
         if (Checker.isNotEmpty(fieldName)) {
