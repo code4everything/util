@@ -24,21 +24,18 @@ public class ArrayUtils {
      *
      * @since 1.0.9
      */
-    public static Object copyOf(Object array, int length) {
-        Class clazz = array.getClass();
-        Object newArray = null;
-        if (clazz.isArray()) {
-            int arrLen = Array.getLength(array);
-            newArray = Array.newInstance(clazz.getComponentType(), length);
-            System.arraycopy(array, 0, newArray, 0, Math.min(length, arrLen));
-        }
+    @SuppressWarnings("unchecked")
+    public static <T> T[] copyOf(T[] array, int length) {
+        T[] newArray = (T[]) Array.newInstance(array.getClass().getComponentType(), length);
+        System.arraycopy(array, 0, newArray, 0, Math.min(length, array.length));
         return newArray;
     }
 
     /**
      * {@link Map}值转数组
      *
-     * @param <T> 类型
+     * @param <K> 类型
+     * @param <V> 类型
      * @param map {@link Map}
      * @param clazz 类
      *
@@ -47,12 +44,12 @@ public class ArrayUtils {
      * @since 1.0.8
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] mapToArray(Map<String, T> map, Class<T> clazz) {
+    public static <K, V> V[] mapToArray(Map<K, V> map, Class<V> clazz) {
         if (Checker.isNotEmpty(map)) {
-            T[] array = (T[]) Array.newInstance(clazz, map.size());
+            V[] array = (V[]) Array.newInstance(clazz, map.size());
             int i = 0;
-            for (T t : map.values()) {
-                array[i++] = t;
+            for (V v : map.values()) {
+                array[i++] = v;
             }
             return array;
         }
@@ -63,7 +60,8 @@ public class ArrayUtils {
      * {@link Map}键转数组
      *
      * @param map {@link Map}
-     * @param <T> 类型
+     * @param <K> 类型
+     * @param <V> 类型
      * @param clazz 类
      *
      * @return 数组
@@ -71,12 +69,12 @@ public class ArrayUtils {
      * @since 1.0.8
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] mapKeyToArray(Map<T, Object> map, Class<T> clazz) {
+    public static <K, V> K[] mapKeyToArray(Map<K, V> map, Class<K> clazz) {
         if (Checker.isNotEmpty(map)) {
-            T[] array = (T[]) Array.newInstance(clazz, map.size());
+            K[] array = (K[]) Array.newInstance(clazz, map.size());
             int i = 0;
-            for (T t : map.keySet()) {
-                array[i++] = t;
+            for (K k : map.keySet()) {
+                array[i++] = k;
             }
             return array;
         }
@@ -251,11 +249,12 @@ public class ArrayUtils {
      *
      * @param nums1 数组
      * @param nums2 数组
+     * @param ignoreEquals 是否忽略相等的数字
      *
      * @return 数组
      */
-    public static int[] mergeSortedArrays(int[] nums1, int[] nums2) {
-        return mergeSortedArrays(nums1, nums2, false);
+    public static int[] mergeSortedArrays(int[] nums1, int[] nums2, boolean ignoreEquals) {
+        return mergeSortedArrays(nums1, nums2, ignoreEquals, false);
     }
 
     /**
@@ -263,16 +262,27 @@ public class ArrayUtils {
      *
      * @param nums1 数组
      * @param nums2 数组
+     * @param ignoreEquals 是否忽略相等的数字
      * @param desc 是否为降序
      *
      * @return 数组
      */
-    public static int[] mergeSortedArrays(int[] nums1, int[] nums2, boolean desc) {
+    public static int[] mergeSortedArrays(int[] nums1, int[] nums2, boolean ignoreEquals, boolean desc) {
         int len = nums1.length + nums2.length;
         int[] nums = new int[len];
         int m = 0;
         int n = 0;
         for (int i = 0; i < len; i++) {
+            if (ignoreEquals && m < nums1.length && n < nums2.length && nums1[m] == nums2[n]) {
+                if (m < nums1.length - 1) {
+                    m++;
+                } else if (n < nums2.length - 1) {
+                    n++;
+                }
+                len--;
+                i--;
+                continue;
+            }
             boolean inNums1 = n == nums2.length || (m != nums1.length && ((nums1[m] < nums2[n]) ^ desc));
             if (inNums1) {
                 nums[i] = nums1[m++];
@@ -280,7 +290,13 @@ public class ArrayUtils {
                 nums[i] = nums2[n++];
             }
         }
-        return nums;
+        if (nums1.length + nums2.length == len) {
+            return nums;
+        } else {
+            int[] newNums = new int[len];
+            System.arraycopy(nums, 0, newNums, 0, len);
+            return newNums;
+        }
     }
 
     /**

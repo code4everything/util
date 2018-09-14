@@ -11,8 +11,11 @@ import static org.junit.Assert.assertTrue;
 public class UtilsTest {
 
     private int[] test1 = {78, 56, 34, 23, 12, 1};
+
     private int[] test2 = {45, 33, 32, 23, 22, 13};
+
     private int[] test3 = {1, 2, 4, 6, 9};
+
     private int[] test4 = {3, 5, 7, 8};
 
     @Test
@@ -54,12 +57,6 @@ public class UtilsTest {
     public void testGetMaxValue() {
         int[] test1 = {1, 2, 3, 2, 123, 34};
         assertEquals(123, Utils.getMaxValue(test1));
-    }
-
-    @Test
-    public void testMergeSortedArrays() {
-        assertTrue(Checker.isSorted(ArrayUtils.mergeSortedArrays(test1, test2, true)));
-        assertTrue(Checker.isSorted(ArrayUtils.mergeSortedArrays(test4, test3)));
     }
 
     @Test
