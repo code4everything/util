@@ -1,5 +1,7 @@
 package com.zhazhapan.util;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.modules.constant.ValueConsts;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -18,6 +20,100 @@ public class FileExecutor extends FileUtils {
     private static Logger logger = Logger.getLogger(FileExecutor.class);
 
     private FileExecutor() {}
+
+    /**
+     * 解析JSON
+     *
+     * @param url {@link URL}
+     *
+     * @return {@link JSONArray}
+     *
+     * @throws IOException 异常
+     * @since 1.1.0
+     */
+    public static JSONArray parseJsonArray(URL url) throws IOException {
+        String path = url.toString();
+        if (path.startsWith(ValueConsts.LOCAL_FILE_URL)) {
+            return parseJsonArray(NetUtils.urlToString(url));
+        } else {
+            return JSONArray.parseArray(read(url));
+        }
+    }
+
+    /**
+     * 解析JSON
+     *
+     * @param file 文件路径
+     *
+     * @return {@link JSONArray}
+     *
+     * @throws IOException 异常
+     * @since 1.1.0
+     */
+    public static JSONArray parseJsonArray(String file) throws IOException {
+        return parseJsonArray(new File(file));
+    }
+
+    /**
+     * 解析JSON
+     *
+     * @param file {@link File}
+     *
+     * @return {@link JSONArray}
+     *
+     * @throws IOException 异常
+     * @since 1.1.0
+     */
+    public static JSONArray parseJsonArray(File file) throws IOException {
+        return JSONArray.parseArray(readFile(file));
+    }
+
+    /**
+     * 解析JSON
+     *
+     * @param url {@link URL}
+     *
+     * @return {@link JSONObject}
+     *
+     * @throws IOException 异常
+     * @since 1.1.0
+     */
+    public static JSONObject parseJsonObject(URL url) throws IOException {
+        String path = url.toString();
+        if (path.startsWith(ValueConsts.LOCAL_FILE_URL)) {
+            return parseJsonObject(NetUtils.urlToString(url));
+        } else {
+            return JSONObject.parseObject(read(url));
+        }
+    }
+
+    /**
+     * 解析JSON
+     *
+     * @param file 文件路径
+     *
+     * @return {@link JSONObject}
+     *
+     * @throws IOException 异常
+     * @since 1.1.0
+     */
+    public static JSONObject parseJsonObject(String file) throws IOException {
+        return parseJsonObject(new File(file));
+    }
+
+    /**
+     * 解析JSON
+     *
+     * @param file {@link File}
+     *
+     * @return {@link JSONObject}
+     *
+     * @throws IOException 异常
+     * @since 1.1.0
+     */
+    public static JSONObject parseJsonObject(File file) throws IOException {
+        return JSONObject.parseObject(readFile(file));
+    }
 
     /**
      * 重命名文件，自动创建不存在的文件夹
@@ -535,8 +631,7 @@ public class FileExecutor extends FileUtils {
      *
      * @throws IOException 异常
      */
-    public static void mergeFiles(String[] filePath, String destinationFilePath, String filterRegex) throws
-            IOException {
+    public static void mergeFiles(String[] filePath, String destinationFilePath, String filterRegex) throws IOException {
         mergeFiles(getFiles(filePath), new File(destinationFilePath), filterRegex);
     }
 
@@ -565,8 +660,7 @@ public class FileExecutor extends FileUtils {
      *
      * @throws IOException 异常
      */
-    public static void mergeFiles(String[] filePath, String destinationFilePath, String[] filterRegex) throws
-            IOException {
+    public static void mergeFiles(String[] filePath, String destinationFilePath, String[] filterRegex) throws IOException {
         mergeFiles(getFiles(filePath), new File(destinationFilePath), filterRegex);
     }
 

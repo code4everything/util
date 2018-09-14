@@ -15,10 +15,11 @@ import java.net.URL;
 import java.util.HashMap;
 
 /**
- * 通过路径获取json对象，您需要手动配置jsonPath或jsonObject
+ * 通过路径获取json对象，您需要手动配置jsonPath或jsonObject 请使用{@link JSONObject} 和{@link JSONArray}
  *
  * @author pantao
  */
+@Deprecated
 public class JsonParser {
 
     /**

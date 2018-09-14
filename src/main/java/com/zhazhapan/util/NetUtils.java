@@ -4,7 +4,6 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.net.HttpHeaders;
-import com.zhazhapan.config.JsonParser;
 import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.encryption.JavaEncrypt;
 import com.zhazhapan.util.interfaces.MultipartFileService;
@@ -724,8 +723,8 @@ public class NetUtils {
      *
      * @throws IOException 异常
      */
-    public static JsonParser getPublicIpAndLocation() throws IOException {
-        return new JsonParser(new URL(ValueConsts.URL_OF_PUBLIC_IP_SEARCH));
+    public static JSONObject getPublicIpAndLocation() throws IOException {
+        return FileExecutor.parseJsonObject(new URL(ValueConsts.URL_OF_PUBLIC_IP_SEARCH));
     }
 
     /**
