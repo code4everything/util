@@ -44,6 +44,7 @@ public class Downloader {
      *
      * @return 是否下载成功
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static boolean download(String downloadURL) {
         if (Checker.isHyperLink(downloadURL) && checkDownloadPath()) {
             logger.info("ready for download url: " + downloadURL + " storage in " + storageFolder);
@@ -51,11 +52,11 @@ public class Downloader {
             logger.info("url or storage path are invalidated, can't download");
             return false;
         }
-        int byteread = 0;
+        int byteRead;
         String log = "download success from url '" + downloadURL + "' to local '";
         try {
-            String fname = checkPath(storageFolder + ValueConsts.SEPARATOR + Formatter.getFileName(downloadURL));
-            String tmp = fname + ".tmp";
+            String fileName = checkPath(storageFolder + ValueConsts.SEPARATOR + Formatter.getFileName(downloadURL));
+            String tmp = fileName + ".tmp";
             File file = new File(tmp);
             log += file.getAbsolutePath() + "'";
             URL url = new URL(downloadURL);
@@ -69,13 +70,13 @@ public class Downloader {
                 file.createNewFile();
             }
             byte[] buffer = new byte[1024];
-            while ((byteread = inStream.read(buffer)) != -1) {
-                fs.write(buffer, 0, byteread);
+            while ((byteRead = inStream.read(buffer)) != -1) {
+                fs.write(buffer, 0, byteRead);
             }
             fs.flush();
             inStream.close();
             fs.close();
-            file.renameTo(new File(fname));
+            file.renameTo(new File(fileName));
             logger.info(log);
             return true;
         } catch (IOException e) {

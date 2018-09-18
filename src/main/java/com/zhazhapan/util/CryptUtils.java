@@ -19,6 +19,8 @@ public class CryptUtils {
      * @param key 可自定义一个INT型数值
      *
      * @return 长度为3的KEY数组
+     *
+     * @deprecated 无用类
      */
     public static int[] getKeys(int key) {
         int[] keys = {0, 1, 1};

@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * @author pantao
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class FileExecutor extends FileUtils {
 
     private static Logger logger = Logger.getLogger(FileExecutor.class);
