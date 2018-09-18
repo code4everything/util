@@ -1,5 +1,7 @@
 package com.zhazhapan.util;
 
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSONObject;
@@ -59,6 +61,11 @@ public class NetUtils {
     public static final String PATH_KEY = "$path";
 
     private NetUtils() {}
+
+    public static String generateToken() {
+        String timestampByBase64 = Utils.rightTrim(Base64.encode(String.valueOf(System.currentTimeMillis())), "=");
+        return (RandomUtil.simpleUUID() + timestampByBase64).toLowerCase();
+    }
 
     /**
      * 上传文件，简化业务代码

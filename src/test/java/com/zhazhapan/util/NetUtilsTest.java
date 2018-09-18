@@ -88,8 +88,7 @@ public class NetUtilsTest {
 
     @Test
     public void parseUrl() {
-        System.out.println(NetUtils.parseUrl("http://127.0.0.1:8080/heart/api/date" +
-                ".html?love-you=forever&coding=everyday"));
+        System.out.println(NetUtils.parseUrl("http://127.0.0.1:8080/heart/api/date" + ".html?love-you=forever&coding" + "=everyday"));
         System.out.println(NetUtils.parseUrl("http://"));
         System.out.println(NetUtils.parseUrl("http"));
         System.out.println(NetUtils.parseUrl("https://zhazhapan.com"));
@@ -150,5 +149,64 @@ public class NetUtilsTest {
 
     @Test
     public void isAjax() {
+    }
+
+    @Test
+    public void generateToken() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println(NetUtils.generateToken());
+        }
+    }
+
+    @Test
+    public void upload() {
+    }
+
+    @Test
+    public void delete() {
+    }
+
+    @Test
+    public void delete1() {
+    }
+
+    @Test
+    public void delete2() {
+    }
+
+    @Test
+    public void put() {
+    }
+
+    @Test
+    public void put1() {
+    }
+
+    @Test
+    public void put2() {
+    }
+
+    @Test
+    public void get() {
+    }
+
+    @Test
+    public void get1() {
+    }
+
+    @Test
+    public void get2() {
+    }
+
+    @Test
+    public void request() {
+    }
+
+    @Test
+    public void request1() {
+    }
+
+    @Test
+    public void replaceLocalHost() {
     }
 }
