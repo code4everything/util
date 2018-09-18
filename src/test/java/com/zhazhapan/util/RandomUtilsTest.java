@@ -73,4 +73,11 @@ public class RandomUtilsTest {
     @Test
     public void getRandomColor1() {
     }
+
+    @Test
+    public void getRandomNumber() {
+        for (int i = 0; i < 100; i++) {
+            assert Checker.isNumber(RandomUtils.getRandomNumber(11));
+        }
+    }
 }

@@ -34,8 +34,7 @@ public class RandomUtils extends org.apache.commons.lang3.RandomUtils {
      * @return 随机Email
      */
     public static String getRandomEmail() {
-        return getRandomStringOnlyLowerCase(getRandomInteger(3, 10)) + "@" + getRandomStringOnlyLowerCase
-                (getRandomInteger(3, 5)) + "." + getRandomStringOnlyLowerCase(getRandomInteger(1, 5));
+        return getRandomStringOnlyLowerCase(getRandomInteger(3, 10)) + "@" + getRandomStringOnlyLowerCase(getRandomInteger(3, 5)) + "." + getRandomStringOnlyLowerCase(getRandomInteger(1, 5));
     }
 
     /**
@@ -218,6 +217,19 @@ public class RandomUtils extends org.apache.commons.lang3.RandomUtils {
      */
     public static int getRandomInteger(int floor, int ceil) {
         return floor + new Random().nextInt(ceil - floor);
+    }
+
+    /**
+     * 获取随机数字
+     *
+     * @param length 长度
+     *
+     * @return {@link String}
+     *
+     * @since 1.1.0
+     */
+    public static String getRandomNumber(int length) {
+        return getRandomText(48, 58, length);
     }
 
     /**
