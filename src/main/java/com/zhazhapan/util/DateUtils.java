@@ -1,5 +1,6 @@
 package com.zhazhapan.util;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -13,6 +14,72 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     private static Calendar calendar = Calendar.getInstance();
 
     private DateUtils() {}
+
+    /**
+     * 第一个值是否大于第二个值
+     *
+     * @param big 第一个值
+     * @param small 第二个值
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean greatThan(Time big, Time small) {
+        return compare(big, small, CompareWay.GT);
+    }
+
+    /**
+     * 第一个值是否等于第二个值
+     *
+     * @param man 第一个值
+     * @param wife 第二个值
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean equals(Time man, Time wife) {
+        return compare(man, wife, CompareWay.EQ);
+    }
+
+    /**
+     * 第一个值是否小于第二个值
+     *
+     * @param small 第一个值
+     * @param big 第二个值
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean lessThan(Time small, Time big) {
+        return compare(small, big, CompareWay.LT);
+    }
+
+    /**
+     * 将第一个值和第二个值进行比较
+     *
+     * @param aValue 第一个值
+     * @param bValue 第二个值
+     * @param compareWay 比较方式
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.0
+     */
+    public static boolean compare(Time aValue, Time bValue, CompareWay compareWay) {
+        String value = Formatter.shortTimeToString(aValue);
+        int result = value.compareTo(Formatter.shortTimeToString(bValue));
+        switch (compareWay) {
+            case EQ:
+                return result == 0;
+            case GT:
+                return result > 0;
+            default:
+                return result < 0;
+        }
+    }
 
     /**
      * 获取当前年份
@@ -369,5 +436,22 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         calendar.setTime(date);
         calendar.add(field, amount);
         return calendar.getTime();
+    }
+
+    public enum CompareWay {
+        /**
+         * 进行小于
+         */
+        LT,
+
+        /**
+         * 进行等于比较
+         */
+        EQ,
+
+        /**
+         * 进行大于比较
+         */
+        GT
     }
 }
