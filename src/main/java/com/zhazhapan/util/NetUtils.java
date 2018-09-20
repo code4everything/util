@@ -62,6 +62,32 @@ public class NetUtils {
 
     private NetUtils() {}
 
+    /**
+     * 获取服务端错误消息
+     *
+     * @param request {@link HttpServletRequest}
+     * @param e {@link Exception}
+     *
+     * @return {@link Map}
+     *
+     * @since 1.1.1
+     */
+    public static Map<String, String> getServerErrorMap(HttpServletRequest request, Exception e) {
+        Map<String, String> attributes = new HashMap<>(4);
+        attributes.put("code", "500");
+        attributes.put("message", e.getMessage());
+        String queryString = request.getQueryString();
+        attributes.put("url", request.getRequestURI() + (Checker.isEmpty(queryString) ? "" : "?" + queryString));
+        return attributes;
+    }
+
+    /**
+     * 生成令牌
+     *
+     * @return 令牌
+     *
+     * @since 1.1.1
+     */
     public static String generateToken() {
         String timestampByBase64 = Utils.rightTrim(Base64.encode(String.valueOf(System.currentTimeMillis())), "=");
         return (RandomUtil.simpleUUID() + timestampByBase64).toLowerCase();
