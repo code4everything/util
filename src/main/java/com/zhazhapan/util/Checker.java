@@ -57,6 +57,27 @@ public class Checker {
     private Checker() {}
 
     /**
+     * 检查字符串是否等于一个字
+     *
+     * @param value 字符串
+     * @param values 待测数组
+     *
+     * @return {@link Boolean}
+     *
+     * @since 1.1.1
+     */
+    public static boolean equals(String value, String... values) {
+        if (isNotEmpty(value) && isNotEmpty(values)) {
+            for (String s : values) {
+                if (s.equals(value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * 检查字符串是否以某个后缀开头
      *
      * @param value 字符串
