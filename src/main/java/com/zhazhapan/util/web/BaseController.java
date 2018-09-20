@@ -15,6 +15,8 @@ public class BaseController {
 
     private HttpServletRequest request;
 
+    private String token;
+
     public BaseController() {}
 
     public BaseController(HttpServletRequest request) {
@@ -22,9 +24,11 @@ public class BaseController {
     }
 
     protected String getToken() {
-        String token = request.getHeader("token");
         if (Checker.isEmpty(token)) {
-            token = request.getParameter("token");
+            token = request.getHeader("token");
+            if (Checker.isEmpty(token)) {
+                token = request.getParameter("token");
+            }
         }
         return token;
     }
@@ -32,6 +36,10 @@ public class BaseController {
     protected ResultObject<Boolean> parseBooleanResult(String okMsg, String errMsg, boolean isOk) {
         ResultObject<Boolean> resultObject = new ResultObject<>(isOk);
         return isOk ? resultObject.setMessage(okMsg) : resultObject.setMessage(errMsg);
+    }
+
+    protected ResultObject parseResult(boolean isOk) {
+        return parseResult("", isOk);
     }
 
     protected ResultObject parseResult(String prefix, boolean isOk) {
@@ -55,5 +63,9 @@ public class BaseController {
 
     protected <T> ResultObject<T> parseResult(String errMsg, T t) {
         return parseResult("操作成功", errMsg, t);
+    }
+
+    protected <T> ResultObject<T> parseResult(T t) {
+        return parseResult("操作失败", t);
     }
 }
