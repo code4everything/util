@@ -11,7 +11,9 @@ import java.util.Date;
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
-    private static Calendar calendar = Calendar.getInstance();
+    private static final String TIME_FORMAT = "HHmmss";
+
+    private static final Calendar CALENDAR = Calendar.getInstance();
 
     private DateUtils() {}
 
@@ -69,8 +71,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @since 1.1.0
      */
     public static boolean compare(Time aValue, Time bValue, CompareWay compareWay) {
-        String value = Formatter.shortTimeToString(aValue);
-        int result = value.compareTo(Formatter.shortTimeToString(bValue));
+        String value = Formatter.datetimeToCustomString(aValue, TIME_FORMAT);
+        int result = value.compareTo(Formatter.datetimeToCustomString(bValue, TIME_FORMAT));
         switch (compareWay) {
             case EQ:
                 return result == 0;
@@ -248,8 +250,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @return 从星期天开始，星期天是1，依次类推
      */
     public static int getWeek(Date date) {
-        calendar.setTime(date);
-        return calendar.get(Calendar.DAY_OF_WEEK);
+        CALENDAR.setTime(date);
+        return CALENDAR.get(Calendar.DAY_OF_WEEK);
     }
 
     /**
@@ -433,9 +435,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @return 添加后的日期
      */
     public static Date add(Date date, int field, int amount) {
-        calendar.setTime(date);
-        calendar.add(field, amount);
-        return calendar.getTime();
+        CALENDAR.setTime(date);
+        CALENDAR.add(field, amount);
+        return CALENDAR.getTime();
     }
 
     public enum CompareWay {
