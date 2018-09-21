@@ -3,6 +3,8 @@ package com.zhazhapan.util.model;
 import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.modules.constant.ValueConsts;
 
+import java.sql.Timestamp;
+
 /**
  * @author pantao
  * @since 2018/7/17
@@ -28,6 +30,8 @@ public class ResultObject<T> {
      * 自定义Data
      */
     public T data = null;
+
+    public Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
     /**
      * 无参构造
