@@ -6,12 +6,16 @@ import com.zhazhapan.util.common.interceptor.ToStringMethodInterceptor;
 import com.zhazhapan.util.enums.FieldModifier;
 import com.zhazhapan.util.enums.JsonMethod;
 import com.zhazhapan.util.enums.JsonType;
+import com.zhazhapan.util.model.A;
+import com.zhazhapan.util.model.B;
 import net.sf.cglib.proxy.Enhancer;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 /**
@@ -80,12 +84,30 @@ public class BeanUtilsTest {
     @Test
     public void toJsonStringByAnnotation() {
     }
+
+    @Test
+    public void bean2Another() throws InvocationTargetException, NoSuchMethodException, InstantiationException,
+            IllegalAccessException {
+        B b = new B();
+        b.setAge(102);
+        b.setBio("test");
+        A a = BeanUtils.bean2Another(b, A.class);
+        Assert.assertNotNull(a);
+        System.out.println(a);
+    }
+
+    @Test
+    public void toJsonObject() {
+    }
 }
 
 @ToJsonString(type = JsonType.PRETTY, modifier = FieldModifier.PRIVATE, method = JsonMethod.MANUAL)
 class User implements Serializable {
+
     public int id;
+
     private String name;
+
     private Date birth;
 
     public User() {}

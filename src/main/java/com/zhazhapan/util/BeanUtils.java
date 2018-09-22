@@ -29,6 +29,39 @@ public class BeanUtils {
     private BeanUtils() {}
 
     /**
+     * 将一个Bean的数据装换到另外一个（需实现setter和getter）
+     *
+     * @param object 一个Bean
+     * @param clazz 另外一个Bean
+     * @param <T> 另外Bean类型
+     *
+     * @return {@link T}
+     *
+     * @throws IllegalAccessException 异常
+     * @throws InstantiationException 异常
+     * @throws NoSuchMethodException 异常
+     * @throws InvocationTargetException 异常
+     * @since 1.1.1
+     */
+    public static <T> T bean2Another(Object object, Class<T> clazz) throws IllegalAccessException,
+            InstantiationException, NoSuchMethodException, InvocationTargetException {
+        T t = clazz.newInstance();
+        Method[] methods = object.getClass().getMethods();
+        Map<String, Method> clazzMethods = ReflectUtils.getMethodMap(clazz, "set");
+        for (Method method : methods) {
+            String name = method.getName();
+            if (name.startsWith("get") && !"getClass".equals(name)) {
+                String clazzMethod = "s" + name.substring(1);
+                if (clazzMethods.containsKey(clazzMethod)) {
+                    clazzMethods.get(clazzMethod).invoke(t, method.invoke(object));
+                }
+            }
+        }
+        return t;
+
+    }
+
+    /**
      * 反序列化对象
      *
      * @param file 对象文件
