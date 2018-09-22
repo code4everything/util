@@ -6,7 +6,7 @@ import com.zhazhapan.modules.constant.ValueConsts;
  * @author pantao
  * @since 2018/7/17
  */
-public class CheckResult {
+public class CheckResult<T> {
 
     private static final int DEFAULT_ERROR_CODE = 400;
 
@@ -14,7 +14,7 @@ public class CheckResult {
 
     public boolean passed = true;
 
-    public ResultObject resultObject = null;
+    public ResultObject<T> resultObject = null;
 
     /**
      * 获取失败的结果
@@ -65,5 +65,56 @@ public class CheckResult {
      */
     public static ResultObject getErrorResult(String message) {
         return getErrorResult(DEFAULT_ERROR_CODE, message);
+    }
+
+    /**
+     * 获取失败的结果
+     *
+     * @param code 错误码
+     * @param message 消息
+     *
+     * @return {@link ResultObject}
+     *
+     * @since 1.1.1
+     */
+    public ResultObject<T> errorResult(int code, String message) {
+        return new ResultObject<>(code, message, ValueConsts.ERROR_EN);
+    }
+
+    /**
+     * 获取失败的结果
+     *
+     * @return {@link ResultObject}
+     *
+     * @since 1.1.1
+     */
+    public ResultObject<T> errorResult() {
+        return errorResult(DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE);
+    }
+
+    /**
+     * 获取失败的结果
+     *
+     * @param code 错误码
+     *
+     * @return {@link ResultObject}
+     *
+     * @since 1.1.1
+     */
+    public ResultObject<T> errorResult(int code) {
+        return errorResult(code, DEFAULT_ERROR_MESSAGE);
+    }
+
+    /**
+     * 获取失败的结果
+     *
+     * @param message 消息
+     *
+     * @return {@link ResultObject}
+     *
+     * @since 1.1.1
+     */
+    public ResultObject<T> errorResult(String message) {
+        return errorResult(DEFAULT_ERROR_CODE, message);
     }
 }

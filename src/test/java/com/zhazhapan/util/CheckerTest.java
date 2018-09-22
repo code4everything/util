@@ -310,7 +310,7 @@ public class CheckerTest {
         bean.none = false;
 
         // 测试空对象
-        CheckResult result = Checker.checkBean(bean);
+        CheckResult<TestBean> result = Checker.checkBean(bean);
         System.out.println(JSONObject.toJSON(result.resultObject));
         assert !result.passed;
 
@@ -346,6 +346,7 @@ public class CheckerTest {
         result = Checker.checkBean(bean);
         System.out.println(JSONObject.toJSON(result.resultObject));
         assert result.passed;
+        System.out.println(result.resultObject.setData(bean));
     }
 
     @Test

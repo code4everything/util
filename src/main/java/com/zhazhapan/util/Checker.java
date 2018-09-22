@@ -262,7 +262,7 @@ public class Checker {
      * @since 1.0.9
      */
 
-    public static CheckResult checkBean(Object bean) {
+    public static <T> CheckResult<T> checkBean(Object bean) {
         return checkBean(bean, new HashMap<>(ValueConsts.TWO_INT));
     }
 
@@ -276,15 +276,15 @@ public class Checker {
      *
      * @since 1.1.0
      */
-    public static CheckResult checkBean(Object bean, Map<String, Object> map) {
-        CheckResult result = new CheckResult();
+    public static <T> CheckResult<T> checkBean(Object bean, Map<String, Object> map) {
+        CheckResult<T> result = new CheckResult<>();
         if (isNull(bean)) {
             result.passed = false;
-            result.resultObject = CheckResult.getErrorResult();
+            result.resultObject = result.errorResult();
             return result;
         }
         Field[] fields = bean.getClass().getDeclaredFields();
-        ResultObject object = new ResultObject();
+        ResultObject<T> object = new ResultObject<>();
         for (Field field : fields) {
             FieldChecking checking = field.getAnnotation(FieldChecking.class);
             if (isNotNull(checking)) {
