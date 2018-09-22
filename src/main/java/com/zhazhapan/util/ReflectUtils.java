@@ -10,13 +10,11 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -31,6 +29,40 @@ public class ReflectUtils {
     private static JexlEngine jexlEngine = new Engine();
 
     private ReflectUtils() {}
+
+    /**
+     * 获取类的所有方法，并封装成集合
+     *
+     * @param clazz 类
+     *
+     * @return {@link Map}
+     *
+     * @since 1.1.1
+     */
+    public static Map<String, Method> getMethodMap(Class<?> clazz) {
+        return getMethodMap(clazz, null);
+    }
+
+    /**
+     * 获取类的方法，并封装成集合
+     *
+     * @param clazz 类
+     * @param prefix 过滤前缀
+     *
+     * @return {@link Map}
+     *
+     * @since 1.1.1
+     */
+    public static Map<String, Method> getMethodMap(Class<?> clazz, String prefix) {
+        Method[] methods = clazz.getMethods();
+        Map<String, Method> methodMap = new HashMap<>(32);
+        for (Method method : methods) {
+            if (Checker.isEmpty(prefix) || method.getName().startsWith(prefix)) {
+                methodMap.put(method.getName(), method);
+            }
+        }
+        return methodMap;
+    }
 
     /**
      * 将字符串转成代码，并执行
@@ -66,8 +98,7 @@ public class ReflectUtils {
      * @throws InvocationTargetException 异常
      * @throws IllegalAccessException 异常
      */
-    public static Object invokeMethod(Object object, String methodName, Object[] parameters) throws
-            NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static Object invokeMethod(Object object, String methodName, Object[] parameters) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return invokeMethod(object, methodName, getTypes(parameters), parameters);
     }
 
@@ -84,8 +115,7 @@ public class ReflectUtils {
      * @throws InvocationTargetException 异常
      * @throws IllegalAccessException 异常
      */
-    public static Object invokeMethodUseBasicType(Object object, String methodName, Object[] parameters) throws
-            NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static Object invokeMethodUseBasicType(Object object, String methodName, Object[] parameters) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return invokeMethod(object, methodName, getBasicTypes(parameters), parameters);
     }
 
@@ -103,9 +133,10 @@ public class ReflectUtils {
      * @throws InvocationTargetException 异常
      * @throws IllegalAccessException 异常
      */
-    public static Object invokeMethod(Object object, String methodName, Class<?>[] parameterTypes, Object[]
-            parameters) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        if (Checker.isNull(parameters)) {
+    public static Object invokeMethod(Object object, String methodName, Class<?>[] parameterTypes,
+                                      Object[] parameters) throws NoSuchMethodException, InvocationTargetException,
+            IllegalAccessException {
+        if (Checker.isEmpty(parameters)) {
             return object.getClass().getMethod(methodName).invoke(object);
         } else {
             return object.getClass().getMethod(methodName, parameterTypes).invoke(object, parameters);
@@ -243,8 +274,7 @@ public class ReflectUtils {
      *
      * @throws ClassNotFoundException 异常
      */
-    public static void addClassesInPackageByFile(String packageName, String packagePath, List<Class<?>> classes)
-            throws ClassNotFoundException {
+    public static void addClassesInPackageByFile(String packageName, String packagePath, List<Class<?>> classes) throws ClassNotFoundException {
         File dir = new File(packagePath);
         if (!dir.exists() || !dir.isDirectory()) {
             return;
