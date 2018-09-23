@@ -69,6 +69,10 @@ public class BaseController {
     }
 
     protected <T> ResultObject<List<T>> parseResult(String errMsg, List<T> list) {
+        return parseResult(errMsg, list, checkSensitiveData);
+    }
+
+    protected <T> ResultObject<List<T>> parseResult(String errMsg, List<T> list, boolean checkSensitiveData) {
         if (Checker.isEmpty(list)) {
             return CheckResult.getErrorResult(errMsg);
         }
@@ -79,6 +83,10 @@ public class BaseController {
     }
 
     protected <T> ResultObject<T> parseResult(String okMsg, String errMsg, T t) {
+        return parseResult(okMsg, errMsg, t, checkSensitiveData);
+    }
+
+    protected <T> ResultObject<T> parseResult(String okMsg, String errMsg, T t, boolean checkSensitiveData) {
         if (Checker.isNull(t)) {
             return CheckResult.getErrorResult(errMsg);
         }
@@ -105,7 +113,11 @@ public class BaseController {
     }
 
     protected <T> ResultObject<T> parseResult(String errMsg, T t) {
-        return parseResult("操作成功", errMsg, t);
+        return parseResult(errMsg, t, checkSensitiveData);
+    }
+
+    protected <T> ResultObject<T> parseResult(String errMsg, T t, boolean checkSensitiveData) {
+        return parseResult("操作成功", errMsg, t, checkSensitiveData);
     }
 
     protected <T> ResultObject<T> parseResult(T t) {
