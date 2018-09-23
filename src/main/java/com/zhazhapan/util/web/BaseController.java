@@ -1,11 +1,13 @@
 package com.zhazhapan.util.web;
 
-import com.zhazhapan.modules.constant.ValueConsts;
 import com.zhazhapan.util.Checker;
+import com.zhazhapan.util.LoggerUtils;
+import com.zhazhapan.util.annotation.SensitiveData;
 import com.zhazhapan.util.model.CheckResult;
 import com.zhazhapan.util.model.ResultObject;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
 
 /**
  * @author pantao
@@ -17,10 +19,23 @@ public class BaseController {
 
     private String token;
 
+    private boolean checkSensitiveData = false;
+
+    private String sensitiveDataTip = "******";
+
     public BaseController() {}
+
+    public BaseController(boolean checkSensitiveData) {
+        this.checkSensitiveData = checkSensitiveData;
+    }
 
     public BaseController(HttpServletRequest request) {
         this.request = request;
+    }
+
+    public BaseController(HttpServletRequest request, boolean checkSensitiveData) {
+        this.request = request;
+        this.checkSensitiveData = checkSensitiveData;
     }
 
     protected String getToken() {
@@ -56,7 +71,21 @@ public class BaseController {
 
     protected <T> ResultObject<T> parseResult(String okMsg, String errMsg, T t) {
         if (Checker.isNull(t)) {
-            return new ResultObject<>(400, errMsg, ValueConsts.ERROR_EN);
+            return CheckResult.getErrorResult(errMsg);
+        }
+        if (checkSensitiveData) {
+            Field[] fields = t.getClass().getDeclaredFields();
+            try {
+                for (Field field : fields) {
+                    SensitiveData sensitiveData = field.getAnnotation(SensitiveData.class);
+                    if (Checker.isNotNull(sensitiveData) && field.getType() == String.class) {
+                        field.setAccessible(true);
+                        field.set(t, sensitiveDataTip);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                LoggerUtils.error("set sensitive data error: {}", e.getMessage());
+            }
         }
         return new ResultObject<>(okMsg, t);
     }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.util.annotation.ToJsonString;
 import com.zhazhapan.util.enums.JsonType;
 import com.zhazhapan.util.model.ResultObject;
+import com.zhazhapan.util.model.TestBean;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,8 +20,14 @@ import java.util.Map;
 public class CommonsTest {
 
     @Test
+    public void testRefelect() throws NoSuchFieldException {
+        assert TestBean.class.getField("username").getType() == String.class;
+        assert TestBean.class.getField("age").getType() != String.class;
+    }
+
+    @Test
     public void testResultObject() {
-        ResultObject resultObject = new ResultObject();
+        ResultObject<String> resultObject = new ResultObject<>();
         System.out.println(resultObject.setCode(200).setMessage("ok").setData("everything is ok"));
     }
 
