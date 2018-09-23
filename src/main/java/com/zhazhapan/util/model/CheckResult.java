@@ -26,8 +26,8 @@ public class CheckResult<T> {
      *
      * @since 1.1.0
      */
-    public static ResultObject getErrorResult(int code, String message) {
-        return new ResultObject(code, message, ValueConsts.ERROR_EN);
+    public static <T> ResultObject<T> getErrorResult(int code, String message) {
+        return new ResultObject<>(code, message, ValueConsts.ERROR_EN);
     }
 
     /**
@@ -37,7 +37,7 @@ public class CheckResult<T> {
      *
      * @since 1.1.0
      */
-    public static ResultObject getErrorResult() {
+    public static <T> ResultObject<T> getErrorResult() {
         return getErrorResult(DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE);
     }
 
@@ -50,7 +50,7 @@ public class CheckResult<T> {
      *
      * @since 1.1.0
      */
-    public static ResultObject getErrorResult(int code) {
+    public static <T> ResultObject<T> getErrorResult(int code) {
         return getErrorResult(code, DEFAULT_ERROR_MESSAGE);
     }
 
@@ -63,58 +63,7 @@ public class CheckResult<T> {
      *
      * @since 1.1.0
      */
-    public static ResultObject getErrorResult(String message) {
+    public static <T> ResultObject<T> getErrorResult(String message) {
         return getErrorResult(DEFAULT_ERROR_CODE, message);
-    }
-
-    /**
-     * 获取失败的结果
-     *
-     * @param code 错误码
-     * @param message 消息
-     *
-     * @return {@link ResultObject}
-     *
-     * @since 1.1.1
-     */
-    public ResultObject<T> errorResult(int code, String message) {
-        return new ResultObject<>(code, message, ValueConsts.ERROR_EN);
-    }
-
-    /**
-     * 获取失败的结果
-     *
-     * @return {@link ResultObject}
-     *
-     * @since 1.1.1
-     */
-    public ResultObject<T> errorResult() {
-        return errorResult(DEFAULT_ERROR_CODE, DEFAULT_ERROR_MESSAGE);
-    }
-
-    /**
-     * 获取失败的结果
-     *
-     * @param code 错误码
-     *
-     * @return {@link ResultObject}
-     *
-     * @since 1.1.1
-     */
-    public ResultObject<T> errorResult(int code) {
-        return errorResult(code, DEFAULT_ERROR_MESSAGE);
-    }
-
-    /**
-     * 获取失败的结果
-     *
-     * @param message 消息
-     *
-     * @return {@link ResultObject}
-     *
-     * @since 1.1.1
-     */
-    public ResultObject<T> errorResult(String message) {
-        return errorResult(DEFAULT_ERROR_CODE, message);
     }
 }

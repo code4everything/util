@@ -306,6 +306,10 @@ public class CheckerTest {
 
     @Test
     public void checkBean() {
+        // 测试NULL
+        CheckResult<TestBean> errorResult = Checker.checkBean(null);
+        assert !errorResult.passed;
+
         TestBean bean = new TestBean();
         bean.none = false;
 
@@ -346,6 +350,8 @@ public class CheckerTest {
         result = Checker.checkBean(bean);
         System.out.println(JSONObject.toJSON(result.resultObject));
         assert result.passed;
+
+        System.out.println(errorResult.resultObject.setData(bean));
         System.out.println(result.resultObject.setData(bean));
     }
 

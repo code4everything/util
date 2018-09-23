@@ -280,7 +280,7 @@ public class Checker {
         CheckResult<T> result = new CheckResult<>();
         if (isNull(bean)) {
             result.passed = false;
-            result.resultObject = result.errorResult();
+            result.resultObject = CheckResult.getErrorResult();
             return result;
         }
         Field[] fields = bean.getClass().getDeclaredFields();
