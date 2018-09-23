@@ -94,6 +94,16 @@ public class BeanUtilsTest {
         A a = BeanUtils.bean2Another(b, A.class);
         Assert.assertNotNull(a);
         System.out.println(a);
+        a.setGender("男");
+        a.setName("pantao");
+        b.setAge(24);
+        A anotherA = null;
+        a = BeanUtils.bean2Another(b, a);
+        Assert.assertNotNull(a);
+        System.out.println(a);
+        anotherA = BeanUtils.bean2Another(a, anotherA, A.class);
+        Assert.assertNotNull(anotherA);
+        System.out.println(anotherA);
     }
 
     @Test

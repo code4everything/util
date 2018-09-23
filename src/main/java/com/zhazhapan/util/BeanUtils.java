@@ -32,20 +32,78 @@ public class BeanUtils {
      * 将一个Bean的数据装换到另外一个（需实现setter和getter）
      *
      * @param object 一个Bean
-     * @param clazz 另外一个Bean
+     * @param another 另外一个Bean对象
      * @param <T> 另外Bean类型
      *
      * @return {@link T}
      *
      * @throws IllegalAccessException 异常
+     * @throws InvocationTargetException 异常
+     * @since 1.1.1
+     */
+    public static <T> T bean2Another(Object object, T another) throws InvocationTargetException,
+            IllegalAccessException {
+        return bean2Another(object, another.getClass(), another);
+    }
+
+    /**
+     * 将一个Bean的数据装换到另外一个（需实现setter和getter，以及一个默认无参构造函数）
+     *
+     * @param object 一个Bean
+     * @param clazz 另外一个Bean
+     * @param <T> 另外Bean类型
+     *
+     * @return {@link T}
+     *
      * @throws InstantiationException 异常
-     * @throws NoSuchMethodException 异常
+     * @throws IllegalAccessException 异常
      * @throws InvocationTargetException 异常
      * @since 1.1.1
      */
     public static <T> T bean2Another(Object object, Class<T> clazz) throws IllegalAccessException,
-            InstantiationException, NoSuchMethodException, InvocationTargetException {
-        T t = clazz.newInstance();
+            InstantiationException, InvocationTargetException {
+        return bean2Another(object, clazz, clazz.newInstance());
+    }
+
+    /**
+     * 将一个Bean的数据装换到另外一个（需实现setter和getter）
+     *
+     * @param object 一个Bean
+     * @param clazz 另外一个Bean类
+     * @param another 另一个Bean对象
+     * @param <T> 另外Bean类型
+     *
+     * @return {@link T}
+     *
+     * @throws IllegalAccessException 异常
+     * @throws InvocationTargetException 异常
+     * @throws InstantiationException 异常
+     * @since 1.1.1
+     */
+    public static <T> T bean2Another(Object object, T another, Class<T> clazz) throws IllegalAccessException,
+            InstantiationException, InvocationTargetException {
+        if (Checker.isNull(another)) {
+            another = clazz.newInstance();
+        }
+        return bean2Another(object, clazz, another);
+    }
+
+    /**
+     * 将一个Bean的数据装换到另外一个（需实现setter和getter）
+     *
+     * @param object 一个Bean
+     * @param clazz 另外一个Bean类
+     * @param another 另一个Bean对象
+     * @param <T> 另外Bean类型
+     *
+     * @return {@link T}
+     *
+     * @throws IllegalAccessException 异常
+     * @throws InvocationTargetException 异常
+     * @since 1.1.1
+     */
+    private static <T> T bean2Another(Object object, Class<?> clazz, T another) throws InvocationTargetException,
+            IllegalAccessException {
         Method[] methods = object.getClass().getMethods();
         Map<String, Method> clazzMethods = ReflectUtils.getMethodMap(clazz, "set");
         for (Method method : methods) {
@@ -53,11 +111,11 @@ public class BeanUtils {
             if (name.startsWith("get") && !"getClass".equals(name)) {
                 String clazzMethod = "s" + name.substring(1);
                 if (clazzMethods.containsKey(clazzMethod)) {
-                    clazzMethods.get(clazzMethod).invoke(t, method.invoke(object));
+                    clazzMethods.get(clazzMethod).invoke(another, method.invoke(object));
                 }
             }
         }
-        return t;
+        return another;
 
     }
 
