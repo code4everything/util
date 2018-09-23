@@ -8,6 +8,7 @@ import com.zhazhapan.util.model.ResultObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * @author pantao
@@ -20,8 +21,6 @@ public class BaseController {
     private String token;
 
     private boolean checkSensitiveData = false;
-
-    private String sensitiveDataTip = "******";
 
     public BaseController() {}
 
@@ -69,25 +68,40 @@ public class BaseController {
         return isOk ? new ResultObject(okMsg) : CheckResult.getErrorResult(errMsg);
     }
 
+    protected <T> ResultObject<List<T>> parseResult(String errMsg, List<T> list) {
+        if (Checker.isEmpty(list)) {
+            return CheckResult.getErrorResult(errMsg);
+        }
+        if (checkSensitiveData) {
+            list.forEach(this::setSensitiveData);
+        }
+        return new ResultObject<>(list);
+    }
+
     protected <T> ResultObject<T> parseResult(String okMsg, String errMsg, T t) {
         if (Checker.isNull(t)) {
             return CheckResult.getErrorResult(errMsg);
         }
         if (checkSensitiveData) {
-            Field[] fields = t.getClass().getDeclaredFields();
-            try {
-                for (Field field : fields) {
-                    SensitiveData sensitiveData = field.getAnnotation(SensitiveData.class);
-                    if (Checker.isNotNull(sensitiveData) && field.getType() == String.class) {
-                        field.setAccessible(true);
-                        field.set(t, sensitiveDataTip);
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                LoggerUtils.error("set sensitive data error: {}", e.getMessage());
-            }
+            setSensitiveData(t);
         }
         return new ResultObject<>(okMsg, t);
+    }
+
+    private <T> void setSensitiveData(T t) {
+        Field[] fields = t.getClass().getDeclaredFields();
+        String sensitiveDataTip = "******";
+        try {
+            for (Field field : fields) {
+                SensitiveData sensitiveData = field.getAnnotation(SensitiveData.class);
+                if (Checker.isNotNull(sensitiveData) && field.getType() == String.class) {
+                    field.setAccessible(true);
+                    field.set(t, sensitiveDataTip);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            LoggerUtils.error("set sensitive data error: {}", e.getMessage());
+        }
     }
 
     protected <T> ResultObject<T> parseResult(String errMsg, T t) {
