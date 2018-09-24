@@ -96,19 +96,21 @@ public class BaseController {
         return new ResultObject<>(okMsg, t);
     }
 
-    private <T> void setSensitiveData(T t) {
-        Field[] fields = t.getClass().getDeclaredFields();
-        String sensitiveDataTip = "******";
-        try {
-            for (Field field : fields) {
-                SensitiveData sensitiveData = field.getAnnotation(SensitiveData.class);
-                if (Checker.isNotNull(sensitiveData) && field.getType() == String.class) {
-                    field.setAccessible(true);
-                    field.set(t, sensitiveDataTip);
+    protected <T> void setSensitiveData(T t) {
+        if (Checker.isNotNull(t)) {
+            Field[] fields = t.getClass().getDeclaredFields();
+            final String sensitiveDataTip = "******";
+            try {
+                for (Field field : fields) {
+                    SensitiveData sensitiveData = field.getAnnotation(SensitiveData.class);
+                    if (Checker.isNotNull(sensitiveData) && field.getType() == String.class) {
+                        field.setAccessible(true);
+                        field.set(t, sensitiveDataTip);
+                    }
                 }
+            } catch (IllegalAccessException e) {
+                LoggerUtils.error("set sensitive data error: {}", e.getMessage());
             }
-        } catch (IllegalAccessException e) {
-            LoggerUtils.error("set sensitive data error: {}", e.getMessage());
         }
     }
 
