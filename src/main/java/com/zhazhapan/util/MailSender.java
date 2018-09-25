@@ -138,8 +138,8 @@ public class MailSender {
      *
      * @throws Exception 异常
      */
-    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content, final
-    String from, final String key) throws Exception {
+    public static void sendMail(MailHost mailHost, String personal, String to, String title, String content,
+                                final String from, final String key) throws Exception {
         setHost(mailHost);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
@@ -158,8 +158,8 @@ public class MailSender {
      *
      * @throws Exception 异常
      */
-    public static void sendMail(String host, String personal, String to, String title, String content, final String
-            from, final String key) throws Exception {
+    public static void sendMail(String host, String personal, String to, String title, String content,
+                                final String from, final String key) throws Exception {
         setHost(host);
         setPersonal(personal);
         sendMail(to, title, content, from, key);
