@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class BaseController {
 
-    private HttpServletRequest request;
+    private ThreadLocal<HttpServletRequest> request = new ThreadLocal<>();
 
-    private String token;
+    private ThreadLocal<String> token = new ThreadLocal<>();
 
     private boolean checkSensitiveData = false;
 
@@ -29,22 +29,24 @@ public class BaseController {
     }
 
     public BaseController(HttpServletRequest request) {
-        this.request = request;
+        this.request.set(request);
     }
 
     public BaseController(HttpServletRequest request, boolean checkSensitiveData) {
-        this.request = request;
+        this.request.set(request);
         this.checkSensitiveData = checkSensitiveData;
     }
 
     protected String getToken() {
-        if (Checker.isEmpty(token)) {
-            token = request.getHeader("token");
-            if (Checker.isEmpty(token)) {
-                token = request.getParameter("token");
+        if (Checker.isEmpty(token.get())) {
+            token.set(request.get().getHeader("token"));
+            if (Checker.isEmpty(token.get())) {
+                token.set(request.get().getParameter("token"));
             }
+            token.remove();
+            request.remove();
         }
-        return token;
+        return token.get();
     }
 
     protected ResultObject<Boolean> parseBooleanResult(String okMsg, String errMsg, boolean isOk) {
