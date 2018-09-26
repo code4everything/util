@@ -864,6 +864,9 @@ public class FileExecutor extends FileUtils {
      * @throws IOException 异常
      */
     public static String readFile(String path) throws IOException {
+        if (path.startsWith(ValueConsts.CLASSPATH_PREFIX)) {
+            return read(FileExecutor.class.getResourceAsStream(path.substring(ValueConsts.CLASSPATH_PREFIX.length())));
+        }
         return readFile(new File(path));
     }
 

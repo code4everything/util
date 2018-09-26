@@ -8,6 +8,8 @@ import java.io.File;
  */
 public class ValueConsts {
 
+    public static final String CLASSPATH_PREFIX = "classpath:";
+
     public static final String ONE_STR = "1";
 
     public static final String TWO_STR = "2";
