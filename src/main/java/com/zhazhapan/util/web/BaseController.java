@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class BaseController {
 
-    private ThreadLocal<HttpServletRequest> request = new ThreadLocal<>();
+    private HttpServletRequest request;
 
     private ThreadLocal<String> token = new ThreadLocal<>();
 
@@ -29,22 +29,21 @@ public class BaseController {
     }
 
     public BaseController(HttpServletRequest request) {
-        this.request.set(request);
+        this.request = request;
     }
 
     public BaseController(HttpServletRequest request, boolean checkSensitiveData) {
-        this.request.set(request);
+        this.request = request;
         this.checkSensitiveData = checkSensitiveData;
     }
 
     protected String getToken() {
         if (Checker.isEmpty(token.get())) {
-            token.set(request.get().getHeader("token"));
-            if (Checker.isEmpty(token.get())) {
-                token.set(request.get().getParameter("token"));
-            }
             token.remove();
-            request.remove();
+            token.set(request.getHeader("token"));
+            if (Checker.isEmpty(token.get())) {
+                token.set(request.getParameter("token"));
+            }
         }
         return token.get();
     }
