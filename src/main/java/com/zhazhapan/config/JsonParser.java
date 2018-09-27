@@ -19,7 +19,6 @@ import java.util.HashMap;
  *
  * @author pantao
  */
-@Deprecated
 public class JsonParser {
 
     /**
