@@ -19,6 +19,7 @@ import org.htmlcleaner.TagNode;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +28,11 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +64,37 @@ public class NetUtils {
     public static final String PATH_KEY = "$path";
 
     private NetUtils() {}
+
+    /**
+     * 响应文件
+     *
+     * @param response {@link HttpServletResponse}
+     * @param local 文件路径
+     * @param isDownloaded 是否下载
+     *
+     * @throws IOException 异常
+     * @since 1.1.1
+     */
+    public static void responseFile(HttpServletResponse response, String local, boolean isDownloaded) throws IOException {
+        if (Checker.isExists(local)) {
+            File file = new File(local);
+            try (FileInputStream in = new FileInputStream(file); ServletOutputStream os = response.getOutputStream()) {
+                byte[] b;
+                while (in.available() > 0) {
+                    b = in.available() > 1024 ? new byte[1024] : new byte[in.available()];
+                    in.read(b, 0, b.length);
+                    os.write(b, 0, b.length);
+                }
+                os.flush();
+            }
+            if (isDownloaded) {
+                String fn = new String(file.getName().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+                response.setHeader("Content-Disposition", "attachment;filename=" + fn);
+            }
+        } else {
+            response.setStatus(404);
+        }
+    }
 
     /**
      * 获取服务端错误消息
