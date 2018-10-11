@@ -1,13 +1,18 @@
 package com.zhazhapan.util;
 
+import cn.hutool.core.io.watch.SimpleWatcher;
+import cn.hutool.core.io.watch.WatchMonitor;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhazhapan.modules.constant.ValueConsts;
+import com.zhazhapan.util.interfaces.SimpleHutoolWatcher;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +26,40 @@ public class FileExecutor extends FileUtils {
     private static Logger logger = Logger.getLogger(FileExecutor.class);
 
     private FileExecutor() {}
+
+    /**
+     * 监听文件
+     *
+     * @param file 待监听的文件
+     * @param watcher {@link SimpleHutoolWatcher}
+     *
+     * @since 1.1.1
+     */
+    public static void watchFile(String file, SimpleHutoolWatcher watcher) {
+        watchFile(file, watcher, false);
+    }
+
+    /**
+     * 监听文件
+     *
+     * @param file 待监听的文件
+     * @param watcher {@link SimpleHutoolWatcher}
+     * @param shouldFirstExecute 第一次是否执行 {@link SimpleHutoolWatcher#doSomething()}
+     *
+     * @since 1.1.1
+     */
+    public static void watchFile(String file, SimpleHutoolWatcher watcher, boolean shouldFirstExecute) {
+        if (shouldFirstExecute) {
+            watcher.doSomething();
+        }
+        WatchMonitor.createAll(file, new SimpleWatcher() {
+            @Override
+            public void onModify(WatchEvent<?> event, Path currentPath) {
+                watcher.onModify(event, currentPath);
+                watcher.doSomething();
+            }
+        }).start();
+    }
 
     /**
      * 解析JSON

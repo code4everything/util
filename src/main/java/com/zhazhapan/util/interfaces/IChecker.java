@@ -6,6 +6,7 @@ package com.zhazhapan.util.interfaces;
  * @author pantao
  * @since 2018/5/9
  */
+@FunctionalInterface
 public interface IChecker {
 
     /**

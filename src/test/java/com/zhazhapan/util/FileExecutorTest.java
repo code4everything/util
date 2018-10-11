@@ -1,5 +1,6 @@
 package com.zhazhapan.util;
 
+import com.zhazhapan.util.interfaces.SimpleHutoolWatcher;
 import org.junit.Test;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public class FileExecutorTest {
     @Test
     public void testMergeFile() throws IOException {
         String[] files = new String[]{"/Users/pantao/Desktop/test/Dump20171220_1.sql",
-                "/Users/pantao/Desktop/test/Dump20171220_2.sql"};
+                "/Users/pantao/Desktop/test" + "/Dump20171220_2.sql"};
         FileExecutor.mergeFiles(files, "/Users/pantao/Desktop/test/test_merge.sql", "/\\*.*?\\*/;\r?\n?");
     }
 
@@ -255,5 +256,51 @@ public class FileExecutorTest {
 
     @Test
     public void saveFile3() {
+    }
+
+    @Test
+    public void watchFile() {
+        FileExecutor.watchFile("c:\\", new SimpleHutoolWatcher() {
+            @Override
+            public void doSomething() {
+                // do something
+            }
+        }, true);
+    }
+
+    @Test
+    public void watchFile1() {
+    }
+
+    @Test
+    public void parseJsonArray() {
+    }
+
+    @Test
+    public void parseJsonArray1() {
+    }
+
+    @Test
+    public void parseJsonArray2() {
+    }
+
+    @Test
+    public void parseJsonObject() {
+    }
+
+    @Test
+    public void parseJsonObject1() {
+    }
+
+    @Test
+    public void parseJsonObject2() {
+    }
+
+    @Test
+    public void getSuffix() {
+    }
+
+    @Test
+    public void getSuffix1() {
     }
 }
