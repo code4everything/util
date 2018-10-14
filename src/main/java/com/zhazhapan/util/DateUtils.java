@@ -18,6 +18,60 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     private DateUtils() {}
 
     /**
+     * 将日期转换成时间戳
+     *
+     * @param date {@link Date}
+     *
+     * @return {@link Timestamp}
+     *
+     * @since 1.1.1
+     */
+    public static Timestamp convertDateToTimestamp(Date date) {
+        return convertDateToTimestamp(date, getCurrentTimestamp());
+    }
+
+    /**
+     * 将日期转换成时间戳
+     *
+     * @param date {@link Date}
+     * @param elseValue 日期为空返回默认时间戳
+     *
+     * @return {@link Timestamp}
+     *
+     * @since 1.1.1
+     */
+    public static Timestamp convertDateToTimestamp(Date date, Timestamp elseValue) {
+        return Checker.isNull(date) ? elseValue : new Timestamp(date.getTime());
+    }
+
+    /**
+     * 将日期转换成时间
+     *
+     * @param date {@link Date}
+     *
+     * @return {@link Time}
+     *
+     * @since 1.1.1
+     */
+    public static Time convertDateToTime(Date date) {
+        return convertDateToTime(date, new Time(System.currentTimeMillis()));
+    }
+
+    /**
+     * 将日期转换成时间
+     *
+     * @param date {@link Date}
+     * @param elseValue 日期为空返回默认时间
+     *
+     * @return {@link Time}
+     *
+     * @since 1.1.1
+     */
+    public static Time convertDateToTime(Date date, Time elseValue) {
+        return Checker.isNull(date) ? elseValue : new Time(date.getTime());
+    }
+
+    /**
      * 第一个值是否大于第二个值
      *
      * @param big 第一个值
