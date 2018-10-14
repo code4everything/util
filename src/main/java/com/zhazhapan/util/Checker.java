@@ -288,6 +288,7 @@ public class Checker {
         for (Field field : fields) {
             FieldChecking checking = field.getAnnotation(FieldChecking.class);
             if (isNotNull(checking)) {
+                field.setAccessible(true);
                 String expression = checking.expression();
                 Object value;
                 try {
@@ -303,7 +304,6 @@ public class Checker {
                 // 设置默认值
                 if (isNull(value) && isNotEmpty(checking.defaultValue())) {
                     try {
-                        field.setAccessible(true);
                         field.set(bean, checking.defaultValue());
                         continue;
                     } catch (IllegalAccessException e) {
