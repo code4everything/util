@@ -18,8 +18,6 @@ public class BaseController {
 
     private HttpServletRequest request;
 
-    private ThreadLocal<String> token = new ThreadLocal<>();
-
     private boolean checkSensitiveData = false;
 
     public BaseController() {}
@@ -38,14 +36,11 @@ public class BaseController {
     }
 
     protected String getToken() {
-        if (Checker.isEmpty(token.get())) {
-            token.remove();
-            token.set(request.getHeader("token"));
-            if (Checker.isEmpty(token.get())) {
-                token.set(request.getParameter("token"));
-            }
+        String token = request.getHeader("token");
+        if (Checker.isEmpty(token)) {
+            token = request.getParameter("token");
         }
-        return token.get();
+        return token;
     }
 
     protected ResultObject<Boolean> parseBooleanResult(String okMsg, String errMsg, boolean isOk) {
