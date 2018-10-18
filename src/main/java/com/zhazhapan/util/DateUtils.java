@@ -1,5 +1,9 @@
 package com.zhazhapan.util;
 
+import cn.hutool.core.date.DateUtil;
+import com.zhazhapan.modules.constant.ValueConsts;
+import org.junit.Assert;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -16,6 +20,36 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     private static final Calendar CALENDAR = Calendar.getInstance();
 
     private DateUtils() {}
+
+    /**
+     * 解析时间字符串
+     *
+     * @param time 时间
+     *
+     * @return {@link Time}
+     *
+     * @since 1.1.1
+     */
+    public static Time parseTime(String time) {
+        Assert.assertTrue("time is required, but value is empty", Checker.isNotEmpty(time));
+        String[] times = time.split(ValueConsts.COLON);
+        String timeStr = formatTimeString(times[0]) + ":" + (times.length > 1 ? formatTimeString(times[1]) : "00") +
+                ":" + (times.length > 2 ? formatTimeString(times[2]) : "00");
+        return new Time(DateUtil.parseTime(timeStr).getTime());
+    }
+
+    /**
+     * 格式化字符串
+     *
+     * @param time 时间
+     *
+     * @return {@link String}
+     *
+     * @since 1.1.1
+     */
+    private static String formatTimeString(String time) {
+        return time.length() > 0 ? (time.length() == 1 ? "0" : "") + time : "00";
+    }
 
     /**
      * 将日期转换成时间戳
