@@ -111,7 +111,10 @@ public class BeanUtils {
             if (name.startsWith("get") && !"getClass".equals(name)) {
                 String clazzMethod = "s" + name.substring(1);
                 if (clazzMethods.containsKey(clazzMethod)) {
-                    clazzMethods.get(clazzMethod).invoke(another, method.invoke(object));
+                    Object value = method.invoke(object);
+                    if (Checker.isNotNull(value)) {
+                        clazzMethods.get(clazzMethod).invoke(another, value);
+                    }
                 }
             }
         }
