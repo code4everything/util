@@ -68,7 +68,7 @@ public class SimpleDateTime {
     }
 
     public Integer getMonth() {
-        return month;
+        return month + 1;
     }
 
     public Integer getDay() {
