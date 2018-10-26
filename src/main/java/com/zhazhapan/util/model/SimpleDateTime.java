@@ -14,6 +14,8 @@ import java.util.Date;
  */
 public class SimpleDateTime {
 
+    private final String DATE_FORMAT = "yyyy-MM-dd";
+
     private DateTime dateTime;
 
     private Integer year;
@@ -45,6 +47,11 @@ public class SimpleDateTime {
 
     public SimpleDateTime(long timeMillis) {
         dateTime = new DateTime(timeMillis);
+        parse();
+    }
+
+    public SimpleDateTime(String dateStr) {
+        dateTime = new DateTime(dateStr, DATE_FORMAT);
         parse();
     }
 
