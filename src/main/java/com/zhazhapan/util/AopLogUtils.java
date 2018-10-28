@@ -10,6 +10,8 @@ import java.lang.reflect.Method;
  **/
 public class AopLogUtils {
 
+    private AopLogUtils() {}
+
     /**
      * 获取 {@link AopLog}注解中的描述
      *

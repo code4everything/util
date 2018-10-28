@@ -52,13 +52,16 @@ public class FileExecutor extends FileUtils {
         if (shouldFirstExecute) {
             watcher.doSomething();
         }
-        WatchMonitor.createAll(file, new SimpleWatcher() {
+        SimpleWatcher simpleWatcher = new SimpleWatcher() {
             @Override
             public void onModify(WatchEvent<?> event, Path currentPath) {
                 watcher.onModify(event, currentPath);
                 watcher.doSomething();
             }
-        }).start();
+        };
+        try (WatchMonitor monitor = WatchMonitor.createAll(file, simpleWatcher)) {
+            monitor.start();
+        }
     }
 
     /**

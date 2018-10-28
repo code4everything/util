@@ -151,11 +151,10 @@ public class BeanUtils {
      * @since 1.0.8
      */
     public static Object deserialize(String file) throws IOException, ClassNotFoundException {
-        FileInputStream fileIn = new FileInputStream(file);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        Object object = in.readObject();
-        in.close();
-        fileIn.close();
+        Object object;
+        try (FileInputStream fileIn = new FileInputStream(file); ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            object = in.readObject();
+        }
         return object;
     }
 
@@ -170,11 +169,10 @@ public class BeanUtils {
      */
     public static void serialize(Object object, String file) throws Exception {
         if (object instanceof Serializable) {
-            FileOutputStream fileOut = new FileOutputStream(file);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(object);
-            out.close();
-            fileOut.close();
+            try (FileOutputStream fileOut = new FileOutputStream(file); ObjectOutputStream out =
+                    new ObjectOutputStream(fileOut)) {
+                out.writeObject(object);
+            }
         } else {
             throw new Exception(object.getClass().getName() + " doesn't implements serializable interface");
         }
